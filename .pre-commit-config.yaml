@@ -10,11 +10,6 @@ repos:
     rev: v2.1.1
     hooks:
       - id: autoflake
-  - repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
-        exclude: ^.*__init__.py$
   - repo: https://github.com/PyCQA/docformatter
     rev: v1.6.3
     hooks:
