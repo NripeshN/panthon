@@ -19,7 +19,3 @@ repos:
     rev: v1.6.3
     hooks:
       - id: docformatter
-  - repo: https://github.com/pycqa/pydocstyle
-    rev: 6.3.0
-    hooks:
-      - id: pydocstyle
