@@ -37,14 +37,3 @@ Please make sure to update tests as appropriate.
 [MIT](https://choosealicense.com/licenses/mit/)
 
 ---
-
-You can add more sections to the README as needed, such as:
-
-- **Documentation**: Link to your full documentation if it's hosted elsewhere.
-- **Tests**: How to run your test suite.
-- **Examples**: More in-depth usage examples or tutorials.
-- **Roadmap**: Upcoming features or improvements.
-- **Acknowledgments**: Acknowledge any major contributors or sources of funding.
-- **Contact Information**: How to get in touch with you or your team.
-
-Remember to keep your README file up-to-date as your project evolves. It's often the first thing people see when they come to your project, so it's an important tool for attracting users and contributors.
