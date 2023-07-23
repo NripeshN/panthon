@@ -127,6 +127,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+panthon_dev/
 
 # Spyder project settings
 .spyderproject
