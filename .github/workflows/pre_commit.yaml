@@ -14,6 +14,6 @@ jobs:
         with:
           python-version: "3.x"
       - name: Install Dependencies
-        run: pip install black autoflake flake8 docformatter pydocstyle
+        run: pip install pre-commit black autoflake flake8 docformatter pydocstyle
       - name: Run pre-commit
         run: pre-commit run --all-files
