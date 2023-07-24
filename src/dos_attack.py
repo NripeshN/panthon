@@ -48,8 +48,6 @@ class DoSAttack:
 
 
 if __name__ == "__main__":
-    dos = DoSAttack(
-        "192.168.1.1", 80, 500
-    )  # target IP, target port, number of connections
+    dos = DoSAttack("192.168.1.1", 80, 500)  # target IP, target port, number of connections
     dos.simulate_attack()
     dos.wait_for_threads()
