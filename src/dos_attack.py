@@ -1,20 +1,8 @@
 import torch
 import torch.nn as nn
-import random
-import string
 import socket
 import threading
-
-
-class RandomStringGenerator(nn.Module):
-    def __init__(self, length):
-        super(RandomStringGenerator, self).__init__()
-        self.length = length
-
-    def forward(self, x):
-        return "".join(
-            random.choices(string.ascii_uppercase + string.digits, k=self.length)
-        )
+from .random_string_generator import RandomStringGenerator
 
 
 class DoSAttack:
@@ -48,6 +36,8 @@ class DoSAttack:
 
 
 if __name__ == "__main__":
-    dos = DoSAttack("192.168.1.1", 80, 500)  # target IP, target port, number of connections
+    dos = DoSAttack(
+        "192.168.1.1", 80, 500
+    )  # target IP, target port, number of connections
     dos.simulate_attack()
     dos.wait_for_threads()
