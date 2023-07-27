@@ -10,9 +10,9 @@ with open('requirements.txt', 'r', encoding='utf-8') as f:
 setup(
     name='panthon',
     version='0.1.0',
-    url='https://github.com/yourusername/panthon',
-    author='Author Name',
-    author_email='author@gmail.com',
+    url='https://github.com/nripeshn/panthon',
+    author='Nripesh Niketan',
+    author_email='nripesh14@gmail.com',
     description='A Machine Learning-powered Cybersecurity Attack Simulation Library',
     packages=find_packages(),
     install_requires=requirements,
