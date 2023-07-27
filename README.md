@@ -22,8 +22,6 @@ pip install panthon
 
 ```python
 import panthon
-
-# code examples here
 ```
 
 ## Contributing
