@@ -9,7 +9,7 @@ with open('requirements.txt', 'r', encoding='utf-8') as f:
 
 setup(
     name='panthon',
-    version='0.1.0',
+    version='0.1.1',
     url='https://github.com/nripeshn/panthon',
     author='Nripesh Niketan',
     author_email='nripesh14@gmail.com',
