@@ -3,8 +3,9 @@ import torch.nn as nn
 import socket
 import threading
 import time
-from .random_string_generator import RandomStringGenerator
+from random_string_generator import RandomStringGenerator
 import logging
+import random
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
