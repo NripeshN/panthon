@@ -43,7 +43,7 @@ class TestDoSAttack(unittest.TestCase):
         self.server_thread.join()
 
     def test_simulation(self):
-        dos = dos_attack.DoSAttack("localhost", 50000, 5)  
+        dos = dos_attack.DoSAttack("localhost", 50000, 5)
         initial_connections = self.server.connection_count()
         dos.simulate_attack()
         time.sleep(2)

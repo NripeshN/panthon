@@ -1,6 +1,7 @@
 import unittest
 from src import ddos_attack
 
+
 class TestDoSAttack(unittest.TestCase):
     def test_simulation(self):
         # Instantiate the class

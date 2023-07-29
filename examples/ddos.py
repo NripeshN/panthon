@@ -1,4 +1,4 @@
-from src.ddos_attack import BotNet # change this to import from panthon
+from src.ddos_attack import BotNet  # change this to import from panthon
 
 botnet = BotNet(
     10, "xxx.xxx.x.x", 80, 100
