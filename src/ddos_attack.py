@@ -60,11 +60,3 @@ class BotNet:
             bot.simulate_attack()
         for bot in self.bots:
             bot.wait_for_threads()
-
-
-if __name__ == "__main__":
-    botnet = BotNet(
-        10, "192.168.1.1", 80, 100
-    )  # num of bots, target IP, target port, connections per bot
-    botnet.create_bots()
-    botnet.launch_attack()
