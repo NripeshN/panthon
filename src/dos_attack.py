@@ -35,7 +35,7 @@ class DoSAttack:
             sock.connect((self.target_ip, self.target_port))
             payload = self.model(torch.tensor([])).encode()  # Generate payload
             sock.send(payload)
-            logging.info("Payload sent.")
+            logging.info(f"Payload sent: {payload}")
             sock.send(b"QUIT")
             sock.close()
         except Exception as e:
