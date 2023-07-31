@@ -60,9 +60,3 @@ class SQLInjectionAttack:
 
         logging.info("Site seems to be SQL Injection proof.")
         return False
-
-
-if __name__ == "__main__":
-    url = "http://testphp.vulnweb.com/?id=1"
-    sql_injection_attack = SQLInjectionAttack(url)
-    sql_injection_attack.attack()
