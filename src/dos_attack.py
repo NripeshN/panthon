@@ -24,8 +24,15 @@ class DoSAttack:
         for _ in range(self.num_connections):
             if self.attack_type == "Slowloris":
                 thread = threading.Thread(target=self.slowloris_attack)
+            elif self.attack_type == "Slowhttptest":
+                thread = threading.Thread(target=self.slowhttptest_attack)
+            elif self.attack_type == "Hulk":
+                thread = threading.Thread(target=self.hulk_attack)
+            elif self.attack_type == "GoldenEye":
+                thread = threading.Thread(target=self.goldeneye_attack)
             else:
                 thread = threading.Thread(target=self.create_connection)
+
             self.threads.append(thread)
             thread.start()
 
@@ -66,6 +73,15 @@ class DoSAttack:
             except socket.error:
                 break
         sock.close()
+        
+    def slowhttptest_attack(self):
+        raise NotImplementedError
+
+    def hulk_attack(self):
+        raise NotImplementedError
+
+    def goldeneye_attack(self):
+        raise NotImplementedError
 
     def wait_for_threads(self):
         for thread in self.threads:
