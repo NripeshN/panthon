@@ -46,7 +46,6 @@ class Requester(object):
             retval[self.script] = None
         return retval
 
-
     @staticmethod
     def check_for_script(
         responses, verification_amount=10, total_amount_to_find=10, test_time=35
@@ -113,7 +112,7 @@ class Requester(object):
             req = requests.get(
                 url, timeout=self.timeout, headers=self.headers, proxies=self.proxy
             )
-            content = req.content.decode('utf-8')
+            content = req.content.decode("utf-8")
             if regex_script.search(content) is not None:
                 return True
             else:

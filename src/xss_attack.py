@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import logging
-from urllib.parse import urljoin
 import threading
 
 logging.basicConfig(level=logging.INFO)
@@ -12,7 +11,7 @@ class XSSAttack:
         self.url = url
         self.time = time
         self.session = requests.Session()
-        with open('XanXSS/xss-payload-list.txt', 'r') as file:
+        with open("XanXSS/xss-payload-list.txt", "r") as file:
             self.payloads = [line.strip() for line in file]
         self.threads = []
         self.num_attacks = num_attacks
@@ -37,8 +36,9 @@ class XSSAttack:
         command.extend(self.payloads)
         command.extend(["--time", str(self.time)])
         command.extend(["-a", "1"])
-        
+
         import subprocess
+
         subprocess.run(command)
 
     def b33f_attack(self):
