@@ -6,7 +6,6 @@ import importlib
 
 
 VERSION = "0.4"
-BANNER = """""".format(VERSION)
 HEADERS = {
     "Connection": "close",
     "User-Agent": "xanxss/v{} (Language={}; Platform={})".format(

@@ -40,11 +40,12 @@ class Requester(object):
             req = requests.get(
                 self.url, timeout=self.timeout, headers=self.headers, proxies=self.proxy
             )
-            content = req.content
+            content = req.text
             retval[self.script] = content
         except Exception:
             retval[self.script] = None
         return retval
+
 
     @staticmethod
     def check_for_script(
@@ -65,7 +66,7 @@ class Requester(object):
                 for key, value in item.items():
                     if value is not None:
                         try:
-                            key_parts = textwrap.wrap(key, len(key) / 8)
+                            key_parts = textwrap.wrap(key, len(key) // 8)
                             for part in key_parts:
                                 issue_fixers = {
                                     ")": r"\)",
@@ -112,7 +113,7 @@ class Requester(object):
             req = requests.get(
                 url, timeout=self.timeout, headers=self.headers, proxies=self.proxy
             )
-            content = req.content
+            content = req.content.decode('utf-8')
             if regex_script.search(content) is not None:
                 return True
             else:
