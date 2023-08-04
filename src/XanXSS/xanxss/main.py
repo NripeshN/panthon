@@ -2,12 +2,11 @@ from lib.cmd import OptParser
 from lib.requester import Requester
 from lib.payload_generation import PayloadGeneration
 from lib.polyglot_generator import generate_polyglot
-from lib.settings import PAYLOADS, prettify, BANNER, HEADERS, heuristics
+from lib.settings import PAYLOADS, prettify, HEADERS, heuristics
 from lib.formatter import info, debug, warning, error
 
 
 def main():
-    print(BANNER)
     placement_marker = False
 
     try:

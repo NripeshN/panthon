@@ -28,7 +28,7 @@ PAYLOADS = [
 
 def load_tampers():
     """Load the tamper scripts into memory."""
-    script_path = "{}/tamper".format(os.getcwd())
+    script_path = "{}/XanXSS/tamper".format(os.getcwd())
     importter = "tamper.{}"
     skip_schema = ("__init__.py", ".pyc", "__")
     tmp = []
