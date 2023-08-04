@@ -11,4 +11,4 @@ def tamper(script):
         if c == " ":
             c = random.choice(fillers)
         retval.append(c)
-    return ''.join(retval)
+    return "".join(retval)

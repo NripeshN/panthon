@@ -9,7 +9,6 @@ import lib.formatter
 
 
 class Requester(object):
-
     def __init__(self, url, script, headers=None, proxy=None, **kwargs):
         self.url = url
         self.script = script
@@ -24,7 +23,13 @@ class Requester(object):
             return self.url + prefix + self.script + suffix
         else:
             marker_index = self.url.index("*")
-            self.url = self.url[:marker_index] + prefix + self.script + suffix + self.url[marker_index:]
+            self.url = (
+                self.url[:marker_index]
+                + prefix
+                + self.script
+                + suffix
+                + self.url[marker_index:]
+            )
             return self.url.replace("*", "")
 
     def make_request(self, marker=False, prefix="", suffix=""):
@@ -32,7 +37,9 @@ class Requester(object):
         try:
             time.sleep(self.throttle)
             self.url = self.load_url(marker=marker, prefix=prefix, suffix=suffix)
-            req = requests.get(self.url, timeout=self.timeout, headers=self.headers, proxies=self.proxy)
+            req = requests.get(
+                self.url, timeout=self.timeout, headers=self.headers, proxies=self.proxy
+            )
             content = req.content
             retval[self.script] = content
         except Exception:
@@ -40,7 +47,9 @@ class Requester(object):
         return retval
 
     @staticmethod
-    def check_for_script(responses, verification_amount=10, total_amount_to_find=10, test_time=35):
+    def check_for_script(
+        responses, verification_amount=10, total_amount_to_find=10, test_time=35
+    ):
         retval = set()
         parts_in_script = 0
         start_time = time.time()
@@ -59,9 +68,17 @@ class Requester(object):
                             key_parts = textwrap.wrap(key, len(key) / 8)
                             for part in key_parts:
                                 issue_fixers = {
-                                    ")": r"\)", "(": "\(", "[": r"\[", "]": r"\]",
-                                    "\\": r"\\", "/*/": r"\/*\/", "((": "\(\(", "+": "\+",
-                                    "*": r"\*", "/": r"\/", "%0a": r"(\r\n|\r|\n)"
+                                    ")": r"\)",
+                                    "(": "\(",
+                                    "[": r"\[",
+                                    "]": r"\]",
+                                    "\\": r"\\",
+                                    "/*/": r"\/*\/",
+                                    "((": "\(\(",
+                                    "+": "\+",
+                                    "*": r"\*",
+                                    "/": r"\/",
+                                    "%0a": r"(\r\n|\r|\n)",
                                 }
                                 identifiers = issue_fixers.keys()
                                 to_use = ""
@@ -92,7 +109,9 @@ class Requester(object):
         regex_script = re.compile(regex_script)
         try:
             url = self.original_url + script
-            req = requests.get(url, timeout=self.timeout, headers=self.headers, proxies=self.proxy)
+            req = requests.get(
+                url, timeout=self.timeout, headers=self.headers, proxies=self.proxy
+            )
             content = req.content
             if regex_script.search(content) is not None:
                 return True
@@ -100,4 +119,3 @@ class Requester(object):
                 return False
         except Exception:
             return None
-

@@ -2,19 +2,8 @@ from lib.cmd import OptParser
 from lib.requester import Requester
 from lib.payload_generation import PayloadGeneration
 from lib.polyglot_generator import generate_polyglot
-from lib.settings import (
-    PAYLOADS,
-    prettify,
-    BANNER,
-    HEADERS,
-    heuristics
-)
-from lib.formatter import (
-    info,
-    debug,
-    warning,
-    error
-)
+from lib.settings import PAYLOADS, prettify, BANNER, HEADERS, heuristics
+from lib.formatter import info, debug, warning, error
 
 
 def main():
@@ -31,22 +20,26 @@ def main():
             url_validation = heuristics(opts.urlToUse)
             if not url_validation["validated"]:
                 error(
-                    "the provided URL could not be validated as a URL, check the URL and try again. a valid URL "
-                    "looks something like this: 'http://somesite.com/some/path.php?someid=param'"
+                    "the provided URL could not be validated as a URL, check the URL"
+                    " and try again. a valid URL looks something like this:"
+                    " 'http://somesite.com/some/path.php?someid=param'"
                 )
                 exit(1)
             else:
                 if url_validation["query"] == "nogo":
                     warning(
-                        "heuristic testing has detected that the provided URL lacks a GET parameter "
-                        "this may interfere with testing results"
+                        "heuristic testing has detected that the provided URL lacks a"
+                        " GET parameter this may interfere with testing results"
                     )
             try:
                 if url_validation["marker"] == "yes":
                     info("marker for attack placement found, prioritizing")
                     placement_marker = True
                 if url_validation["multi_marker"]:
-                    warning("multiple markers are not supported, only the first one will be used")
+                    warning(
+                        "multiple markers are not supported, only the first one will be"
+                        " used"
+                    )
             except:
                 pass
         if opts.extraHeaders is not None:
@@ -101,10 +94,17 @@ def main():
                 times_ran += 1
                 payload = polyglot
             if opts.runVerbose:
-                debug("running payload '{}{}{}'".format(opts.usePrefix, payload, opts.useSuffix))
+                debug(
+                    "running payload '{}{}{}'".format(
+                        opts.usePrefix, payload, opts.useSuffix
+                    )
+                )
             requester = Requester(
-                opts.urlToUse, payload, headers=headers,
-                proxy=opts.proxyToUse, throttle=opts.throttleTime
+                opts.urlToUse,
+                payload,
+                headers=headers,
+                proxy=opts.proxyToUse,
+                throttle=opts.throttleTime,
             )
             soup = requester.make_request(
                 marker=placement_marker, prefix=opts.usePrefix, suffix=opts.useSuffix
@@ -115,13 +115,18 @@ def main():
             retval, verification_amount=verification_amount, test_time=test_time
         )
         if opts.useSuffix != "" or opts.usePrefix != "":
-            working_payloads = [opts.usePrefix + p + opts.useSuffix for p in working_payloads]
+            working_payloads = [
+                opts.usePrefix + p + opts.useSuffix for p in working_payloads
+            ]
         if len(working_payloads) == 0:
             warning("no working payloads found for requested site")
             info("checking if scripts are being sanitized")
             requester = Requester(
-                opts.urlToUse, None, headers=headers,
-                proxy=opts.proxyToUse, throttle=opts.throttleTime
+                opts.urlToUse,
+                None,
+                headers=headers,
+                proxy=opts.proxyToUse,
+                throttle=opts.throttleTime,
             )
             results = requester.check_for_sanitize()
             if results:
@@ -129,7 +134,9 @@ def main():
             elif results is None:
                 warning("hit an error in request, possible WAF?")
             else:
-                info("it appears that the scripts are not being sanitized, try manually?")
+                info(
+                    "it appears that the scripts are not being sanitized, try manually?"
+                )
             exit(1)
         else:
             info("working payloads:")
@@ -139,7 +146,13 @@ def main():
         import sys
         import traceback
 
-        error("something bad happened, failed with error: {}, traceback:".format(str(e)))
-        print("Traceback (most recent call):\n    {}".format("".join(traceback.format_tb(sys.exc_info()[2])).strip()))
+        error(
+            "something bad happened, failed with error: {}, traceback:".format(str(e))
+        )
+        print(
+            "Traceback (most recent call):\n    {}".format(
+                "".join(traceback.format_tb(sys.exc_info()[2])).strip()
+            )
+        )
     except KeyboardInterrupt:
         error("user quit")

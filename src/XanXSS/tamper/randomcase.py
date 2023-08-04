@@ -11,4 +11,4 @@ def tamper(script):
         if do_replace:
             c = c.upper()
         retval.append(c)
-    return ''.join(retval)
+    return "".join(retval)
