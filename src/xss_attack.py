@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 class XSSAttack:
-    def __init__(self, url, time, checks, num_attacks=1, attack_type="xanxxs"):
+    def __init__(self, url, time=25, checks=5, num_attacks=1, attack_type="xanxxs"):
         self.url = url
         self.time = time
         self.session = requests.Session()

@@ -158,7 +158,6 @@ class GoldenEye(object):
     def printHeader(self):
         # Taunt!
         print()
-        print(GOLDENEYE_BANNER)
         print()
 
     # Do the fun!
