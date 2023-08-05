@@ -58,7 +58,7 @@ class DoSAttack:
 
     def send_header(self, s, name, value):
         self.send_line(s, f"{name}: {value}")
-        
+
     def get_domain_name(ip_address):
         try:
             hostname = socket.gethostbyaddr(ip_address)[0]
