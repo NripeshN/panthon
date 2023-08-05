@@ -26,8 +26,6 @@ class XSSAttack:
     def run_attack(self):
         if self.attack_type == "xanxxs":
             self.xanxxs_attack()
-        elif self.attack_type == "b33f":
-            self.b33f_attack()
         else:
             logging.error(f"Unknown attack type: {self.attack_type}")
 
@@ -40,10 +38,6 @@ class XSSAttack:
         import subprocess
 
         subprocess.run(command)
-
-    def b33f_attack(self):
-        # TODO: Implement the b33f attack here
-        raise NotImplementedError
 
     def wait_for_threads(self):
         for thread in self.threads:
