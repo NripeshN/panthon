@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import threading
 from random_string_generator import RandomStringGenerator
 import logging
 import os
@@ -75,7 +74,7 @@ class DDoSAttack:
         command = [
             "python3",
             os.path.join(os.path.dirname(__file__), "saphyra.py"),
-            self.target_url
+            self.target_url,
         ]
         try:
             subprocess.run(command)
