@@ -134,7 +134,7 @@ int main(int argc, char *argv[]){
     char source_ip[32];
     
     //IP header
-    th_param.iph = (struct iphdr *)(th_param.datagram);
+    th_param.iph = (struct ip *) th_param.datagram;
 
     //TCP header
     struct tcphdr *tcph = (struct tcphdr *)(th_param.datagram + sizeof(struct ip));
