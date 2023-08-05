@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import logging
 import threading
+import os
 
 logging.basicConfig(level=logging.INFO)
 
@@ -30,7 +31,8 @@ class XSSAttack:
             logging.error(f"Unknown attack type: {self.attack_type}")
 
     def xanxxs_attack(self):
-        command = ["python3", "XanXSS/xanxss.py", "-u", self.url, "--payloads"]
+        path_to_executable = os.path.join(os.path.dirname(__file__), "XanXSS/xanxss.py")
+        command = ["python3", path_to_executable, "-u", self.url, "--payloads"]
         command.extend(self.payloads)
         command.extend(["--time", str(self.time)])
         command.extend(["-a", "1"])
