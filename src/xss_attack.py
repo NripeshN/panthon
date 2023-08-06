@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import logging
 import threading
 import os
+import subprocess
 
 logging.basicConfig(level=logging.INFO)
 
@@ -27,6 +28,8 @@ class XSSAttack:
     def run_attack(self):
         if self.attack_type == "xanxxs":
             self.xanxxs_attack()
+        if self.attack_type == "xsstrike":
+            self.xsstrike_attack()
         else:
             logging.error(f"Unknown attack type: {self.attack_type}")
 
@@ -37,7 +40,20 @@ class XSSAttack:
         command.extend(["--time", str(self.time)])
         command.extend(["-a", "1"])
 
-        import subprocess
+        subprocess.run(command)
+
+    def xsstrike_attack(self):
+        path_to_executable = os.path.join(
+            os.path.dirname(__file__), "XSStrike/xsstrike.py"
+        )
+        command = [
+            "python3",
+            path_to_executable,
+            "-u",
+            self.url,
+            "-t",
+            str(self.num_attacks),
+        ]
 
         subprocess.run(command)
 
@@ -50,6 +66,6 @@ class XSSAttack:
 target_url = "http://xss-game.appspot.com/level1/frame?query="
 
 # Create and launch attack
-attack = XSSAttack(target_url, time=25, checks=5, num_attacks=1, attack_type="xanxxs")
+attack = XSSAttack(target_url, time=25, checks=5, num_attacks=1, attack_type="xsstrike")
 attack.create_attacks()
 attack.wait_for_threads()
