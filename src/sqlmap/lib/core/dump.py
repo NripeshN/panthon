@@ -29,7 +29,6 @@ from lib.core.convert import getBytes
 from lib.core.convert import getConsoleLength
 from lib.core.convert import getText
 from lib.core.convert import getUnicode
-from html import escape as html_escape
 from lib.core.data import conf
 from lib.core.data import kb
 from lib.core.data import logger
