@@ -29,11 +29,6 @@ from thirdparty import six
 from thirdparty.six import unichr as _unichr
 from thirdparty.six.moves import collections_abc as _collections
 
-try:
-    pass
-except ImportError:
-    pass
-
 
 def base64pickle(value):
     """Serializes (with pickle) and encodes to Base64 format supplied (binary)

