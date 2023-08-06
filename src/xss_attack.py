@@ -77,6 +77,8 @@ class XSSAttack:
 target_url = "http://xss-game.appspot.com/level1/frame?query="
 
 # Create and launch attack
-attack = XSSAttack(target_url, time=25, checks=5, num_attacks=100, attack_type="xsstrike")
+attack = XSSAttack(
+    target_url, time=25, checks=5, num_attacks=100, attack_type="xsstrike"
+)
 attack.create_attacks()
 attack.wait_for_threads()

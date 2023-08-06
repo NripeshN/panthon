@@ -1014,7 +1014,6 @@ def _create_bs_classes(
     class RobustFormParser(_AbstractBSFormParser, bs):
         """Tries to be highly tolerant of incorrect HTML."""
 
-
     RobustFormParser.bs_base_class = bs
 
     class NestingRobustFormParser(_AbstractBSFormParser, icbinbs):
@@ -1023,7 +1022,6 @@ def _create_bs_classes(
         Different from RobustFormParser in that it more often guesses
         nesting above missing end tags (see BeautifulSoup docs).
         """
-
 
     NestingRobustFormParser.bs_base_class = icbinbs
 
@@ -2163,8 +2161,8 @@ class ListControl(Control):
         example, the "alt" HTML attribute gives a text string describing
         the item (graphical browsers usually display this as a tooltip).
 
-        The returned dictionary maps HTML attribute names to values.
-        The names and values are taken from the original HTML.
+        The returned dictionary maps HTML attribute names to values. The
+        names and values are taken from the original HTML.
         """
         deprecation("control.get(...).attrs")
         return self._get(name, by_label, nr).attrs

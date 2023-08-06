@@ -282,9 +282,8 @@ class des(_baseDes):
     using CBC mode.         Must be 8 bytes in length. pad  -> Optional
     argument, set the pad character (PAD_NORMAL) to use         during
     all encrypt/decrpt operations done with this instance. padmode ->
-    Optional argument, set the padding mode (PAD_NORMAL or
-    PAD_PKCS5) to use during all encrypt/decrpt operations done
-    with this instance.
+    Optional argument, set the padding mode (PAD_NORMAL or PAD_PKCS5) to
+    use during all encrypt/decrpt operations done with this instance.
     """
 
     # Permutation and translation tables for DES

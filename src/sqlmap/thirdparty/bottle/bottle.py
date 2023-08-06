@@ -275,7 +275,6 @@ class BottleException(Exception):
     """A base class for exceptions used by bottle."""
 
 
-
 ###############################################################################
 # Routing ######################################################################
 ###############################################################################
@@ -2025,7 +2024,9 @@ class BaseResponse(object):
     @property
     def charset(self, default="UTF-8"):
         """Return the charset specified in the content-type header (default:
-        utf8)."""
+
+        utf8).
+        """
         if "charset=" in self.content_type:
             return self.content_type.split("charset=")[-1].split(";")[0].strip()
         return default

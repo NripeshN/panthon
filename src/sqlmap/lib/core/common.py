@@ -1571,7 +1571,9 @@ def getHeader(headers, key):
 def checkPipedInput():
     """Checks whether input to program has been provided via standard input
     (e.g. cat /tmp/req.txt | python sqlmap.py -r -) # Reference:
-    https://stackoverflow.com/a/33873570."""
+
+    https://stackoverflow.com/a/33873570.
+    """
 
     return hasattr(sys.stdin, "fileno") and not os.isatty(sys.stdin.fileno())
 

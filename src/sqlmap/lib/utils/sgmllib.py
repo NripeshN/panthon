@@ -47,7 +47,6 @@ class SGMLParseError(RuntimeError):
     """Exception raised for all parse errors."""
 
 
-
 # SGML parser base class -- find tags and call handler functions.
 # Usage: p = SGMLParser(); p.feed(data); ...; p.close().
 # The dtd is defined by deriving a class which defines methods
