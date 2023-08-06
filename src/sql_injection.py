@@ -43,6 +43,6 @@ class SQLInjectionAttack:
 
 
 sql_injection_attack = SQLInjectionAttack(
-    "http://testphp.vulnweb.com/?id=1", attack_type="sqlmap"
+    "http://localhost:3000/rest/products/search?q=", attack_type="sqlmap"
 )  # target_url, attack_type
 sql_injection_attack.simulate_attack()
