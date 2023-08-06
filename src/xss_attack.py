@@ -9,7 +9,15 @@ logging.basicConfig(level=logging.INFO)
 
 
 class XSSAttack:
-    def __init__(self, url, time=25, checks=5, num_attacks=1, attack_type="xanxxs", file="XanXSS/xss-payload-list.txt"):
+    def __init__(
+        self,
+        url,
+        time=25,
+        checks=5,
+        num_attacks=1,
+        attack_type="xanxxs",
+        file="XanXSS/xss-payload-list.txt",
+    ):
         self.url = url
         self.time = time
         self.file = file
@@ -55,7 +63,7 @@ class XSSAttack:
             "-t",
             str(self.num_attacks),
             "--file",
-            self.file
+            self.file,
         ]
 
         subprocess.run(command)
