@@ -9,11 +9,12 @@ logging.basicConfig(level=logging.INFO)
 
 
 class XSSAttack:
-    def __init__(self, url, time=25, checks=5, num_attacks=1, attack_type="xanxxs"):
+    def __init__(self, url, time=25, checks=5, num_attacks=1, attack_type="xanxxs", file="XanXSS/xss-payload-list.txt"):
         self.url = url
         self.time = time
+        self.file = file
         self.session = requests.Session()
-        with open("XanXSS/xss-payload-list.txt", "r") as file:
+        with open(self.file, "r") as file:
             self.payloads = [line.strip() for line in file]
         self.threads = []
         self.num_attacks = num_attacks
@@ -53,6 +54,8 @@ class XSSAttack:
             self.url,
             "-t",
             str(self.num_attacks),
+            "--file",
+            self.file
         ]
 
         subprocess.run(command)
