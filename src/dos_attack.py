@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import socket
-import threading
 import random
 from random_string_generator import RandomStringGenerator
 import logging
@@ -17,9 +16,8 @@ logging.basicConfig(
 
 class DoSAttack:
     def __init__(self):
-      
         self.threads = []
-     
+
     # def simulate_attack(self):
     #     for _ in range(self.num_connections):
     #         if self.attack_type == "Slowloris":
@@ -36,7 +34,7 @@ class DoSAttack:
     #         self.threads.append(thread)
     #         thread.start()
 
-    def create_connection(self, url, target_port, model = RandomStringGenerator(100)):
+    def create_connection(self, url, target_port, model=RandomStringGenerator(100)):
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             parsed_url = urlparse(url)
