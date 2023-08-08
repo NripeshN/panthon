@@ -12,8 +12,8 @@ class DNSSpoofer:
             "addr"
         ]
         return mac_address
-        
-#add flags
+
+    # add flags
     def _dns_responder(self, packet):
         # Only process DNS requests
         if packet.haslayer(DNS) and packet[DNS].qr == 0:
