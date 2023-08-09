@@ -1,16 +1,15 @@
 # Panthon: Cybersecurity Attack Simulation Library 
 
-Panthon is a machine learning-powered cybersecurity attack simulation library designed to test and strengthen system defenses.
+Panthon is a cybersecurity attack simulation library designed to test and strengthen a system's defenses.
 
 ## Description
 
-Panthon leverages advanced machine learning techniques to simulate various cyber threats, providing an evolving solution to stay ahead in the ever-changing landscape of cybersecurity threats. Our goal is to help build more resilient and secure systems through a deeper understanding and anticipation of potential vulnerabilities.
+Panthon employs sophisticated methods to replicate different cyber threats, offering a dynamic solution to proactively address the constantly shifting realm of cybersecurity risks. Our goal is to help build more resilient and secure systems through a deeper understanding and anticipation of potential vulnerabilities.
 
 ## Features
 
 - Generation of realistic synthetic cybersecurity data
 - Simulation of a range of common cyber threats
-- Adaptive attack strategies using reinforcement learning
 
 ## Installation
 
