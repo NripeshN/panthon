@@ -7,7 +7,7 @@ import os
 
 
 class SQLInjectionAttack:
-    def sqlmap_attack(self, target_url, level=5, risk=3):
+    def sqlmap_attack(self, target_url, level=1, risk=1):
         logging.info("Attacking %s with SQLMap...", target_url)
         path_to_executable = os.path.join(os.path.dirname(__file__), "sqlmap/sqlmap.py")
         command = [
