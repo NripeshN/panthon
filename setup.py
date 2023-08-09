@@ -8,13 +8,7 @@ from setuptools import setup, find_packages
 # with open("~/panthon/requirements.txt", "r", encoding="utf-8") as f:
 #     requirements = f.read().splitlines()
 
-requirements=['torch',
-"scapy",
-"netifaces",
-"bs4",
-"tld",
-"fuzzywuzzy",
-"requests"]
+requirements = ["torch", "scapy", "netifaces", "bs4", "tld", "fuzzywuzzy", "requests"]
 
 setup(
     name="panthon",
