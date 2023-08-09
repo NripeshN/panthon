@@ -193,9 +193,6 @@ def main():
 
         conf.showTime = True
         dataToStdout(
-            "[!] legal disclaimer: %s\n\n" % LEGAL_DISCLAIMER, forceOutput=True
-        )
-        dataToStdout(
             "[*] starting @ %s\n\n" % time.strftime("%X /%Y-%m-%d/"), forceOutput=True
         )
 
