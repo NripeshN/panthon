@@ -271,10 +271,8 @@ class StdDbOut(object):
                     return
 
             output = conf.databaseCursor.execute(
-                (
-                    "SELECT id, status, value FROM data WHERE taskid = ? AND"
-                    " content_type = ?"
-                ),
+                "SELECT id, status, value FROM data WHERE taskid = ? AND"
+                " content_type = ?",
                 (self.taskid, content_type),
             )
 
@@ -725,10 +723,8 @@ def scan_log_limited(taskid, start, end):
 
     # Read a subset of log messages from the IPC database
     for time_, level, message in DataStore.current_db.execute(
-        (
-            "SELECT time, level, message FROM logs WHERE taskid = ? AND id >= ? AND id"
-            " <= ? ORDER BY id ASC"
-        ),
+        "SELECT time, level, message FROM logs WHERE taskid = ? AND id >= ? AND id"
+        " <= ? ORDER BY id ASC",
         (taskid, start, end),
     ):
         json_log_messages.append({"time": time_, "level": level, "message": message})

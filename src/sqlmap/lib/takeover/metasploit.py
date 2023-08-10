@@ -728,10 +728,8 @@ class Metasploit(object):
         payloadStderr = process.communicate()[1]
 
         match = re.search(
-            (
-                b"(Total size:|Length:|succeeded with size|Final size of exe file:)"
-                b" ([\\d]+)"
-            ),
+            b"(Total size:|Length:|succeeded with size|Final size of exe file:)"
+            b" ([\\d]+)",
             payloadStderr,
         )
 
