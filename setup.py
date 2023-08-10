@@ -4,10 +4,6 @@ Specifies package details and dependencies.
 """
 from setuptools import setup, find_packages
 
-# # Read in requirements.txt with specified encoding
-# with open("~/panthon/requirements.txt", "r", encoding="utf-8") as f:
-#     requirements = f.read().splitlines()
-
 requirements = ["torch", "scapy", "netifaces", "bs4", "tld", "fuzzywuzzy", "requests"]
 
 setup(
@@ -18,6 +14,7 @@ setup(
     author_email="nripesh14@gmail.com",
     description="A Machine Learning-powered Cybersecurity Attack Simulation Library",
     packages=find_packages(),
+    package_data={"panthon": ["data/*.txt"]},
     install_requires=requirements,
     classifiers=[
         "Development Status :: 3 - Alpha",
