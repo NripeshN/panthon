@@ -12,7 +12,7 @@ requirements = ["torch", "scapy", "netifaces", "bs4", "tld", "fuzzywuzzy", "requ
 
 setup(
     name="panthon",
-    version="0.1.3",
+    version="0.1.13",
     url="https://github.com/nripeshn/panthon",
     author="Nripesh Niketan",
     author_email="nripesh14@gmail.com",
