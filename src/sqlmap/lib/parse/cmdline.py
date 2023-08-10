@@ -528,10 +528,8 @@ def cmdLineParser(argv=None):
         # Injection options
         injection = parser.add_argument_group(
             "Injection",
-            (
-                "These options can be used to specify which parameters to test for,"
-                " provide custom injection payloads and optional tampering scripts"
-            ),
+            "These options can be used to specify which parameters to test for,"
+            " provide custom injection payloads and optional tampering scripts",
         )
 
         injection.add_argument("-p", dest="testParameter", help="Testable parameter(s)")
@@ -692,10 +690,8 @@ def cmdLineParser(argv=None):
         # Techniques options
         techniques = parser.add_argument_group(
             "Techniques",
-            (
-                "These options can be used to tweak testing of specific SQL injection"
-                " techniques"
-            ),
+            "These options can be used to tweak testing of specific SQL injection"
+            " techniques",
         )
 
         techniques.add_argument(
@@ -761,11 +757,9 @@ def cmdLineParser(argv=None):
         # Enumeration options
         enumeration = parser.add_argument_group(
             "Enumeration",
-            (
-                "These options can be used to enumerate the back-end database"
-                " management system information, structure and data contained in the"
-                " tables"
-            ),
+            "These options can be used to enumerate the back-end database"
+            " management system information, structure and data contained in the"
+            " tables",
         )
 
         enumeration.add_argument(
@@ -1026,10 +1020,8 @@ def cmdLineParser(argv=None):
         # File system options
         filesystem = parser.add_argument_group(
             "File system access",
-            (
-                "These options can be used to access the back-end database management"
-                " system underlying file system"
-            ),
+            "These options can be used to access the back-end database management"
+            " system underlying file system",
         )
 
         filesystem.add_argument(
@@ -1053,10 +1045,8 @@ def cmdLineParser(argv=None):
         # Takeover options
         takeover = parser.add_argument_group(
             "Operating system access",
-            (
-                "These options can be used to access the back-end database management"
-                " system underlying operating system"
-            ),
+            "These options can be used to access the back-end database management"
+            " system underlying operating system",
         )
 
         takeover.add_argument(
@@ -1113,10 +1103,8 @@ def cmdLineParser(argv=None):
         # Windows registry options
         windows = parser.add_argument_group(
             "Windows registry access",
-            (
-                "These options can be used to access the back-end database management"
-                " system Windows registry"
-            ),
+            "These options can be used to access the back-end database management"
+            " system Windows registry",
         )
 
         windows.add_argument(

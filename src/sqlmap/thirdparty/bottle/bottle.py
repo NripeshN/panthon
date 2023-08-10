@@ -662,10 +662,8 @@ class Route(object):
             0,
             13,
             "Route.get_config() is deprecated.",
-            (
-                "The Route.config property already includes values from the"
-                " application config for missing keys. Access it directly."
-            ),
+            "The Route.config property already includes values from the"
+            " application config for missing keys. Access it directly.",
         )
         return self.config.get(key, default)
 
@@ -684,8 +682,8 @@ class Bottle(object):
     consists of routes, callbacks, plugins, resources and configuration.
     Instances are callable WSGI applications.
 
-    :param catchall: If true (default), handle all exceptions. Turn off to
-                     let debugging middleware handle exceptions.
+    :param catchall: If true (default), handle all exceptions. Turn off
+        to let debugging middleware handle exceptions.
     """
 
     @lazy_attribute
@@ -706,10 +704,8 @@ class Bottle(object):
                 0,
                 13,
                 "Bottle(catchall) keyword argument.",
-                (
-                    "The 'catchall' setting is now part of the app "
-                    "configuration. Fix: `app.config['catchall'] = False`"
-                ),
+                "The 'catchall' setting is now part of the app "
+                "configuration. Fix: `app.config['catchall'] = False`",
             )
             self.config["catchall"] = False
         if kwargs.get("autojson") is False:
@@ -717,10 +713,8 @@ class Bottle(object):
                 0,
                 13,
                 "Bottle(autojson) keyword argument.",
-                (
-                    "The 'autojson' setting is now part of the app "
-                    "configuration. Fix: `app.config['json.enable'] = False`"
-                ),
+                "The 'autojson' setting is now part of the app "
+                "configuration. Fix: `app.config['json.enable'] = False`",
             )
             self.config["json.disable"] = True
 
@@ -852,10 +846,8 @@ class Bottle(object):
                 0,
                 13,
                 "Prefix must end in '/'. Falling back to WSGI mount.",
-                (
-                    "Consider adding an explicit redirect from '/prefix' to '/prefix/'"
-                    " in the parent application."
-                ),
+                "Consider adding an explicit redirect from '/prefix' to '/prefix/'"
+                " in the parent application.",
             )
             return self._mount_wsgi(prefix, app, **options)
 
@@ -898,9 +890,12 @@ class Bottle(object):
 
     def merge(self, routes):
         """Merge the routes of another :class:`Bottle` application or a list of
-        :class:`Route` objects into this application. The routes keep their
+        :class:`Route` objects into this application.
+
+        The routes keep their
         'owner', meaning that the :data:`Route.app` attribute is not
-        changed."""
+        changed.
+        """
         if isinstance(routes, Bottle):
             routes = routes.routes
         for route in routes:
@@ -1448,8 +1443,10 @@ class BaseRequest(object):
     @DictProperty("environ", "bottle.request.json", read_only=True)
     def json(self):
         """If the ``Content-Type`` header is ``application/json`` or
-        ``application/json-rpc``, this property holds the parsed content
-        of the request body. Only requests smaller than :attr:`MEMFILE_MAX`
+        ``application/json-rpc``, this property holds the parsed content of the
+        request body.
+
+        Only requests smaller than :attr:`MEMFILE_MAX`
         are processed to avoid memory exhaustion.
         Invalid JSON raises a 400 error response.
         """
@@ -1562,7 +1559,9 @@ class BaseRequest(object):
     @DictProperty("environ", "bottle.request.post", read_only=True)
     def POST(self):
         """The values of :attr:`forms` and :attr:`files` combined into a single
-        :class:`FormsDict`. Values are either strings (form values) or
+        :class:`FormsDict`.
+
+        Values are either strings (form values) or
         instances of :class:`cgi.FieldStorage` (file uploads).
         """
         post = FormsDict()
@@ -1651,8 +1650,8 @@ class BaseRequest(object):
         """Shift path segments from :attr:`path` to :attr:`script_name` and
         vice versa.
 
-        :param shift: The number of path segments to shift. May be negative
-                      to change the shift direction. (default: 1)
+        :param shift: The number of path segments to shift. May be
+            negative to change the shift direction. (default: 1)
         """
         script, path = path_shift(
             self.environ.get("SCRIPT_NAME", "/"), self.path, shift
@@ -1844,12 +1843,11 @@ class BaseResponse(object):
     yields parts of the body and not the headers.
 
     :param body: The response body as one of the supported types.
-    :param status: Either an HTTP status code (e.g. 200) or a status line
-                   including the reason phrase (e.g. '200 OK').
+    :param status: Either an HTTP status code (e.g. 200) or a status
+        line including the reason phrase (e.g. '200 OK').
     :param headers: A dictionary or a list of name-value pairs.
-
-    Additional keyword arguments are added to the list of headers.
-    Underscores in the header name are replaced with dashes.
+        Additional keyword arguments are added to the list of headers.
+        Underscores in the header name are replaced with dashes.
     """
 
     default_status = 200
@@ -2424,12 +2422,12 @@ class MultiDict(DictMixin):
     def get(self, key, default=None, index=-1, type=None):
         """Return the most recent value for a key.
 
-        :param default: The default value to be returned if the key is not
-               present or the type conversion fails.
+        :param default: The default value to be returned if the key is
+            not present or the type conversion fails.
         :param index: An index for the list of available values.
         :param type: If defined, this callable is used to cast the value
-                into a specific type. Exception are suppressed and result in
-                the default value to be returned.
+            into a specific type. Exception are suppressed and result in
+            the default value to be returned.
         """
         try:
             val = self.dict[key][index]
@@ -2481,8 +2479,10 @@ class FormsDict(MultiDict):
 
     def decode(self, encoding=None):
         """Returns a copy with all keys and values de- or recoded to match
-        :attr:`input_encoding`. Some libraries (e.g. WTForms) want a
-        unicode dictionary."""
+        :attr:`input_encoding`.
+
+        Some libraries (e.g. WTForms) want a unicode dictionary.
+        """
         copy = FormsDict()
         enc = copy.input_encoding = encoding or self.input_encoding
         copy.recode_unicode = False
@@ -2693,7 +2693,6 @@ class ConfigDict(dict):
         :param filename: The path of a config file, or a list of paths.
         :param options: All keyword parameters are passed to the underlying
             :class:`python:configparser.ConfigParser` constructor call.
-
         """
         options.setdefault("allow_no_value", True)
         if py3k:
@@ -3084,7 +3083,8 @@ class FileUpload(object):
         Existing files are not overwritten by default (IOError).
 
         :param destination: File path, directory or file(-like) object.
-        :param overwrite: If True, replace existing files. (default: False)
+        :param overwrite: If True, replace existing files. (default:
+            False)
         :param chunk_size: Bytes to read at a time. (default: 64kb)
         """
         if isinstance(destination, basestring):  # Except file-likes here
@@ -3472,8 +3472,8 @@ def path_shift(script_name, path_info, shift=1):
     :return: The modified paths.
     :param script_name: The SCRIPT_NAME path.
     :param script_name: The PATH_INFO path.
-    :param shift: The number of path fragments to shift. May be negative to
-      change the shift direction. (default: 1)
+    :param shift: The number of path fragments to shift. May be negative
+        to change the shift direction. (default: 1)
     """
     if shift == 0:
         return script_name, path_info
@@ -3632,10 +3632,8 @@ class CherryPyServer(ServerAdapter):
         depr(
             0,
             13,
-            (
-                "The wsgi server part of cherrypy was split into a new "
-                "project called 'cheroot'."
-            ),
+            "The wsgi server part of cherrypy was split into a new "
+            "project called 'cheroot'.",
             "Use the 'cheroot' server adapter instead of cherrypy.",
         )
         from cherrypy import wsgiserver  # This will fail for CherryPy >= 9

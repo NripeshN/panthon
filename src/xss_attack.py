@@ -1,5 +1,4 @@
 import requests
-from bs4 import BeautifulSoup
 import logging
 import os
 import subprocess
@@ -8,67 +7,43 @@ logging.basicConfig(level=logging.INFO)
 
 
 class XSSAttack:
-    def __init__(
-        self,
-        url,
-        time=25,
-        checks=5,
-        threads=1000,
-        attack_type="xanxxs",
-        file="XanXSS/xss-payload-list.txt",
-    ):
-        self.url = url
-        self.time = time
-        self.file = file
-        self.session = requests.Session()
-        with open(self.file, "r") as file:
-            self.payloads = [line.strip() for line in file]
-        self.threads = []
-        self.threads = threads
-        self.attack_type = attack_type
-
-    def create_attacks(self):
-        self.run_attack()
-
-    def run_attack(self):
-        if self.attack_type == "xanxxs":
-            self.xanxxs_attack()
-        if self.attack_type == "xsstrike":
-            self.xsstrike_attack()
-        else:
-            logging.error(f"Unknown attack type: {self.attack_type}")
-
-    def xanxxs_attack(self):
+    def xanxxs_attack(self, url, time=25, file="XanXSS/xss-payload-list.txt", amount=1):
         path_to_executable = os.path.join(os.path.dirname(__file__), "XanXSS/xanxss.py")
-        command = ["python3", path_to_executable, "-u", self.url, "--payloads"]
-        command.extend(self.payloads)
-        command.extend(["--time", str(self.time)])
-        command.extend(["-a", "1"])
+        with open(file, "r") as f:
+            payloads = [line.strip() for line in f]
+
+        command = ["python3", path_to_executable, "-u", url, "--payloads"]
+        command.extend(payloads)
+        command.extend(["--time", str(time)])
+        command.extend(["-a", str(amount)])
 
         subprocess.run(command)
 
-    def xsstrike_attack(self):
+    def xsstrike_attack(self, url, threads=1000, file="XSStrike/xsstrike.py"):
         path_to_executable = os.path.join(
             os.path.dirname(__file__), "XSStrike/xsstrike.py"
         )
+
         command = [
             "python3",
             path_to_executable,
             "-u",
-            self.url,
+            url,
             "-t",
-            str(self.threads),
+            str(threads),
             "--file",
-            self.file,
+            file,
         ]
 
         subprocess.run(command)
 
 
 # Target URL
-target_url = "http://xss-game.appspot.com/level1/frame?query="
+target_url = "http://localhost:3000/#/search?q="
 
-# Create and launch attack
-attack = XSSAttack(target_url, time=25, checks=5, threads=1000, attack_type="xsstrike")
-attack.create_attacks()
-attack.wait_for_threads()
+# Create and launch xanxxs attack
+attack = XSSAttack()
+attack.xanxxs_attack(target_url, time=25, file="XanXSS/xss-payload-list.txt")
+
+# Create and launch xsstrike attack
+attack.xsstrike_attack(target_url, threads=1000, file="XSStrike/xsstrike.py")
