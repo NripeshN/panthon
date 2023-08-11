@@ -241,8 +241,8 @@ class Format(object):
         """Format the back-end DBMS fingerprint value and return its values
         formatted as a human readable string.
 
-        @return: detected back-end DBMS based upon fingerprint techniques.
-        @rtype: C{str}
+        @return: detected back-end DBMS based upon fingerprint
+        techniques. @rtype: C{str}
         """
 
         if versions is None and Backend.getVersionList():
@@ -259,9 +259,8 @@ class Format(object):
         """Parses the knowledge base htmlFp list and return its values
         formatted as a human readable string.
 
-        @return: list of possible back-end DBMS based upon error messages
-        parsing.
-        @rtype: C{str}
+        @return: list of possible back-end DBMS based upon error
+        messages parsing. @rtype: C{str}
         """
 
         htmlParsed = None
@@ -282,27 +281,18 @@ class Format(object):
 
         Example of info (kb.headersFp) dictionary:
 
-        {
-          'distrib': set(['Ubuntu']),
-          'type': set(['Linux']),
-          'technology': set(['PHP 5.2.6', 'Apache 2.2.9']),
-          'release': set(['8.10'])
-        }
+        {   'distrib': set(['Ubuntu']),   'type': set(['Linux']),
+        'technology': set(['PHP 5.2.6', 'Apache 2.2.9']),   'release':
+        set(['8.10']) }
 
         Example of info (kb.bannerFp) dictionary:
 
-        {
-          'sp': set(['Service Pack 4']),
-          'dbmsVersion': '8.00.194',
-          'dbmsServicePack': '0',
-          'distrib': set(['2000']),
-          'dbmsRelease': '2000',
-          'type': set(['Windows'])
-        }
+        {   'sp': set(['Service Pack 4']),   'dbmsVersion': '8.00.194',
+        'dbmsServicePack': '0',   'distrib': set(['2000']),
+        'dbmsRelease': '2000',   'type': set(['Windows']) }
 
-        @return: detected back-end operating system based upon fingerprint
-        techniques.
-        @rtype: C{str}
+        @return: detected back-end operating system based upon
+        fingerprint techniques. @rtype: C{str}
         """
 
         infoStr = ""
@@ -4832,10 +4822,10 @@ def encodeStringEscape(value):
 
 
 def removeReflectiveValues(content, payload, suppressWarning=False):
-    """
-    Neutralizes reflective values in a given content based on a payload
-    (e.g. ..search.php?q=1 AND 1=2 --> "...searching for <b>1%20AND%201%3D2</b>..." --> "...searching for <b>__REFLECTED_VALUE__</b>...")
-    """
+    """Neutralizes reflective values in a given content based on a payload
+    (e.g. ..search.php?q=1 AND 1=2 --> "...searching for
+    <b>1%20AND%201%3D2</b>..." --> "...searching for
+    <b>__REFLECTED_VALUE__</b>...")"""
 
     retVal = content
 
@@ -5388,8 +5378,7 @@ def randomizeParameterValue(value):
 
 @cachedmethod
 def asciifyUrl(url, forceQuote=False):
-    """
-    Attempts to make a unicode URL usable with ``urllib/urllib2``.
+    """Attempts to make a unicode URL usable with ``urllib/urllib2``.
 
     More specifically, it attempts to convert the unicode object ``url``,
     which is meant to represent a IRI, to an unicode object that,

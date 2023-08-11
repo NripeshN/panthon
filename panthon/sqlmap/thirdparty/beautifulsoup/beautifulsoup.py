@@ -629,7 +629,7 @@ class Tag(PageElement):
         return self._getAttrMap().has_key(key)
 
     def __getitem__(self, key):
-        """tag[key] returns the value of the 'key' attribute for the tag, and
+        """Tag[key] returns the value of the 'key' attribute for the tag, and
         throws an exception if it's not there."""
         return self._getAttrMap()[key]
 
@@ -1810,16 +1810,13 @@ class BeautifulSOAP(BeautifulStoneSoup):
     tag's parent as an attribute. The attribute's name is the tag name, and the
     value is the string child. An example should give the flavor of the change:
 
-    <foo><bar>baz</bar></foo>
-     =>
-    <foo bar="baz"><bar>baz</bar></foo>
+    <foo><bar>baz</bar></foo>  => <foo bar="baz"><bar>baz</bar></foo>
 
     You can then access fooTag['bar'] instead of fooTag.barTag.string.
 
-    This is, of course, useful for scraping structures that tend to
-    use subelements instead of attributes, such as SOAP messages. Note
-    that it modifies its input, so don't print the modified version
-    out.
+    This is, of course, useful for scraping structures that tend to use
+    subelements instead of attributes, such as SOAP messages. Note that
+    it modifies its input, so don't print the modified version out.
 
     I'm not sure how many people really want to use this class; let me
     know if you do. Mainly I like the name.

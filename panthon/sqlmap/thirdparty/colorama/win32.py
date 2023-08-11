@@ -20,7 +20,7 @@ else:
     COORD = wintypes._COORD
 
     class CONSOLE_SCREEN_BUFFER_INFO(Structure):
-        """struct in wincon.h."""
+        """Struct in wincon.h."""
 
         _fields_ = [
             ("dwSize", COORD),

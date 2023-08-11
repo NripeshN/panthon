@@ -197,7 +197,7 @@ class KeepAliveHandler:
 
     #### Connection Management
     def open_connections(self):
-        """return a list of connected hosts and the number of connections to
+        """Return a list of connected hosts and the number of connections to
         each.
 
         [('foo.com:80', 2), ('bar.org', 1)]
@@ -205,7 +205,7 @@ class KeepAliveHandler:
         return [(host, len(li)) for (host, li) in self._cm.get_all().items()]
 
     def close_connection(self, host):
-        """close connection(s) to <host> host is the host:port spec, as in
+        """Close connection(s) to <host> host is the host:port spec, as in
         'www.cnn.com:8080' as passed in.
 
         no error occurs if there is no connection to that host.
@@ -286,7 +286,7 @@ class KeepAliveHandler:
             return self.parent.error("http", req, r, r.status, r.msg, r.headers)
 
     def _reuse_connection(self, h, req, host):
-        """start the transaction with a re-used connection return a response
+        """Start the transaction with a re-used connection return a response
         object (r) upon success or None on failure.
 
         This DOES not close or remove bad connections in cases where it

@@ -426,7 +426,7 @@ class MimeWriter:
         self._first_part = True
 
     def addheader(self, key, value, prefix=0, add_to_http_hdrs=0):
-        """prefix is ignored if add_to_http_hdrs is true."""
+        """Prefix is ignored if add_to_http_hdrs is true."""
         lines = value.split("\r\n")
         while lines and not lines[-1]:
             del lines[-1]
@@ -453,7 +453,7 @@ class MimeWriter:
     def startbody(
         self, ctype=None, plist=[], prefix=1, add_to_http_hdrs=0, content_type=1
     ):
-        """prefix is ignored if add_to_http_hdrs is true."""
+        """Prefix is ignored if add_to_http_hdrs is true."""
         if content_type and ctype:
             for name, value in plist:
                 ctype = ctype + ";\r\n %s=%s" % (name, value)
@@ -547,7 +547,7 @@ else:
 
 
 class _AbstractFormParser:
-    """forms attribute contains HTMLForm instances on completion."""
+    """Forms attribute contains HTMLForm instances on completion."""
 
     # thanks to Moshe Zadka for an example of sgmllib/htmllib usage
     def __init__(self, entitydefs=None, encoding=DEFAULT_ENCODING):
@@ -1655,28 +1655,31 @@ class FileControl(ScalarControl):
 class IsindexControl(ScalarControl):
     """ISINDEX control.
 
-    ISINDEX is the odd-one-out of HTML form controls.  In fact, it isn't really
-    part of regular HTML forms at all, and predates it.  You're only allowed
-    one ISINDEX per HTML document.  ISINDEX and regular form submission are
-    mutually exclusive -- either submit a form, or the ISINDEX.
+    ISINDEX is the odd-one-out of HTML form controls.  In fact, it isn't
+    really part of regular HTML forms at all, and predates it.  You're
+    only allowed one ISINDEX per HTML document.  ISINDEX and regular
+    form submission are mutually exclusive -- either submit a form, or
+    the ISINDEX.
 
-    Having said this, since ISINDEX controls may appear in forms (which is
-    probably bad HTML), ParseFile / ParseResponse will include them in the
-    HTMLForm instances it returns.  You can set the ISINDEX's value, as with
-    any other control (but note that ISINDEX controls have no name, so you'll
-    need to use the type argument of set_value!).  When you submit the form,
-    the ISINDEX will not be successful (ie., no data will get returned to the
-    server as a result of its presence), unless you click on the ISINDEX
-    control, in which case the ISINDEX gets submitted instead of the form:
+    Having said this, since ISINDEX controls may appear in forms (which
+    is probably bad HTML), ParseFile / ParseResponse will include them
+    in the HTMLForm instances it returns.  You can set the ISINDEX's
+    value, as with any other control (but note that ISINDEX controls
+    have no name, so you'll need to use the type argument of
+    set_value!).  When you submit the form, the ISINDEX will not be
+    successful (ie., no data will get returned to the server as a result
+    of its presence), unless you click on the ISINDEX control, in which
+    case the ISINDEX gets submitted instead of the form:
 
     form.set_value("my isindex value", type="isindex")
     urllib2.urlopen(form.click(type="isindex"))
 
-    ISINDEX elements outside of FORMs are ignored.  If you want to submit one
-    by hand, do it like so:
+    ISINDEX elements outside of FORMs are ignored.  If you want to
+    submit one by hand, do it like so:
 
-    url = _urllib.parse.urljoin(page_uri, "?"+_urllib.parse.quote_plus("my isindex value"))
-    result = urllib2.urlopen(url)
+    url = _urllib.parse.urljoin(page_uri,
+    "?"+_urllib.parse.quote_plus("my isindex value")) result =
+    urllib2.urlopen(url)
     """
 
     def __init__(self, type, name, attrs, index=None):

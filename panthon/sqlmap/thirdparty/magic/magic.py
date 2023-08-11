@@ -1,4 +1,4 @@
-"""magic is a wrapper around the libmagic file identification library.
+"""Magic is a wrapper around the libmagic file identification library.
 
 Usage:
 

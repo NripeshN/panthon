@@ -121,7 +121,7 @@ _socks4errors = (
 def setdefaultproxy(
     proxytype=None, addr=None, port=None, rdns=True, username=None, password=None
 ):
-    """setdefaultproxy(proxytype, addr[, port[, rdns[, username[, password]]]])
+    """Setdefaultproxy(proxytype, addr[, port[, rdns[, username[, password]]]])
     Sets a default proxy which all further socksocket objects will use, unless
     explicitly changed."""
     global _defaultproxy
@@ -129,7 +129,7 @@ def setdefaultproxy(
 
 
 def wrapmodule(module):
-    """wrapmodule(module) Attempts to replace a module's socket library with a
+    """Wrapmodule(module) Attempts to replace a module's socket library with a
     SOCKS socket.
 
     Must set a default proxy using setdefaultproxy(...) first. This will
@@ -153,7 +153,7 @@ def unwrapmodule(module):
 
 
 class socksocket(socket.socket):
-    """socksocket([family[, type[, proto]]]) -> socket object Open a SOCKS
+    """Socksocket([family[, type[, proto]]]) -> socket object Open a SOCKS
     enabled socket.
 
     The parameters are the same as those of the standard socket init. In
@@ -195,7 +195,7 @@ class socksocket(socket.socket):
         username=None,
         password=None,
     ):
-        """setproxy(proxytype, addr[, port[, rdns[, username[, password]]]])
+        """Setproxy(proxytype, addr[, port[, rdns[, username[, password]]]])
 
         Sets the proxy to be used.
         proxytype -    The type of the proxy to be used. Three types
@@ -317,17 +317,17 @@ class socksocket(socket.socket):
             self.__proxypeername = (destaddr, destport)
 
     def getproxysockname(self):
-        """getsockname() -> address info Returns the bound IP address and port
+        """Getsockname() -> address info Returns the bound IP address and port
         number at the proxy."""
         return self.__proxysockname
 
     def getproxypeername(self):
-        """getproxypeername() -> address info Returns the IP and port number of
+        """Getproxypeername() -> address info Returns the IP and port number of
         the proxy."""
         return _orgsocket.getpeername(self)
 
     def getpeername(self):
-        """getpeername() -> address info Returns the IP address and port number
+        """Getpeername() -> address info Returns the IP address and port number
         of the destination machine (note: getproxypeername returns the
         proxy)"""
         return self.__proxypeername
@@ -424,7 +424,7 @@ class socksocket(socket.socket):
         self.__proxypeername = (addr, destport)
 
     def connect(self, destpair):
-        """connect(self, despair)
+        """Connect(self, despair)
 
         Connects to the specified destination through a proxy.
         destpar - A tuple of the IP/DNS address and the port number.

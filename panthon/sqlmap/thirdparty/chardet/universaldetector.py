@@ -25,13 +25,11 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 # 02110-1301  USA
 ######################### END LICENSE BLOCK #########################
-"""
-Module containing the UniversalDetector detector class, which is the primary
+"""Module containing the UniversalDetector detector class, which is the primary
 class a user of ``chardet`` should use.
 
-:author: Mark Pilgrim (initial port to Python)
-:author: Shy Shalom (original C code)
-:author: Dan Blanchard (major refactoring for 3.0)
+:author: Mark Pilgrim (initial port to Python) :author: Shy Shalom
+(original C code) :author: Dan Blanchard (major refactoring for 3.0)
 :author: Ian Cordasco
 """
 
@@ -49,9 +47,8 @@ from .sbcsgroupprober import SBCSGroupProber
 
 
 class UniversalDetector(object):
-    """
-    The ``UniversalDetector`` class underlies the ``chardet.detect`` function
-    and coordinates all of the different charset probers.
+    """The ``UniversalDetector`` class underlies the ``chardet.detect``
+    function and coordinates all of the different charset probers.
 
     To get a ``dict`` containing an encoding and its confidence, you can simply
     run:
@@ -62,7 +59,6 @@ class UniversalDetector(object):
             u.feed(some_bytes)
             u.close()
             detected = u.result
-
     """
 
     MINIMUM_THRESHOLD = 0.20

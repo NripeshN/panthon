@@ -146,14 +146,14 @@ class _baseDes(object):
         self._mode = mode
 
     def getPadding(self):
-        """getPadding() -> bytes of length 1.
+        """GetPadding() -> bytes of length 1.
 
         Padding character.
         """
         return self._padding
 
     def setPadding(self, pad):
-        """setPadding() -> bytes of length 1.
+        """SetPadding() -> bytes of length 1.
 
         Padding character.
         """
@@ -1545,7 +1545,7 @@ class triple_des(_baseDes):
             key.setMode(mode)
 
     def setPadding(self, pad):
-        """setPadding() -> bytes of length 1.
+        """SetPadding() -> bytes of length 1.
 
         Padding character.
         """

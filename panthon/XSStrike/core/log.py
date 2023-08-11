@@ -6,14 +6,8 @@ __all__ = ["setup_logger", "console_log_level", "file_log_level", "log_file"]
 console_log_level = "INFO"
 file_log_level = None
 log_file = "xsstrike.log"
-"""
-Default Logging Levels
-CRITICAL = 50
-ERROR = 40
-WARNING = 30
-INFO = 20
-DEBUG = 10
-"""
+"""Default Logging Levels CRITICAL = 50 ERROR = 40 WARNING = 30 INFO = 20 DEBUG
+= 10."""
 
 VULN_LEVEL_NUM = 60
 RUN_LEVEL_NUM = 22
@@ -93,9 +87,9 @@ class CustomStreamHandler(logging.StreamHandler):
     default_terminator = "\n"
 
     def emit(self, record):
-        """
-        Overrides emit method to temporally update terminator character in case last log record character is '\r'
-        :param record:
+        """Overrides emit method to temporally update terminator character in
+        case last log record character is '\r' :param record:
+
         :return:
         """
         if record.msg.endswith("\r"):

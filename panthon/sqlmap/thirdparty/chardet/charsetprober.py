@@ -100,8 +100,7 @@ class CharSetProber(object):
 
     @staticmethod
     def filter_with_english_letters(buf):
-        """
-        Returns a copy of ``buf`` that retains only the sequences of English
+        """Returns a copy of ``buf`` that retains only the sequences of English
         alphabet and high byte characters that are not between <> characters.
         Also retains English alphabet and high byte characters immediately
         before occurrences of >.

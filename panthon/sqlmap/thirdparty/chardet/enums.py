@@ -14,10 +14,8 @@ class InputState(object):
 
 
 class LanguageFilter(object):
-    """
-    This enum represents the different language filters we can apply to a
-    ``UniversalDetector``.
-    """
+    """This enum represents the different language filters we can apply to a
+    ``UniversalDetector``."""
 
     CHINESE_SIMPLIFIED = 0x01
     CHINESE_TRADITIONAL = 0x02
@@ -61,8 +59,7 @@ class SequenceLikelihood(object):
 
 
 class CharacterCategory(object):
-    """
-    This enum represents the different categories language models for
+    """This enum represents the different categories language models for
     ``SingleByteCharsetProber`` put characters into.
 
     Anything less than CONTROL is considered a letter.
