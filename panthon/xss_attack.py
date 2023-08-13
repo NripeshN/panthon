@@ -78,10 +78,10 @@ target_url = "http://localhost:3000/#/search?q="
 
 # Create and launch xanxxs attack
 attack = XSSAttack()
-# attack.xanxxs_attack(target_url, time=25, file="XanXSS/xss-payload-list.txt")
+attack.xanxxs_attack(target_url, time=25, file="XanXSS/xss-payload-list.txt")
 
-# # Create and launch xsstrike attack
-# attack.xsstrike_attack(target_url, threads=1000, file="XSStrike/xsstrike.py")
+# Create and launch xsstrike attack
+attack.xsstrike_attack(target_url, threads=1000, file="XSStrike/xsstrike.py")
 
 # Create and launch xsscon attack
 attack.xsscon_attack(target_url)
