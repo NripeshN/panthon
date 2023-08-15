@@ -5,3 +5,4 @@ bs4
 tld
 fuzzywuzzy
 requests
+twisted
