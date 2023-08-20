@@ -4,7 +4,16 @@ Specifies package details and dependencies.
 """
 from setuptools import setup, find_packages
 
-requirements = ["torch", "scapy", "netifaces", "bs4", "tld", "fuzzywuzzy", "requests", "twisted"]
+requirements = [
+    "torch",
+    "scapy",
+    "netifaces",
+    "bs4",
+    "tld",
+    "fuzzywuzzy",
+    "requests",
+    "twisted",
+]
 
 setup(
     name="panthon",
