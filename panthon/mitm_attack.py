@@ -12,7 +12,7 @@ logging.basicConfig(
 
 
 class MITMAttack:
-    def __init__(self, target_ip, gateway_ip, interface):
+    def set_attributes(self, target_ip, gateway_ip, interface):
         self.target_ip = target_ip
         self.gateway_ip = gateway_ip
         self.interface = interface
@@ -53,7 +53,7 @@ class MITMAttack:
         except KeyboardInterrupt:
             logging.info("\nMITM Attack Stopped.")
 
-    def run_mitm_script(
+    def mitm6(
         self,
         interface=None,
         localdomain=None,
@@ -80,12 +80,14 @@ class MITMAttack:
 
 
 if __name__ == "__main__":
+    mitm = MITMAttack()
+
     interface = input("Enter the interface name: ")
     target_ip = input("Enter the target IP address: ")
     gateway_ip = input("Enter the gateway IP address: ")
 
     try:
-        mitm = MITMAttack(
+        mitm.set_attributes(
             target_ip=target_ip, gateway_ip=gateway_ip, interface=interface
         )
         mitm.run_attack()
