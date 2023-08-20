@@ -3,21 +3,7 @@ from scapy.all import sniff, ls, ARP, IPv6, DNS, DNSRR, Ether, conf, IP, UDP, DN
 from scapy.config import conf as config
 from twisted.internet import reactor
 from twisted.internet.protocol import ProcessProtocol, DatagramProtocol
-from scapy.layers.dhcp6 import (
-    DHCP6OptClientFQDN,
-    DHCP6OptClientId,
-    DHCP6OptDNSDomains,
-    DHCP6OptDNSServers,
-    DHCP6OptIAAddress,
-    DHCP6OptIA_NA,
-    DHCP6OptServerId,
-    DHCP6_Advertise,
-    DHCP6_Renew,
-    DHCP6_Reply,
-    DHCP6_Request,
-    DHCP6_Solicit,
-    DUID_LL,
-)
+from scapy.layers.dhcp6 import *
 from scapy.layers.inet6 import ICMPv6ND_RA
 from scapy.sendrecv import sendp
 from twisted.internet import task, threads

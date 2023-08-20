@@ -3,6 +3,8 @@
 Specifies package details and dependencies.
 """
 from setuptools import setup, find_packages
+from pathlib import Path
+
 
 requirements = [
     "torch",
@@ -15,13 +17,17 @@ requirements = [
     "twisted",
 ]
 
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text(encoding="utf-8")
+
 setup(
     name="panthon",
-    version="0.1.13",
+    version="0.1.14",
     url="https://github.com/nripeshn/panthon",
     author="Nripesh Niketan",
     author_email="nripesh14@gmail.com",
-    description="A Machine Learning-powered Cybersecurity Attack Simulation Library",
+    description="A Cybersecurity Attack Simulation Library",
+    long_description=long_description,
     packages=find_packages(),
     package_data={"panthon": ["data/*.txt"]},
     install_requires=requirements,

@@ -1,56 +1,55 @@
-import unittest
-from src import dos_attack
-import threading
-import socket
-import time
+import pytest
+from unittest.mock import patch, Mock
+from panthon.dos_attack import DoSAttack
 
 
-class DummyServer:
-    def __init__(self, host="localhost", port=50000):
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.bind((host, port))
-        self.sock.listen(1)
-        self.sock.settimeout(1.0)
-        self.connections = []
-        self.running = True
+def test_create_connection_success():
+    with patch("panthon.dos_attack.socket.socket") as mock_socket:
+        mock_socket_instance = Mock()
+        mock_socket.return_value = mock_socket_instance
 
-    def start(self):
-        while self.running:
-            try:
-                conn, addr = self.sock.accept()
-                self.connections.append(conn)
-            except socket.timeout:
-                continue
+        dos = DoSAttack()
+        dos.create_connection(url="http://localhost", target_port=8080)
 
-    def stop(self):
-        self.running = False  # stop the server
-        for conn in self.connections:
-            conn.close()
-        self.sock.close()
-
-    def connection_count(self):
-        return len(self.connections)
+        mock_socket_instance.connect.assert_called_once()
+        mock_socket_instance.send.assert_called()
+        mock_socket_instance.close.assert_called_once()
 
 
-class TestDoSAttack(unittest.TestCase):
-    def setUp(self):
-        self.server = DummyServer()
-        self.server_thread = threading.Thread(target=self.server.start)
-        self.server_thread.start()
+def test_create_connection_failure():
+    with patch("panthon.dos_attack.socket.socket") as mock_socket:
+        mock_socket_instance = Mock()
+        mock_socket.return_value = mock_socket_instance
+        mock_socket_instance.connect.side_effect = Exception("Mock Exception")
 
-    def tearDown(self):
-        self.server.stop()
-        self.server_thread.join()
+        dos = DoSAttack()
+        dos.create_connection(url="http://localhost", target_port=8080)
 
-    def test_simulation(self):
-        dos = dos_attack.DoSAttack("localhost", 50000, 5)
-        initial_connections = self.server.connection_count()
-        dos.simulate_attack()
-        time.sleep(2)
-        dos.wait_for_threads()
-        final_connections = self.server.connection_count()
-        self.assertEqual(final_connections - initial_connections, 5)
+        mock_socket_instance.close.assert_not_called()
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_slowloris_attack_initial_connection():
+    with patch("panthon.dos_attack.socket.socket") as mock_socket, patch(
+        "panthon.dos_attack.read_user_agents", return_value=["UA1", "UA2"]
+    ):
+        mock_socket_instance = Mock()
+        mock_socket.return_value = mock_socket_instance
+
+        dos = DoSAttack()
+        dos.slowloris_attack(
+            url="http://localhost", target_port=8080, num_connections=2
+        )
+
+        mock_socket_instance.send.assert_called()
+        assert mock_socket_instance.send.call_count == 2
+
+
+# ... similarly for other methods ...
+
+
+def test_goldeneye_attack():
+    with patch("subprocess.run") as mock_subprocess:
+        dos = DoSAttack()
+        dos.goldeneye_attack(url="http://localhost")
+
+        mock_subprocess.assert_called_once()

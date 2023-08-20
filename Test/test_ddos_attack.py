@@ -1,5 +1,5 @@
 import unittest
-from src import ddos_attack
+from panthon import ddos_attack
 
 
 class TestDoSAttack(unittest.TestCase):
