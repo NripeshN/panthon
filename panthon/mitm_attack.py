@@ -87,9 +87,6 @@ if __name__ == "__main__":
     gateway_ip = input("Enter the gateway IP address: ")
 
     try:
-        mitm.set_attributes(
-            target_ip=target_ip, gateway_ip=gateway_ip, interface=interface
-        )
-        mitm.run_attack()
+        mitm6()
     except ValueError as e:
         logging.error(e)

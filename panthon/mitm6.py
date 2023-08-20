@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from scapy.all import sniff, ls, ARP, IPv6, DNS, DNSRR, Ether, conf, IP, UDP, DNSRRSOA
+from scapy.config import conf as config
 from twisted.internet import reactor
 from twisted.internet.protocol import ProcessProtocol, DatagramProtocol
 from scapy.layers.dhcp6 import (
@@ -16,7 +17,6 @@ from scapy.layers.dhcp6 import (
     DHCP6_Request,
     DHCP6_Solicit,
     DUID_LL,
-    config,
 )
 from scapy.layers.inet6 import ICMPv6ND_RA
 from scapy.sendrecv import sendp
