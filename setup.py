@@ -5,19 +5,10 @@ Specifies package details and dependencies.
 from setuptools import setup, find_packages
 from pathlib import Path
 
-
-requirements = [
-    "torch",
-    "scapy",
-    "netifaces",
-    "bs4",
-    "tld",
-    "fuzzywuzzy",
-    "requests",
-    "twisted",
-]
-
 this_directory = Path(__file__).parent
+requirements = (
+    (this_directory / "requirements.txt").read_text(encoding="utf-8").splitlines()
+)
 long_description = (this_directory / "README.md").read_text(encoding="utf-8")
 
 setup(
