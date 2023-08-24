@@ -1,4 +1,4 @@
-from random_string_generator import RandomStringGenerator
+from .random_string_generator import RandomStringGenerator
 import logging
 import subprocess
 import os
