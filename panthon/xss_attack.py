@@ -2,10 +2,10 @@ import requests
 import logging
 import os
 import subprocess
-from XSSCon.lib import core
-from XSSCon.lib.crawler.crawler import *
+from .XSSCon.lib import core
+from .XSSCon.lib.crawler.crawler import *
 from random import randint
-from XSSCon.lib.helper.Log import *
+from .XSSCon.lib.helper.Log import *
 
 logging.basicConfig(level=logging.INFO)
 
