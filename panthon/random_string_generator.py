@@ -1,5 +1,3 @@
-# random_string_generator.py
-
 import torch.nn as nn
 import random
 import string
