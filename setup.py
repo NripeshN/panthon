@@ -1,7 +1,3 @@
-"""Setup file for the Panthon package.
-
-Specifies package details and dependencies.
-"""
 from setuptools import setup, find_packages
 from pathlib import Path
 
