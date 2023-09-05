@@ -77,16 +77,3 @@ class MITMAttack:
             " --relay " if relay_target else "",
         ]
         subprocess.run(command)
-
-
-if __name__ == "__main__":
-    mitm = MITMAttack()
-
-    interface = input("Enter the interface name: ")
-    target_ip = input("Enter the target IP address: ")
-    gateway_ip = input("Enter the gateway IP address: ")
-
-    try:
-        mitm6()
-    except ValueError as e:
-        logging.error(e)
