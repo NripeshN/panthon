@@ -1,4 +1,4 @@
-from src import SQLInjectionAttack
+from panthon import SQLInjectionAttack
 
 # Example usage:
 sql_injection_attack = SQLInjectionAttack()
