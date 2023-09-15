@@ -1,4 +1,4 @@
-from src import XSSAttack
+from panthon import XSSAttack
 
 url = "http://testphp.vulnweb.com"
 xss_attack = XSSAttack(url)

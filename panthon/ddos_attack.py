@@ -13,9 +13,6 @@ logging.basicConfig(
 
 
 class DDoSAttack:
-    def __init__(self):
-        self.threads = []
-
     def aSYNcrone_attack(self, target_url, target_port, num_connections):
         platform_type = self.detect_platform()
 
