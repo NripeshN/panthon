@@ -2,15 +2,12 @@
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[metadata]
+[project]
 name = "panthon"
-version = "0.1.16"
-url = "https://github.com/nripeshn/panthon"
-author = "Nripesh Niketan"
-author_email = "nripesh14@gmail.com"
+version = "0.1.15"
+authors = [{name = "Nripesh Niketan"}]
 description = "A Cybersecurity Attack Simulation Library"
-long_description = "file: README.md"
-long_description_content_type = "text/markdown"
+
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -24,9 +21,11 @@ classifiers = [
 ]
 
 [options]
-packages = ["panthon"]
-package_dir = {"" = "src"}
-install_requires = [
+packages = "find:"
+package_data = {"panthon" = ["data/*.txt"]}
+
+[options.install_requires]
+dependencies = [
     "torch",
     "scapy",
     "netifaces",
@@ -36,6 +35,3 @@ install_requires = [
     "requests",
     "twisted"
 ]
-
-[options.package_data]
-panthon = ["data/*.txt"]
