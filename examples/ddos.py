@@ -1,1 +1,1 @@
-import panthon
+from panthon import DoSAttack
