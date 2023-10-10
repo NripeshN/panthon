@@ -5,3 +5,4 @@ from .dos_attack import DoSAttack
 from .mitm_attack import MITMAttack
 from .sql_injection import SQLInjectionAttack
 from .xss_attack import XSSAttack
+import dsss  # dsss is a module for SQL Injection Attack
