@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "panthon"
-version = "0.1.15"
+version = "0.1.17"
 authors = [{name = "Nripesh Niketan"}]
 description = "A Cybersecurity Attack Simulation Library"
 
