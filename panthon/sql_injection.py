@@ -2,7 +2,7 @@ from .random_string_generator import RandomStringGenerator
 import logging
 import subprocess
 import os
-import dsss
+import .dsss
 
 
 class SQLInjectionAttack:
