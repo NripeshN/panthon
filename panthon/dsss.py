@@ -86,6 +86,17 @@ DBMS_ERRORS = (
 )
 
 class dsss:
+    def __init__(self, proxy=None, cookie=None, ua=None, referer=None):
+        globals()["_headers"] = dict(
+            filter(lambda _: _[1], ((COOKIE, cookie), (UA, ua or NAME), (REFERER, referer)))
+        )
+        urllib.request.install_opener(
+            urllib.request.build_opener(urllib.request.ProxyHandler({"http": proxy}))
+            if proxy
+            else None
+        )
+    
+
     def _retrieve_content(self, url, data=None):
         retval = {HTTPCODE: http.client.OK}
         try:
@@ -249,14 +260,3 @@ class dsss:
         except KeyboardInterrupt:
             print("\r (x) Ctrl-C pressed")
         return retval
-
-
-    def init_options(self, proxy=None, cookie=None, ua=None, referer=None):
-        globals()["_headers"] = dict(
-            filter(lambda _: _[1], ((COOKIE, cookie), (UA, ua or NAME), (REFERER, referer)))
-        )
-        urllib.request.install_opener(
-            urllib.request.build_opener(urllib.request.ProxyHandler({"http": proxy}))
-            if proxy
-            else None
-        )

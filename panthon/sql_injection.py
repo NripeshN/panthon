@@ -58,10 +58,10 @@ class SQLInjectionAttack:
         """
 
         # Initialize options for the scanner
-        dsss.init_options(proxy=proxy, cookie=cookie, ua=ua, referer=referer)
+        attack = dsss(proxy=proxy, cookie=cookie, ua=ua, referer=referer)
 
         # Scan the target URL
-        result = dsss.scan_page(target_url, data)
+        result = attack.scan_page(target_url, data)
 
         # Print the result
         logging.info(
