@@ -85,178 +85,178 @@ DBMS_ERRORS = (
     }
 )
 
-
-def _retrieve_content(url, data=None):
-    retval = {HTTPCODE: http.client.OK}
-    try:
-        req = urllib.request.Request(
-            "".join(
-                url[_].replace(" ", "%20") if _ > url.find("?") else url[_]
-                for _ in range(len(url))
-            ),
-            data.encode("utf8", "ignore") if data else None,
-            globals().get("_headers", {}),
+class dsss:
+    def _retrieve_content(self, url, data=None):
+        retval = {HTTPCODE: http.client.OK}
+        try:
+            req = urllib.request.Request(
+                "".join(
+                    url[_].replace(" ", "%20") if _ > url.find("?") else url[_]
+                    for _ in range(len(url))
+                ),
+                data.encode("utf8", "ignore") if data else None,
+                globals().get("_headers", {}),
+            )
+            retval[HTML] = urllib.request.urlopen(req, timeout=TIMEOUT).read()
+        except Exception as ex:
+            retval[HTTPCODE] = getattr(ex, "code", None)
+            retval[HTML] = ex.read() if hasattr(ex, "read") else str(ex.args[-1])
+        retval[HTML] = (
+            retval[HTML].decode("utf8", "ignore") if hasattr(retval[HTML], "decode") else ""
+        ) or ""
+        retval[HTML] = "" if re.search(BLOCKED_IP_REGEX, retval[HTML]) else retval[HTML]
+        retval[HTML] = re.sub(
+            r"(?i)[^>]*(AND|OR)[^<]*%d[^<]*" % RANDINT, "__REFLECTED__", retval[HTML]
         )
-        retval[HTML] = urllib.request.urlopen(req, timeout=TIMEOUT).read()
-    except Exception as ex:
-        retval[HTTPCODE] = getattr(ex, "code", None)
-        retval[HTML] = ex.read() if hasattr(ex, "read") else str(ex.args[-1])
-    retval[HTML] = (
-        retval[HTML].decode("utf8", "ignore") if hasattr(retval[HTML], "decode") else ""
-    ) or ""
-    retval[HTML] = "" if re.search(BLOCKED_IP_REGEX, retval[HTML]) else retval[HTML]
-    retval[HTML] = re.sub(
-        r"(?i)[^>]*(AND|OR)[^<]*%d[^<]*" % RANDINT, "__REFLECTED__", retval[HTML]
-    )
-    match = re.search(r"<title>(?P<result>[^<]+)</title>", retval[HTML], re.I)
-    retval[TITLE] = (
-        match.group("result") if match and "result" in match.groupdict() else None
-    )
-    retval[TEXT] = re.sub(
-        r"(?si)<script.+?</script>|<!--.+?-->|<style.+?</style>|<[^>]+>|\s+",
-        " ",
-        retval[HTML],
-    )
-    return retval
+        match = re.search(r"<title>(?P<result>[^<]+)</title>", retval[HTML], re.I)
+        retval[TITLE] = (
+            match.group("result") if match and "result" in match.groupdict() else None
+        )
+        retval[TEXT] = re.sub(
+            r"(?si)<script.+?</script>|<!--.+?-->|<style.+?</style>|<[^>]+>|\s+",
+            " ",
+            retval[HTML],
+        )
+        return retval
 
 
-def scan_page(url, data=None):
-    retval, usable = False, False
-    url, data = re.sub(r"=(&|\Z)", "=1\g<1>", url) if url else url, (
-        re.sub(r"=(&|\Z)", "=1\g<1>", data) if data else data
-    )
-    try:
-        for phase in (GET, POST):
-            original, current = None, url if phase is GET else (data or "")
-            for match in re.finditer(
-                r"((\A|[?&])(?P<parameter>[^_]\w*)=)(?P<value>[^&#]+)", current
-            ):
-                vulnerable, usable = False, True
-                print(
-                    "* scanning %s parameter '%s'" % (phase, match.group("parameter"))
-                )
-                original = original or (
-                    _retrieve_content(current, data)
-                    if phase is GET
-                    else _retrieve_content(url, current)
-                )
-                tampered = current.replace(
-                    match.group(0),
-                    "%s%s"
-                    % (
+    def scan_page(self, url, data=None):
+        retval, usable = False, False
+        url, data = re.sub(r"=(&|\Z)", "=1\g<1>", url) if url else url, (
+            re.sub(r"=(&|\Z)", "=1\g<1>", data) if data else data
+        )
+        try:
+            for phase in (GET, POST):
+                original, current = None, url if phase is GET else (data or "")
+                for match in re.finditer(
+                    r"((\A|[?&])(?P<parameter>[^_]\w*)=)(?P<value>[^&#]+)", current
+                ):
+                    vulnerable, usable = False, True
+                    print(
+                        "* scanning %s parameter '%s'" % (phase, match.group("parameter"))
+                    )
+                    original = original or (
+                        self._retrieve_content(current, data)
+                        if phase is GET
+                        else self._retrieve_content(url, current)
+                    )
+                    tampered = current.replace(
                         match.group(0),
-                        urllib.parse.quote(
-                            "".join(
-                                random.sample(
-                                    TAMPER_SQL_CHAR_POOL, len(TAMPER_SQL_CHAR_POOL)
+                        "%s%s"
+                        % (
+                            match.group(0),
+                            urllib.parse.quote(
+                                "".join(
+                                    random.sample(
+                                        TAMPER_SQL_CHAR_POOL, len(TAMPER_SQL_CHAR_POOL)
+                                    )
                                 )
-                            )
+                            ),
                         ),
-                    ),
-                )
-                content = (
-                    _retrieve_content(tampered, data)
-                    if phase is GET
-                    else _retrieve_content(url, tampered)
-                )
-                for dbms, regex in (
-                    (dbms, regex) for dbms in DBMS_ERRORS for regex in DBMS_ERRORS[dbms]
-                ):
-                    if (
-                        not vulnerable
-                        and re.search(regex, content[HTML], re.I)
-                        and not re.search(regex, original[HTML], re.I)
+                    )
+                    content = (
+                        self._retrieve_content(tampered, data)
+                        if phase is GET
+                        else self._retrieve_content(url, tampered)
+                    )
+                    for dbms, regex in (
+                        (dbms, regex) for dbms in DBMS_ERRORS for regex in DBMS_ERRORS[dbms]
                     ):
-                        print(
-                            " (i) %s parameter '%s' appears to be error SQLi vulnerable"
-                            " (%s)" % (phase, match.group("parameter"), dbms)
-                        )
-                        retval = vulnerable = True
-                vulnerable = False
-                for prefix, boolean, suffix, inline_comment in itertools.product(
-                    PREFIXES, BOOLEAN_TESTS, SUFFIXES, (False, True)
-                ):
-                    if not vulnerable:
-                        template = ("%s%s%s" % (prefix, boolean, suffix)).replace(
-                            " " if inline_comment else "/**/", "/**/"
-                        )
-                        payloads = dict(
-                            (
-                                _,
-                                current.replace(
-                                    match.group(0),
-                                    "%s%s"
-                                    % (
+                        if (
+                            not vulnerable
+                            and re.search(regex, content[HTML], re.I)
+                            and not re.search(regex, original[HTML], re.I)
+                        ):
+                            print(
+                                " (i) %s parameter '%s' appears to be error SQLi vulnerable"
+                                " (%s)" % (phase, match.group("parameter"), dbms)
+                            )
+                            retval = vulnerable = True
+                    vulnerable = False
+                    for prefix, boolean, suffix, inline_comment in itertools.product(
+                        PREFIXES, BOOLEAN_TESTS, SUFFIXES, (False, True)
+                    ):
+                        if not vulnerable:
+                            template = ("%s%s%s" % (prefix, boolean, suffix)).replace(
+                                " " if inline_comment else "/**/", "/**/"
+                            )
+                            payloads = dict(
+                                (
+                                    _,
+                                    current.replace(
                                         match.group(0),
-                                        urllib.parse.quote(
-                                            template
-                                            % (RANDINT if _ else RANDINT + 1, RANDINT),
-                                            safe="%",
+                                        "%s%s"
+                                        % (
+                                            match.group(0),
+                                            urllib.parse.quote(
+                                                template
+                                                % (RANDINT if _ else RANDINT + 1, RANDINT),
+                                                safe="%",
+                                            ),
                                         ),
                                     ),
-                                ),
+                                )
+                                for _ in (True, False)
                             )
-                            for _ in (True, False)
-                        )
-                        contents = dict(
-                            (
-                                _,
+                            contents = dict(
                                 (
-                                    _retrieve_content(payloads[_], data)
-                                    if phase is GET
-                                    else _retrieve_content(url, payloads[_])
-                                ),
-                            )
-                            for _ in (False, True)
-                        )
-                        if all(
-                            _[HTTPCODE]
-                            and _[HTTPCODE] < http.client.INTERNAL_SERVER_ERROR
-                            for _ in (original, contents[True], contents[False])
-                        ):
-                            if any(
-                                original[_] == contents[True][_] != contents[False][_]
-                                for _ in (HTTPCODE, TITLE)
-                            ):
-                                vulnerable = True
-                            else:
-                                ratios = dict(
+                                    _,
                                     (
-                                        _,
-                                        difflib.SequenceMatcher(
-                                            None, original[TEXT], contents[_][TEXT]
-                                        ).quick_ratio(),
-                                    )
-                                    for _ in (False, True)
+                                        self._retrieve_content(payloads[_], data)
+                                        if phase is GET
+                                        else self._retrieve_content(url, payloads[_])
+                                    ),
                                 )
-                                vulnerable = (
-                                    all(ratios.values())
-                                    and min(ratios.values())
-                                    < FUZZY_THRESHOLD
-                                    < max(ratios.values())
-                                    and abs(ratios[True] - ratios[False])
-                                    > FUZZY_THRESHOLD / 10
-                                )
-                        if vulnerable:
-                            print(
-                                " (i) %s parameter '%s' appears to be blind SQLi"
-                                " vulnerable (e.g.: '%s')"
-                                % (phase, match.group("parameter"), payloads[True])
+                                for _ in (False, True)
                             )
-                            retval = True
-        if not usable:
-            print(" (x) no usable GET/POST parameters found")
-    except KeyboardInterrupt:
-        print("\r (x) Ctrl-C pressed")
-    return retval
+                            if all(
+                                _[HTTPCODE]
+                                and _[HTTPCODE] < http.client.INTERNAL_SERVER_ERROR
+                                for _ in (original, contents[True], contents[False])
+                            ):
+                                if any(
+                                    original[_] == contents[True][_] != contents[False][_]
+                                    for _ in (HTTPCODE, TITLE)
+                                ):
+                                    vulnerable = True
+                                else:
+                                    ratios = dict(
+                                        (
+                                            _,
+                                            difflib.SequenceMatcher(
+                                                None, original[TEXT], contents[_][TEXT]
+                                            ).quick_ratio(),
+                                        )
+                                        for _ in (False, True)
+                                    )
+                                    vulnerable = (
+                                        all(ratios.values())
+                                        and min(ratios.values())
+                                        < FUZZY_THRESHOLD
+                                        < max(ratios.values())
+                                        and abs(ratios[True] - ratios[False])
+                                        > FUZZY_THRESHOLD / 10
+                                    )
+                            if vulnerable:
+                                print(
+                                    " (i) %s parameter '%s' appears to be blind SQLi"
+                                    " vulnerable (e.g.: '%s')"
+                                    % (phase, match.group("parameter"), payloads[True])
+                                )
+                                retval = True
+            if not usable:
+                print(" (x) no usable GET/POST parameters found")
+        except KeyboardInterrupt:
+            print("\r (x) Ctrl-C pressed")
+        return retval
 
 
-def init_options(proxy=None, cookie=None, ua=None, referer=None):
-    globals()["_headers"] = dict(
-        filter(lambda _: _[1], ((COOKIE, cookie), (UA, ua or NAME), (REFERER, referer)))
-    )
-    urllib.request.install_opener(
-        urllib.request.build_opener(urllib.request.ProxyHandler({"http": proxy}))
-        if proxy
-        else None
-    )
+    def init_options(self, proxy=None, cookie=None, ua=None, referer=None):
+        globals()["_headers"] = dict(
+            filter(lambda _: _[1], ((COOKIE, cookie), (UA, ua or NAME), (REFERER, referer)))
+        )
+        urllib.request.install_opener(
+            urllib.request.build_opener(urllib.request.ProxyHandler({"http": proxy}))
+            if proxy
+            else None
+        )
