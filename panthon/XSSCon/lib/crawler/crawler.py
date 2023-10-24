@@ -1,7 +1,7 @@
 import requests
-from XSSCon.lib.helper.Log import *
-from XSSCon.lib.helper.helper import *
-from XSSCon.lib.core import *
+from ....XSSCon.lib.helper.Log import *
+from ....XSSCon.lib.helper.helper import *
+from ....XSSCon.lib.core import *
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from multiprocessing import Process
