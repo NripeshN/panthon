@@ -85,17 +85,19 @@ DBMS_ERRORS = (
     }
 )
 
+
 class dsss:
     def __init__(self, proxy=None, cookie=None, ua=None, referer=None):
         globals()["_headers"] = dict(
-            filter(lambda _: _[1], ((COOKIE, cookie), (UA, ua or NAME), (REFERER, referer)))
+            filter(
+                lambda _: _[1], ((COOKIE, cookie), (UA, ua or NAME), (REFERER, referer))
+            )
         )
         urllib.request.install_opener(
             urllib.request.build_opener(urllib.request.ProxyHandler({"http": proxy}))
             if proxy
             else None
         )
-    
 
     def _retrieve_content(self, url, data=None):
         retval = {HTTPCODE: http.client.OK}
@@ -113,7 +115,9 @@ class dsss:
             retval[HTTPCODE] = getattr(ex, "code", None)
             retval[HTML] = ex.read() if hasattr(ex, "read") else str(ex.args[-1])
         retval[HTML] = (
-            retval[HTML].decode("utf8", "ignore") if hasattr(retval[HTML], "decode") else ""
+            retval[HTML].decode("utf8", "ignore")
+            if hasattr(retval[HTML], "decode")
+            else ""
         ) or ""
         retval[HTML] = "" if re.search(BLOCKED_IP_REGEX, retval[HTML]) else retval[HTML]
         retval[HTML] = re.sub(
@@ -130,7 +134,6 @@ class dsss:
         )
         return retval
 
-
     def scan_page(self, url, data=None):
         retval, usable = False, False
         url, data = re.sub(r"=(&|\Z)", "=1\g<1>", url) if url else url, (
@@ -144,7 +147,8 @@ class dsss:
                 ):
                     vulnerable, usable = False, True
                     print(
-                        "* scanning %s parameter '%s'" % (phase, match.group("parameter"))
+                        "* scanning %s parameter '%s'"
+                        % (phase, match.group("parameter"))
                     )
                     original = original or (
                         self._retrieve_content(current, data)
@@ -171,7 +175,9 @@ class dsss:
                         else self._retrieve_content(url, tampered)
                     )
                     for dbms, regex in (
-                        (dbms, regex) for dbms in DBMS_ERRORS for regex in DBMS_ERRORS[dbms]
+                        (dbms, regex)
+                        for dbms in DBMS_ERRORS
+                        for regex in DBMS_ERRORS[dbms]
                     ):
                         if (
                             not vulnerable
@@ -179,8 +185,9 @@ class dsss:
                             and not re.search(regex, original[HTML], re.I)
                         ):
                             print(
-                                " (i) %s parameter '%s' appears to be error SQLi vulnerable"
-                                " (%s)" % (phase, match.group("parameter"), dbms)
+                                " (i) %s parameter '%s' appears to be error SQLi"
+                                " vulnerable (%s)"
+                                % (phase, match.group("parameter"), dbms)
                             )
                             retval = vulnerable = True
                     vulnerable = False
@@ -201,7 +208,10 @@ class dsss:
                                             match.group(0),
                                             urllib.parse.quote(
                                                 template
-                                                % (RANDINT if _ else RANDINT + 1, RANDINT),
+                                                % (
+                                                    RANDINT if _ else RANDINT + 1,
+                                                    RANDINT,
+                                                ),
                                                 safe="%",
                                             ),
                                         ),
@@ -226,7 +236,9 @@ class dsss:
                                 for _ in (original, contents[True], contents[False])
                             ):
                                 if any(
-                                    original[_] == contents[True][_] != contents[False][_]
+                                    original[_]
+                                    == contents[True][_]
+                                    != contents[False][_]
                                     for _ in (HTTPCODE, TITLE)
                                 ):
                                     vulnerable = True
