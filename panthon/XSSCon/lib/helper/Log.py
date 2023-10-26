@@ -4,7 +4,7 @@ This project was created by menkrep1337 with 407Aex team.
 Copyright under the MIT license
 """
 
-from XSSCon.lib.helper.helper import G, N, R, Y
+from ....XSSCon.lib.helper.helper import G, N, R, Y
 from datetime import datetime
 
 

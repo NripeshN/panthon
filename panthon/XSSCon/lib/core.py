@@ -1,8 +1,8 @@
-from lib.helper.helper import *
+from ..lib.helper.helper import *
 from random import randint
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse, parse_qs, urlencode
-from lib.helper.Log import *
+from ..lib.helper.Log import *
 
 
 class core:
