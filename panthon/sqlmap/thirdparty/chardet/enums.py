@@ -3,7 +3,6 @@
 :author: Dan Blanchard (dan.blanchard@gmail.com)
 """
 
-
 class InputState(object):
     """This enum represents the different states a universal detector can be
     in."""
