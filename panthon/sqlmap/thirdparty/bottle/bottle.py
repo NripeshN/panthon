@@ -2310,9 +2310,9 @@ class _ImportRedirect(object):
         self.name = name
         self.impmask = impmask
         self.module = sys.modules.setdefault(name, new_module(name))
-        self.module.__dict__.update(
-            {"__file__": __file__, "__path__": [], "__all__": [], "__loader__": self}
-        )
+        self.module.__dict__.update({
+            "__file__": __file__, "__path__": [], "__all__": [], "__loader__": self
+        })
         sys.meta_path.append(self)
 
     def find_spec(self, fullname, path, target=None):
@@ -4423,20 +4423,18 @@ class SimpleTemplate(BaseTemplate):
     def execute(self, _stdout, kwargs):
         env = self.defaults.copy()
         env.update(kwargs)
-        env.update(
-            {
-                "_stdout": _stdout,
-                "_printlist": _stdout.extend,
-                "include": functools.partial(self._include, env),
-                "rebase": functools.partial(self._rebase, env),
-                "_rebase": None,
-                "_str": self._str,
-                "_escape": self._escape,
-                "get": env.get,
-                "setdefault": env.setdefault,
-                "defined": env.__contains__,
-            }
-        )
+        env.update({
+            "_stdout": _stdout,
+            "_printlist": _stdout.extend,
+            "include": functools.partial(self._include, env),
+            "rebase": functools.partial(self._rebase, env),
+            "_rebase": None,
+            "_str": self._str,
+            "_escape": self._escape,
+            "get": env.get,
+            "setdefault": env.setdefault,
+            "defined": env.__contains__,
+        })
         exec(self.co, env)
         if env.get("_rebase"):
             subtpl, rargs = env.pop("_rebase")

@@ -593,12 +593,10 @@ class Search(object):
 
                     for db in conf.db.split(","):
                         for tbl in conf.tbl.split(","):
-                            values.append(
-                                [
-                                    safeSQLIdentificatorNaming(db),
-                                    safeSQLIdentificatorNaming(tbl, True),
-                                ]
-                            )
+                            values.append([
+                                safeSQLIdentificatorNaming(db),
+                                safeSQLIdentificatorNaming(tbl, True),
+                            ])
 
                 for db, tbl in filterPairValues(values):
                     db = safeSQLIdentificatorNaming(db)

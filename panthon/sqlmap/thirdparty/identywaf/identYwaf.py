@@ -212,12 +212,10 @@ def retrieve(url, data=None):
         while True:
             try:
                 opener = build_opener(
-                    ProxyHandler(
-                        {
-                            "http": proxies[proxies_index],
-                            "https": proxies[proxies_index],
-                        }
-                    )
+                    ProxyHandler({
+                        "http": proxies[proxies_index],
+                        "https": proxies[proxies_index],
+                    })
                 )
                 install_opener(opener)
                 proxies_index = (proxies_index + 1) % len(proxies)

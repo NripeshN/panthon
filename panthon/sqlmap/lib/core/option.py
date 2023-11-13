@@ -767,9 +767,9 @@ def _setOS():
     if conf.os.lower() not in SUPPORTED_OS:
         errMsg = "you provided an unsupported back-end DBMS operating "
         errMsg += "system. The supported DBMS operating systems for OS "
-        errMsg += "and file system access are %s. " % ", ".join(
-            [o.capitalize() for o in SUPPORTED_OS]
-        )
+        errMsg += "and file system access are %s. " % ", ".join([
+            o.capitalize() for o in SUPPORTED_OS
+        ])
         errMsg += "If you do not know the back-end DBMS underlying OS, "
         errMsg += "do not provide it and sqlmap will fingerprint it for "
         errMsg += "you."
@@ -1378,17 +1378,15 @@ def _setHTTPHandlers():
         debugMsg = "creating HTTP requests opener object"
         logger.debug(debugMsg)
 
-        handlers = filterNone(
-            [
-                multipartPostHandler,
-                proxyHandler if proxyHandler.proxies else None,
-                authHandler,
-                redirectHandler,
-                rangeHandler,
-                chunkedHandler if conf.chunked else None,
-                httpsHandler,
-            ]
-        )
+        handlers = filterNone([
+            multipartPostHandler,
+            proxyHandler if proxyHandler.proxies else None,
+            authHandler,
+            redirectHandler,
+            rangeHandler,
+            chunkedHandler if conf.chunked else None,
+            httpsHandler,
+        ])
 
         if not conf.dropSetCookie:
             if not conf.loadCookies:

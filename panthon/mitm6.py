@@ -598,13 +598,11 @@ def main():
             print("DNS allowlist: %s" % ", ".join(config.dns_allowlist))
             if (
                 config.relay
-                and len(
-                    [
-                        matching
-                        for matching in config.dns_allowlist
-                        if matching in config.relay
-                    ]
-                )
+                and len([
+                    matching
+                    for matching in config.dns_allowlist
+                    if matching in config.relay
+                ])
                 == 0
             ):
                 print(
