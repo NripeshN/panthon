@@ -1773,18 +1773,16 @@ class IgnoreControl(ScalarControl):
 class Item:
     def __init__(self, control, attrs, index=None):
         label = _get_label(attrs)
-        self.__dict__.update(
-            {
-                "name": attrs["value"],
-                "_labels": label and [label] or [],
-                "attrs": attrs,
-                "_control": control,
-                "disabled": "disabled" in attrs,
-                "_selected": False,
-                "id": attrs.get("id"),
-                "_index": index,
-            }
-        )
+        self.__dict__.update({
+            "name": attrs["value"],
+            "_labels": label and [label] or [],
+            "attrs": attrs,
+            "_control": control,
+            "disabled": "disabled" in attrs,
+            "_selected": False,
+            "id": attrs.get("id"),
+            "_index": index,
+        })
         control.items.append(self)
 
     def get_labels(self):

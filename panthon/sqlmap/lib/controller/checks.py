@@ -237,13 +237,11 @@ def checkSqlInjection(place, parameter, value):
             trueCode, falseCode = None, None
 
             if conf.httpCollector is not None:
-                conf.httpCollector.setExtendedArguments(
-                    {
-                        "_title": title,
-                        "_place": place,
-                        "_parameter": parameter,
-                    }
-                )
+                conf.httpCollector.setExtendedArguments({
+                    "_title": title,
+                    "_place": place,
+                    "_parameter": parameter,
+                })
 
             if stype == PAYLOAD.TECHNIQUE.UNION:
                 configUnion(test.request.char)

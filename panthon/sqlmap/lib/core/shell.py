@@ -131,60 +131,56 @@ def autoCompletion(completion=None, os=None, commands=None):
     if completion == AUTOCOMPLETE_TYPE.OS:
         if os == OS.WINDOWS:
             # Reference: http://en.wikipedia.org/wiki/List_of_DOS_commands
-            completer = CompleterNG(
-                {
-                    "attrib": None,
-                    "copy": None,
-                    "del": None,
-                    "dir": None,
-                    "echo": None,
-                    "fc": None,
-                    "label": None,
-                    "md": None,
-                    "mem": None,
-                    "move": None,
-                    "net": None,
-                    "netstat -na": None,
-                    "tree": None,
-                    "truename": None,
-                    "type": None,
-                    "ver": None,
-                    "vol": None,
-                    "xcopy": None,
-                }
-            )
+            completer = CompleterNG({
+                "attrib": None,
+                "copy": None,
+                "del": None,
+                "dir": None,
+                "echo": None,
+                "fc": None,
+                "label": None,
+                "md": None,
+                "mem": None,
+                "move": None,
+                "net": None,
+                "netstat -na": None,
+                "tree": None,
+                "truename": None,
+                "type": None,
+                "ver": None,
+                "vol": None,
+                "xcopy": None,
+            })
 
         else:
             # Reference: http://en.wikipedia.org/wiki/List_of_Unix_commands
-            completer = CompleterNG(
-                {
-                    "cat": None,
-                    "chmod": None,
-                    "chown": None,
-                    "cp": None,
-                    "cut": None,
-                    "date": None,
-                    "df": None,
-                    "diff": None,
-                    "du": None,
-                    "echo": None,
-                    "env": None,
-                    "file": None,
-                    "find": None,
-                    "free": None,
-                    "grep": None,
-                    "id": None,
-                    "ifconfig": None,
-                    "ls": None,
-                    "mkdir": None,
-                    "mv": None,
-                    "netstat": None,
-                    "pwd": None,
-                    "rm": None,
-                    "uname": None,
-                    "whoami": None,
-                }
-            )
+            completer = CompleterNG({
+                "cat": None,
+                "chmod": None,
+                "chown": None,
+                "cp": None,
+                "cut": None,
+                "date": None,
+                "df": None,
+                "diff": None,
+                "du": None,
+                "echo": None,
+                "env": None,
+                "file": None,
+                "find": None,
+                "free": None,
+                "grep": None,
+                "id": None,
+                "ifconfig": None,
+                "ls": None,
+                "mkdir": None,
+                "mv": None,
+                "netstat": None,
+                "pwd": None,
+                "rm": None,
+                "uname": None,
+                "whoami": None,
+            })
 
         readline.set_completer(completer.complete)
         readline.parse_and_bind("tab: complete")
