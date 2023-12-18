@@ -187,21 +187,19 @@ def pivotDumpTable(table, colList, count=None, blind=True, alias=None):
                 if column == colList[0]:
                     if isNoneValue(value):
                         try:
-                            for pivotValue in filterNone(
+                            for pivotValue in filterNone((
+                                "  " if pivotValue == " " else None,
                                 (
-                                    "  " if pivotValue == " " else None,
-                                    (
-                                        "%s%s"
-                                        % (
-                                            pivotValue[0],
-                                            _unichr(ord(pivotValue[1]) + 1),
-                                        )
-                                        if len(pivotValue) > 1
-                                        else None
-                                    ),
-                                    _unichr(ord(pivotValue[0]) + 1),
-                                )
-                            ):
+                                    "%s%s"
+                                    % (
+                                        pivotValue[0],
+                                        _unichr(ord(pivotValue[1]) + 1),
+                                    )
+                                    if len(pivotValue) > 1
+                                    else None
+                                ),
+                                _unichr(ord(pivotValue[0]) + 1),
+                            )):
                                 value = _(column, pivotValue)
                                 if not isNoneValue(value):
                                     break

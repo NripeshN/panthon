@@ -529,9 +529,9 @@ class Striker(Process):
 
         if random.randrange(2) == 0:
             # Random Content-Trype
-            http_headers["Content-Type"] = random.choice([
-                "multipart/form-data", "application/x-url-encoded"
-            ])
+            http_headers["Content-Type"] = random.choice(
+                ["multipart/form-data", "application/x-url-encoded"]
+            )
 
         if random.randrange(2) == 0:
             # Random Cookie

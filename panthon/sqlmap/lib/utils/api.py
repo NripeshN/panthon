@@ -539,9 +539,9 @@ def option_get(taskid):
             logger.debug(
                 "(%s) Requested value for unknown option '%s'" % (taskid, option)
             )
-            return jsonize({
-                "success": False, "message": "Unknown option '%s'" % option
-            })
+            return jsonize(
+                {"success": False, "message": "Unknown option '%s'" % option}
+            )
 
     logger.debug(
         "(%s) Retrieved values for option(s) '%s'" % (taskid, ",".join(options))
@@ -587,9 +587,9 @@ def scan_start(taskid):
             logger.warning(
                 "[%s] Unsupported option '%s' provided to scan_start()" % (taskid, key)
             )
-            return jsonize({
-                "success": False, "message": "Unsupported option '%s'" % key
-            })
+            return jsonize(
+                {"success": False, "message": "Unsupported option '%s'" % key}
+            )
 
     # Initialize sqlmap engine's options with user's provided options, if any
     for option, value in request.json.items():
@@ -599,9 +599,9 @@ def scan_start(taskid):
     DataStore.tasks[taskid].engine_start()
 
     logger.debug("(%s) Started scan" % taskid)
-    return jsonize({
-        "success": True, "engineid": DataStore.tasks[taskid].engine_get_id()
-    })
+    return jsonize(
+        {"success": True, "engineid": DataStore.tasks[taskid].engine_get_id()}
+    )
 
 
 @get("/scan/<taskid>/stop")
@@ -681,9 +681,9 @@ def scan_data(taskid):
         "SELECT status, content_type, value FROM data WHERE taskid = ? ORDER BY id ASC",
         (taskid,),
     ):
-        json_data_message.append({
-            "status": status, "type": content_type, "value": dejsonize(value)
-        })
+        json_data_message.append(
+            {"status": status, "type": content_type, "value": dejsonize(value)}
+        )
 
     # Read all error messages from the IPC database
     for error in DataStore.current_db.execute(
@@ -692,9 +692,9 @@ def scan_data(taskid):
         json_errors_message.append(error)
 
     logger.debug("(%s) Retrieved scan data and error messages" % taskid)
-    return jsonize({
-        "success": True, "data": json_data_message, "error": json_errors_message
-    })
+    return jsonize(
+        {"success": True, "data": json_data_message, "error": json_errors_message}
+    )
 
 
 # Functions to handle scans' logs
@@ -712,9 +712,9 @@ def scan_log_limited(taskid, start, end):
         logger.warning(
             "[%s] Invalid start or end value provided to scan_log_limited()" % taskid
         )
-        return jsonize({
-            "success": False, "message": "Invalid start or end value, must be digits"
-        })
+        return jsonize(
+            {"success": False, "message": "Invalid start or end value, must be digits"}
+        )
 
     start = max(1, int(start))
     end = max(1, int(end))

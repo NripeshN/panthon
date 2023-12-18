@@ -58,15 +58,13 @@ try:
                             time = match.group(1)
                             message = message.replace(
                                 time,
-                                "".join(
-                                    (
-                                        self.csi,
-                                        str(self.color_map["cyan"] + 30),
-                                        "m",
-                                        time,
-                                        self._reset(message),
-                                    )
-                                ),
+                                "".join((
+                                    self.csi,
+                                    str(self.color_map["cyan"] + 30),
+                                    "m",
+                                    time,
+                                    self._reset(message),
+                                )),
                                 1,
                             )
 
@@ -75,15 +73,13 @@ try:
                             counter = match.group(1)
                             message = message.replace(
                                 counter,
-                                "".join(
-                                    (
-                                        self.csi,
-                                        str(self.color_map["yellow"] + 30),
-                                        "m",
-                                        counter,
-                                        self._reset(message),
-                                    )
-                                ),
+                                "".join((
+                                    self.csi,
+                                    str(self.color_map["yellow"] + 30),
+                                    "m",
+                                    counter,
+                                    self._reset(message),
+                                )),
                                 1,
                             )
 
@@ -97,15 +93,13 @@ try:
                                     message = message.replace(
                                         "'%s'" % string,
                                         "'%s'"
-                                        % "".join(
-                                            (
-                                                self.csi,
-                                                str(self.color_map["white"] + 30),
-                                                "m",
-                                                string,
-                                                self._reset(message),
-                                            )
-                                        ),
+                                        % "".join((
+                                            self.csi,
+                                            str(self.color_map["white"] + 30),
+                                            "m",
+                                            string,
+                                            self._reset(message),
+                                        )),
                                         1,
                                     )
                             else:
@@ -115,15 +109,13 @@ try:
                                     message = message.replace(
                                         "'%s" % string,
                                         "'%s"
-                                        % "".join(
-                                            (
-                                                self.csi,
-                                                str(self.color_map["white"] + 30),
-                                                "m",
-                                                string,
-                                                self._reset(message),
-                                            )
-                                        ),
+                                        % "".join((
+                                            self.csi,
+                                            str(self.color_map["white"] + 30),
+                                            "m",
+                                            string,
+                                            self._reset(message),
+                                        )),
                                         1,
                                     )
                                 else:
@@ -135,15 +127,13 @@ try:
                                         message = message.replace(
                                             "'%s'" % string,
                                             "'%s'"
-                                            % "".join(
-                                                (
-                                                    self.csi,
-                                                    str(self.color_map["white"] + 30),
-                                                    "m",
-                                                    string,
-                                                    self._reset(message),
-                                                )
-                                            ),
+                                            % "".join((
+                                                self.csi,
+                                                str(self.color_map["white"] + 30),
+                                                "m",
+                                                string,
+                                                self._reset(message),
+                                            )),
                                             1,
                                         )
                                     else:
@@ -154,17 +144,13 @@ try:
                                             message = message.replace(
                                                 "'%s'" % string,
                                                 "'%s'"
-                                                % "".join(
-                                                    (
-                                                        self.csi,
-                                                        str(
-                                                            self.color_map["white"] + 30
-                                                        ),
-                                                        "m",
-                                                        string,
-                                                        self._reset(message),
-                                                    )
-                                                ),
+                                                % "".join((
+                                                    self.csi,
+                                                    str(self.color_map["white"] + 30),
+                                                    "m",
+                                                    string,
+                                                    self._reset(message),
+                                                )),
                                                 1,
                                             )
                     else:

@@ -41,9 +41,9 @@ def photon(seedUrl, headers, level, threadCount, delay, timeout, skipDOM):
         retireJs(url, response)
         if not skipDOM:
             highlighted = dom(response)
-            clean_highlighted = "".join([
-                re.sub(r"^\d+\s+", "", line) for line in highlighted
-            ])
+            clean_highlighted = "".join(
+                [re.sub(r"^\d+\s+", "", line) for line in highlighted]
+            )
             if highlighted and clean_highlighted not in checkedDOMs:
                 checkedDOMs.append(clean_highlighted)
                 logger.good("Potentially vulnerable objects found at %s" % url)

@@ -1857,18 +1857,16 @@ class BaseResponse(object):
     # (rfc2616 section 10.2.3 and 10.3.5)
     bad_headers = {
         204: frozenset(("Content-Type", "Content-Length")),
-        304: frozenset(
-            (
-                "Allow",
-                "Content-Encoding",
-                "Content-Language",
-                "Content-Length",
-                "Content-Range",
-                "Content-Type",
-                "Content-Md5",
-                "Last-Modified",
-            )
-        ),
+        304: frozenset((
+            "Allow",
+            "Content-Encoding",
+            "Content-Language",
+            "Content-Length",
+            "Content-Range",
+            "Content-Type",
+            "Content-Md5",
+            "Last-Modified",
+        )),
     }
 
     def __init__(self, body="", status=None, headers=None, **more_headers):
@@ -2310,9 +2308,9 @@ class _ImportRedirect(object):
         self.name = name
         self.impmask = impmask
         self.module = sys.modules.setdefault(name, new_module(name))
-        self.module.__dict__.update({
-            "__file__": __file__, "__path__": [], "__all__": [], "__loader__": self
-        })
+        self.module.__dict__.update(
+            {"__file__": __file__, "__path__": [], "__all__": [], "__loader__": self}
+        )
         sys.meta_path.append(self)
 
     def find_spec(self, fullname, path, target=None):

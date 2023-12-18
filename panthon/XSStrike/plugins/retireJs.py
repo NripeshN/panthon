@@ -24,9 +24,9 @@ def scan(data, extractor, definitions, matcher=None):
         for i in extractors:
             match = matcher(i, data)
             if match:
-                detected.append({
-                    "version": match, "component": component, "detection": extractor
-                })
+                detected.append(
+                    {"version": match, "component": component, "detection": extractor}
+                )
     return detected
 
 

@@ -339,15 +339,13 @@ def unionUse(expression, unpack=True, dump=False):
         Backend.getIdentifiedDbms()
         in (DBMS.MYSQL, DBMS.ORACLE, DBMS.PGSQL, DBMS.MSSQL, DBMS.SQLITE)
         and expressionFields
-        and not any(
-            (
-                conf.binaryFields,
-                conf.limitStart,
-                conf.limitStop,
-                conf.forcePartial,
-                conf.disableJson,
-            )
-        )
+        and not any((
+            conf.binaryFields,
+            conf.limitStart,
+            conf.limitStop,
+            conf.forcePartial,
+            conf.disableJson,
+        ))
     ):
         match = re.search(r"SELECT\s*(.+?)\bFROM", expression, re.I)
         if (

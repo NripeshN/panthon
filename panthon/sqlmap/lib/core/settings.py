@@ -574,17 +574,15 @@ REFERER_ALIASES = ("ref", "referer", "referrer")
 HOST_ALIASES = ("host",)
 
 # DBMSes with upper case identifiers
-UPPER_CASE_DBMSES = set(
-    (
-        DBMS.ORACLE,
-        DBMS.DB2,
-        DBMS.FIREBIRD,
-        DBMS.MAXDB,
-        DBMS.H2,
-        DBMS.DERBY,
-        DBMS.ALTIBASE,
-    )
-)
+UPPER_CASE_DBMSES = set((
+    DBMS.ORACLE,
+    DBMS.DB2,
+    DBMS.FIREBIRD,
+    DBMS.MAXDB,
+    DBMS.H2,
+    DBMS.DERBY,
+    DBMS.ALTIBASE,
+))
 
 # Default schemas to use (when unable to enumerate)
 H2_DEFAULT_SCHEMA = HSQLDB_DEFAULT_SCHEMA = "PUBLIC"

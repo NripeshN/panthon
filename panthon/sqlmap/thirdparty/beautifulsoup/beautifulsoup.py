@@ -1309,9 +1309,9 @@ class BeautifulStoneSoup(Tag, sgmllib.SGMLParser):
     def endData(self, containerClass=NavigableString):
         if self.currentData:
             currentData = "".join(self.currentData)
-            if currentData.translate(self.STRIP_ASCII_SPACES) == "" and not set([
-                tag.name for tag in self.tagStack
-            ]).intersection(self.PRESERVE_WHITESPACE_TAGS):
+            if currentData.translate(self.STRIP_ASCII_SPACES) == "" and not set(
+                [tag.name for tag in self.tagStack]
+            ).intersection(self.PRESERVE_WHITESPACE_TAGS):
                 if "\n" in currentData:
                     currentData = "\n"
                 else:
