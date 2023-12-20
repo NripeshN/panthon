@@ -75,8 +75,8 @@ class SBCSGroupProber(CharSetGroupProber):
             Win1255HebrewModel, True, hebrew_prober
         )
         hebrew_prober.set_model_probers(logical_hebrew_prober, visual_hebrew_prober)
-        self.probers.extend([
-            hebrew_prober, logical_hebrew_prober, visual_hebrew_prober
-        ])
+        self.probers.extend(
+            [hebrew_prober, logical_hebrew_prober, visual_hebrew_prober]
+        )
 
         self.reset()

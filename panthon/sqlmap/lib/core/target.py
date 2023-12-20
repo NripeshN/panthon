@@ -134,16 +134,14 @@ def _setRequestParams():
                     else:
                         break
                 if kb.customInjectionMark in retVal:
-                    hintNames.append(
+                    hintNames.append((
+                        retVal.split(kb.customInjectionMark)[0],
                         (
-                            retVal.split(kb.customInjectionMark)[0],
-                            (
-                                match.group("name").strip("\"'")
-                                if kb.postHint == POST_HINT.JSON_LIKE
-                                else match.group("name")
-                            ),
-                        )
-                    )
+                            match.group("name").strip("\"'")
+                            if kb.postHint == POST_HINT.JSON_LIKE
+                            else match.group("name")
+                        ),
+                    ))
 
             return retVal
 
@@ -541,12 +539,10 @@ def _setRequestParams():
             if httpHeader.upper() == HTTP_HEADER.USER_AGENT.upper():
                 conf.parameters[PLACE.USER_AGENT] = urldecode(headerValue)
 
-                condition = any(
-                    (
-                        not conf.testParameter,
-                        intersect(conf.testParameter, USER_AGENT_ALIASES, True),
-                    )
-                )
+                condition = any((
+                    not conf.testParameter,
+                    intersect(conf.testParameter, USER_AGENT_ALIASES, True),
+                ))
 
                 if condition:
                     conf.paramDict[PLACE.USER_AGENT] = {PLACE.USER_AGENT: headerValue}
@@ -555,12 +551,10 @@ def _setRequestParams():
             elif httpHeader.upper() == HTTP_HEADER.REFERER.upper():
                 conf.parameters[PLACE.REFERER] = urldecode(headerValue)
 
-                condition = any(
-                    (
-                        not conf.testParameter,
-                        intersect(conf.testParameter, REFERER_ALIASES, True),
-                    )
-                )
+                condition = any((
+                    not conf.testParameter,
+                    intersect(conf.testParameter, REFERER_ALIASES, True),
+                ))
 
                 if condition:
                     conf.paramDict[PLACE.REFERER] = {PLACE.REFERER: headerValue}
@@ -569,12 +563,10 @@ def _setRequestParams():
             elif httpHeader.upper() == HTTP_HEADER.HOST.upper():
                 conf.parameters[PLACE.HOST] = urldecode(headerValue)
 
-                condition = any(
-                    (
-                        not conf.testParameter,
-                        intersect(conf.testParameter, HOST_ALIASES, True),
-                    )
-                )
+                condition = any((
+                    not conf.testParameter,
+                    intersect(conf.testParameter, HOST_ALIASES, True),
+                ))
 
                 if condition:
                     conf.paramDict[PLACE.HOST] = {PLACE.HOST: headerValue}

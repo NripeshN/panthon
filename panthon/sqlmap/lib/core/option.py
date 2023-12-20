@@ -767,9 +767,9 @@ def _setOS():
     if conf.os.lower() not in SUPPORTED_OS:
         errMsg = "you provided an unsupported back-end DBMS operating "
         errMsg += "system. The supported DBMS operating systems for OS "
-        errMsg += "and file system access are %s. " % ", ".join([
-            o.capitalize() for o in SUPPORTED_OS
-        ])
+        errMsg += "and file system access are %s. " % ", ".join(
+            [o.capitalize() for o in SUPPORTED_OS]
+        )
         errMsg += "If you do not know the back-end DBMS underlying OS, "
         errMsg += "do not provide it and sqlmap will fingerprint it for "
         errMsg += "you."
@@ -2047,16 +2047,14 @@ def _cleanupOptions():
     if conf.tmpPath:
         conf.tmpPath = ntToPosixSlashes(normalizePath(conf.tmpPath))
 
-    if any(
-        (
-            conf.googleDork,
-            conf.logFile,
-            conf.bulkFile,
-            conf.forms,
-            conf.crawlDepth,
-            conf.stdinPipe,
-        )
-    ):
+    if any((
+        conf.googleDork,
+        conf.logFile,
+        conf.bulkFile,
+        conf.forms,
+        conf.crawlDepth,
+        conf.stdinPipe,
+    )):
         conf.multipleTargets = True
 
     if conf.optimize:
@@ -3254,23 +3252,21 @@ def _basicOptionValidation():
         )
         raise SqlmapSyntaxException(errMsg)
 
-    if conf.hashFile and any(
-        (
-            conf.direct,
-            conf.url,
-            conf.logFile,
-            conf.bulkFile,
-            conf.googleDork,
-            conf.configFile,
-            conf.requestFile,
-            conf.updateAll,
-            conf.smokeTest,
-            conf.wizard,
-            conf.dependencies,
-            conf.purge,
-            conf.listTampers,
-        )
-    ):
+    if conf.hashFile and any((
+        conf.direct,
+        conf.url,
+        conf.logFile,
+        conf.bulkFile,
+        conf.googleDork,
+        conf.configFile,
+        conf.requestFile,
+        conf.updateAll,
+        conf.smokeTest,
+        conf.wizard,
+        conf.dependencies,
+        conf.purge,
+        conf.listTampers,
+    )):
         errMsg = "option '--crack' should be used as a standalone"
         raise SqlmapSyntaxException(errMsg)
 
@@ -3343,16 +3339,14 @@ def init():
 
     parseTargetDirect()
 
-    if any(
-        (
-            conf.url,
-            conf.logFile,
-            conf.bulkFile,
-            conf.requestFile,
-            conf.googleDork,
-            conf.stdinPipe,
-        )
-    ):
+    if any((
+        conf.url,
+        conf.logFile,
+        conf.bulkFile,
+        conf.requestFile,
+        conf.googleDork,
+        conf.stdinPipe,
+    )):
         _setHostname()
         _setHTTPTimeout()
         _setHTTPExtraHeaders()
