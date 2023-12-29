@@ -46,7 +46,7 @@ class DoSAttack:
                     user_agents.append(line.strip())
             return user_agents
 
-        path = os.path.join(os.path.dirname(__file__), "data/user_agents.txt")
+        path = os.path.join(os.path.dirname(__file__), "data/useragents.txt")
         user_agents = read_user_agents(path)
         list_of_sockets = []
 
