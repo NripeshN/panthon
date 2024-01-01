@@ -5,7 +5,6 @@ import logging
 import subprocess
 from urllib.parse import urlparse
 import os
-import re
 
 
 logging.basicConfig(
@@ -43,7 +42,7 @@ class DoSAttack:
         try:
             parsed_url = urlparse(url)
             if not parsed_url.netloc:
-                parsed_url = urlparse('http://' + url)
+                parsed_url = urlparse("http://" + url)
             hostname = parsed_url.netloc
             return socket.gethostbyname(hostname)
         except Exception as e:
@@ -55,7 +54,7 @@ class DoSAttack:
             return True
         except socket.error:
             return False
-        
+
     def slowloris_attack(self, target, target_port, num_connections=100):
         def read_user_agents(file_name):
             user_agents = []
