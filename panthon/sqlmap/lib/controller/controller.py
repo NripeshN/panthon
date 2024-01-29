@@ -893,8 +893,7 @@ def start():
                                             if conf.alert:
                                                 infoMsg = (
                                                     "executing alerting shell"
-                                                    " command(s) ('%s')"
-                                                    % conf.alert
+                                                    " command(s) ('%s')" % conf.alert
                                                 )
                                                 logger.info(infoMsg)
                                                 try:

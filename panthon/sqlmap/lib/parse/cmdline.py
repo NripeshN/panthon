@@ -1721,22 +1721,19 @@ def cmdLineParser(argv=None):
             ):
                 dataToStdout(
                     "[!] copy-pasting illegal (non-console) quote characters from"
-                    " Internet is illegal (%s)\n"
-                    % argv[i]
+                    " Internet is illegal (%s)\n" % argv[i]
                 )
                 raise SystemExit
             elif len(argv[i]) > 1 and "\uff0c" in argv[i].split("=", 1)[-1]:
                 dataToStdout(
                     "[!] copy-pasting illegal (non-console) comma characters from"
-                    " Internet is illegal (%s)\n"
-                    % argv[i]
+                    " Internet is illegal (%s)\n" % argv[i]
                 )
                 raise SystemExit
             elif re.search(r"\A-\w=.+", argv[i]):
                 dataToStdout(
                     "[!] potentially miswritten (illegal '=') short option detected"
-                    " ('%s')\n"
-                    % argv[i]
+                    " ('%s')\n" % argv[i]
                 )
                 raise SystemExit
             elif re.search(r"\A-\w{3,}", argv[i]):
@@ -1833,8 +1830,7 @@ def cmdLineParser(argv=None):
             ):
                 dataToStdout(
                     "[!] detected usage of long-option without a starting hyphen"
-                    " ('%s')\n"
-                    % argv[i]
+                    " ('%s')\n" % argv[i]
                 )
                 raise SystemExit
 

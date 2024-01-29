@@ -78,8 +78,7 @@ class Replication(object):
                 except Exception as ex:
                     errMsg = (
                         "problem occurred ('%s') while initializing the sqlite"
-                        " database "
-                        % getSafeExString(ex, UNICODE_ENCODING)
+                        " database " % getSafeExString(ex, UNICODE_ENCODING)
                     )
                     errMsg += "located at '%s'" % self.parent.dbpath
                     raise SqlmapGenericException(errMsg)

@@ -578,7 +578,8 @@ def _setRequestParams():
                 if condition:
                     conf.parameters[PLACE.CUSTOM_HEADER] = str(conf.httpHeaders)
                     conf.paramDict[PLACE.CUSTOM_HEADER] = {
-                        httpHeader: "%s,%s%s" % (
+                        httpHeader: "%s,%s%s"
+                        % (
                             httpHeader,
                             headerValue,
                             kb.customInjectionMark,

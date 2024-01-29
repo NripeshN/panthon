@@ -442,8 +442,7 @@ def shutdownnotice():
 def print_err(failure):
     print(
         "An error occurred while sending a packet: %s\nNote that root privileges are"
-        " required to run mitm6"
-        % failure.getErrorMessage()
+        " required to run mitm6" % failure.getErrorMessage()
     )
 
 
