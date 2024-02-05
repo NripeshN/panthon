@@ -68,7 +68,10 @@ l    j|   \    /  _]|    \ |      T`|  |  |`|  T__T  T /    T|   __|
  j  l |     ||   [_ |  |  |  |  |  `|     !` \      / |  |  ||  ] 
 |____jl_____jl_____jl__j__j  l__j  `l____/ `  \_/\_/  l__j__jl__j  (%s)%s""".strip(
     "\n"
-) % (VERSION, "\n")
+) % (
+    VERSION,
+    "\n",
+)
 
 RAW, TEXT, HTTPCODE, SERVER, TITLE, HTML, URL = xrange(7)
 COOKIE, UA, REFERER = "Cookie", "User-Agent", "Referer"

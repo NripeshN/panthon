@@ -861,8 +861,7 @@ def paramToDict(place, parameters=None):
                             )
                             message += (
                                 "has boundaries. Do you want to inject inside? ('%s')"
-                                " [y/N] "
-                                % getUnicode(_)
+                                " [y/N] " % getUnicode(_)
                             )
 
                             if readInput(message, default="N", boolean=True):
@@ -4656,9 +4655,8 @@ def createGithubIssue(errMsg, excMsg):
             url="https://api.github.com/repos/sqlmapproject/sqlmap/issues",
             data=getBytes(json.dumps(data)),
             headers={
-                HTTP_HEADER.AUTHORIZATION: "token %s" % decodeBase64(
-                    GITHUB_REPORT_OAUTH_TOKEN, binary=False
-                ),
+                HTTP_HEADER.AUTHORIZATION: "token %s"
+                % decodeBase64(GITHUB_REPORT_OAUTH_TOKEN, binary=False),
                 HTTP_HEADER.USER_AGENT: fetchRandomAgent(),
             },
         )
@@ -5715,9 +5713,7 @@ def checkSystemEncoding():
         except LookupError:
             errMsg = "there is a known Python issue (#1616979) related "
             errMsg += "to support for charset 'cp720'. Please visit "
-            errMsg += (
-                "'http://blog.oneortheother.info/tip/python-fix-cp720-encoding/index.html' "
-            )
+            errMsg += "'http://blog.oneortheother.info/tip/python-fix-cp720-encoding/index.html' "
             errMsg += "and follow the instructions to be able to fix it"
             logger.critical(errMsg)
 

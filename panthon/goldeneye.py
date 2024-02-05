@@ -63,7 +63,8 @@ USER_AGENT_PARTS = {
                     random.randint(1, 36),
                 )
                 for i in range(1, 30)
-            ] + [
+            ]
+            + [
                 "Version/%d.%d.%d Safari/%d.%d"
                 % (
                     random.randint(4, 6),
@@ -87,7 +88,8 @@ USER_AGENT_PARTS = {
                     "MSIE 10.0",
                 ],
                 "ext_pre": ["compatible", "Windows; U"],
-                "ext_post": ["Trident/%d.0" % i for i in range(4, 6)] + [
+                "ext_post": ["Trident/%d.0" % i for i in range(4, 6)]
+                + [
                     ".NET CLR %d.%d.%d"
                     % (
                         random.randint(1, 3),

@@ -1,6 +1,6 @@
 """
 XSSCon - 2019/2020
-This project was created by menkrep1337 with 407Aex team. 
+This project was created by menkrep1337 with 407Aex team.
 Copyright under the MIT license
 """
 

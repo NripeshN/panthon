@@ -163,8 +163,7 @@ class Fingerprint(GenericFingerprint):
             for version, data in versions.items():
                 query = (
                     "(SELECT LENGTH(OS_VERSION) FROM SYSIBMADM.ENV_SYS_INFO WHERE"
-                    " OS_VERSION = '%s')>0"
-                    % data[0]
+                    " OS_VERSION = '%s')>0" % data[0]
                 )
                 result = inject.checkBooleanExpression(query)
 
@@ -180,9 +179,7 @@ class Fingerprint(GenericFingerprint):
             for sp in versions[Backend.getOsVersion()][1]:
                 query = (
                     "(SELECT LENGTH(OS_RELEASE) FROM SYSIBMADM.ENV_SYS_INFO WHERE"
-                    " OS_RELEASE LIKE '%Service Pack "
-                    + str(sp)
-                    + "%')>0"
+                    " OS_RELEASE LIKE '%Service Pack " + str(sp) + "%')>0"
                 )
                 result = inject.checkBooleanExpression(query)
 

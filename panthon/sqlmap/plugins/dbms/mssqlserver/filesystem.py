@@ -401,7 +401,10 @@ class Filesystem(GenericFilesystem):
             Else
                 mimedecode = InStr(Base64Chars, strIn) - 1
             End If
-        End Function""" % (randFilePath, remoteFile)
+        End Function""" % (
+            randFilePath,
+            remoteFile,
+        )
 
         vbs = vbs.replace("    ", "")
         encodedFileContent = encodeBase64(localFileContent, binary=False)

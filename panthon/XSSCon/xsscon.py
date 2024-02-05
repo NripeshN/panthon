@@ -1,6 +1,6 @@
 """
 XSSCon - 2019/2020
-This project was created by menkrep1337 with 407Aex team. 
+This project was created by menkrep1337 with 407Aex team.
 Copyright under the MIT license
 """
 
@@ -133,7 +133,8 @@ def start():
         )
 
     elif getopt.about:
-        print("""
+        print(
+            """
 ***************
 Project: XSSCon
 License: MIT
@@ -141,7 +142,9 @@ Author: menkrep1337
 Last updates: 2019 may 26
 Note: Take your own RISK
 ****************
-""" + epilog)
+"""
+            + epilog
+        )
     else:
         parse.print_help()
 

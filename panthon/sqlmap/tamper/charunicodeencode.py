@@ -14,8 +14,7 @@ __priority__ = PRIORITY.LOWEST
 def dependencies():
     singleTimeWarnMessage(
         "tamper script '%s' is only meant to be run against ASP or ASP.NET web"
-        " applications"
-        % os.path.basename(__file__).split(".")[0]
+        " applications" % os.path.basename(__file__).split(".")[0]
     )
 
 

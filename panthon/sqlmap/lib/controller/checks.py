@@ -748,8 +748,7 @@ def checkSqlInjection(place, parameter, value):
                                             kb.matchRatio = _
                                             logger.debug(
                                                 "adjusting match ratio for current"
-                                                " parameter to %.3f"
-                                                % kb.matchRatio
+                                                " parameter to %.3f" % kb.matchRatio
                                             )
 
                                     # Reducing false-positive "appears" messages in heavily dynamic environment
@@ -2173,8 +2172,7 @@ def checkConnection(suppressOutput=False):
         if any(_ in (kb.serverHeader or "") for _ in PRECONNECT_INCOMPATIBLE_SERVERS):
             singleTimeWarnMessage(
                 "turning off pre-connect mechanism because of incompatible server"
-                " ('%s')"
-                % kb.serverHeader
+                " ('%s')" % kb.serverHeader
             )
             conf.disablePrecon = True
 

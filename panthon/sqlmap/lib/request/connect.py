@@ -507,7 +507,8 @@ class Connect(object):
                     HTTP_HEADER.REFERER: referer,
                     HTTP_HEADER.HOST: getHeader(
                         dict(conf.httpHeaders), HTTP_HEADER.HOST
-                    ) or getHostHeader(url),
+                    )
+                    or getHostHeader(url),
                 },
                 base=None if target else {},
             )
