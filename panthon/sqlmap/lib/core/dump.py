@@ -656,10 +656,12 @@ class Dump(object):
                                 colType = None
                                 break
 
-                    cols.append((
-                        unsafeSQLIdentificatorNaming(column),
-                        colType if colType else Replication.TEXT,
-                    ))
+                    cols.append(
+                        (
+                            unsafeSQLIdentificatorNaming(column),
+                            colType if colType else Replication.TEXT,
+                        )
+                    )
 
             rtable = replication.createTable(table, cols)
         elif conf.dumpFormat == DUMP_FORMAT.HTML:

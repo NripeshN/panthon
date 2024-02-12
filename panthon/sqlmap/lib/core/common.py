@@ -2045,10 +2045,12 @@ def parseTargetUrl():
     hostnamePort = (
         urlSplit.netloc.split(":")
         if not re.search(r"\[.+\]", urlSplit.netloc)
-        else filterNone((
-            re.search(r"\[.+\]", urlSplit.netloc).group(0),
-            re.search(r"\](:(?P<port>\d+))?", urlSplit.netloc).group("port"),
-        ))
+        else filterNone(
+            (
+                re.search(r"\[.+\]", urlSplit.netloc).group(0),
+                re.search(r"\](:(?P<port>\d+))?", urlSplit.netloc).group("port"),
+            )
+        )
     )
 
     conf.scheme = urlSplit.scheme.strip().lower() or "http"
@@ -2069,13 +2071,15 @@ def parseTargetUrl():
     else:
         invalid = False
 
-    if any((
-        invalid,
-        re.search(r"\s", conf.hostname),
-        ".." in conf.hostname,
-        conf.hostname.startswith("."),
-        "\n" in originalUrl,
-    )):
+    if any(
+        (
+            invalid,
+            re.search(r"\s", conf.hostname),
+            ".." in conf.hostname,
+            conf.hostname.startswith("."),
+            "\n" in originalUrl,
+        )
+    ):
         errMsg = "invalid target URL ('%s')" % originalUrl
         raise SqlmapSyntaxException(errMsg)
 
@@ -4091,15 +4095,17 @@ def setOptimize():
     conf.threads = (
         3 if conf.threads < 3 and cmdLineOptions.threads is None else conf.threads
     )
-    conf.nullConnection = not any((
-        conf.data,
-        conf.textOnly,
-        conf.titles,
-        conf.string,
-        conf.notString,
-        conf.regexp,
-        conf.tor,
-    ))
+    conf.nullConnection = not any(
+        (
+            conf.data,
+            conf.textOnly,
+            conf.titles,
+            conf.string,
+            conf.notString,
+            conf.regexp,
+            conf.tor,
+        )
+    )
 
     if not conf.nullConnection:
         debugMsg = (

@@ -1378,15 +1378,17 @@ def _setHTTPHandlers():
         debugMsg = "creating HTTP requests opener object"
         logger.debug(debugMsg)
 
-        handlers = filterNone([
-            multipartPostHandler,
-            proxyHandler if proxyHandler.proxies else None,
-            authHandler,
-            redirectHandler,
-            rangeHandler,
-            chunkedHandler if conf.chunked else None,
-            httpsHandler,
-        ])
+        handlers = filterNone(
+            [
+                multipartPostHandler,
+                proxyHandler if proxyHandler.proxies else None,
+                authHandler,
+                redirectHandler,
+                rangeHandler,
+                chunkedHandler if conf.chunked else None,
+                httpsHandler,
+            ]
+        )
 
         if not conf.dropSetCookie:
             if not conf.loadCookies:
@@ -2047,14 +2049,16 @@ def _cleanupOptions():
     if conf.tmpPath:
         conf.tmpPath = ntToPosixSlashes(normalizePath(conf.tmpPath))
 
-    if any((
-        conf.googleDork,
-        conf.logFile,
-        conf.bulkFile,
-        conf.forms,
-        conf.crawlDepth,
-        conf.stdinPipe,
-    )):
+    if any(
+        (
+            conf.googleDork,
+            conf.logFile,
+            conf.bulkFile,
+            conf.forms,
+            conf.crawlDepth,
+            conf.stdinPipe,
+        )
+    ):
         conf.multipleTargets = True
 
     if conf.optimize:
@@ -3252,21 +3256,23 @@ def _basicOptionValidation():
         )
         raise SqlmapSyntaxException(errMsg)
 
-    if conf.hashFile and any((
-        conf.direct,
-        conf.url,
-        conf.logFile,
-        conf.bulkFile,
-        conf.googleDork,
-        conf.configFile,
-        conf.requestFile,
-        conf.updateAll,
-        conf.smokeTest,
-        conf.wizard,
-        conf.dependencies,
-        conf.purge,
-        conf.listTampers,
-    )):
+    if conf.hashFile and any(
+        (
+            conf.direct,
+            conf.url,
+            conf.logFile,
+            conf.bulkFile,
+            conf.googleDork,
+            conf.configFile,
+            conf.requestFile,
+            conf.updateAll,
+            conf.smokeTest,
+            conf.wizard,
+            conf.dependencies,
+            conf.purge,
+            conf.listTampers,
+        )
+    ):
         errMsg = "option '--crack' should be used as a standalone"
         raise SqlmapSyntaxException(errMsg)
 
@@ -3339,14 +3345,16 @@ def init():
 
     parseTargetDirect()
 
-    if any((
-        conf.url,
-        conf.logFile,
-        conf.bulkFile,
-        conf.requestFile,
-        conf.googleDork,
-        conf.stdinPipe,
-    )):
+    if any(
+        (
+            conf.url,
+            conf.logFile,
+            conf.bulkFile,
+            conf.requestFile,
+            conf.googleDork,
+            conf.stdinPipe,
+        )
+    ):
         _setHostname()
         _setHTTPTimeout()
         _setHTTPExtraHeaders()
