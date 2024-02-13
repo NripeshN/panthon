@@ -237,11 +237,13 @@ def checkSqlInjection(place, parameter, value):
             trueCode, falseCode = None, None
 
             if conf.httpCollector is not None:
-                conf.httpCollector.setExtendedArguments({
-                    "_title": title,
-                    "_place": place,
-                    "_parameter": parameter,
-                })
+                conf.httpCollector.setExtendedArguments(
+                    {
+                        "_title": title,
+                        "_place": place,
+                        "_parameter": parameter,
+                    }
+                )
 
             if stype == PAYLOAD.TECHNIQUE.UNION:
                 configUnion(test.request.char)
@@ -674,12 +676,14 @@ def checkSqlInjection(place, parameter, value):
                             falseRawResponse = "%s%s" % (falseHeaders, falsePage)
 
                             # Checking if there is difference between current FALSE, original and heuristics page (i.e. not used parameter)
-                            if not any((
-                                kb.negativeLogic,
-                                conf.string,
-                                conf.notString,
-                                conf.code,
-                            )):
+                            if not any(
+                                (
+                                    kb.negativeLogic,
+                                    conf.string,
+                                    conf.notString,
+                                    conf.code,
+                                )
+                            ):
                                 try:
                                     ratio = 1.0
                                     seqMatcher = getCurrentThreadData().seqMatcher
@@ -734,13 +738,15 @@ def checkSqlInjection(place, parameter, value):
                                         )
                                         if errorResult:
                                             continue
-                                    elif kb.heuristicPage and not any((
-                                        conf.string,
-                                        conf.notString,
-                                        conf.regexp,
-                                        conf.code,
-                                        kb.nullConnection,
-                                    )):
+                                    elif kb.heuristicPage and not any(
+                                        (
+                                            conf.string,
+                                            conf.notString,
+                                            conf.regexp,
+                                            conf.code,
+                                            kb.nullConnection,
+                                        )
+                                    ):
                                         _ = comparison(
                                             kb.heuristicPage, None, getRatioValue=True
                                         )
@@ -761,13 +767,15 @@ def checkSqlInjection(place, parameter, value):
 
                                 elif (
                                     threadData.lastComparisonRatio or 0
-                                ) > UPPER_RATIO_BOUND and not any((
-                                    conf.string,
-                                    conf.notString,
-                                    conf.regexp,
-                                    conf.code,
-                                    kb.nullConnection,
-                                )):
+                                ) > UPPER_RATIO_BOUND and not any(
+                                    (
+                                        conf.string,
+                                        conf.notString,
+                                        conf.regexp,
+                                        conf.code,
+                                        kb.nullConnection,
+                                    )
+                                ):
                                     originalSet = set(
                                         getFilteredPageContent(
                                             kb.pageTemplate, True, "\n"
@@ -837,13 +845,15 @@ def checkSqlInjection(place, parameter, value):
                                                     break
 
                             if injectable:
-                                if kb.pageStable and not any((
-                                    conf.string,
-                                    conf.notString,
-                                    conf.regexp,
-                                    conf.code,
-                                    kb.nullConnection,
-                                )):
+                                if kb.pageStable and not any(
+                                    (
+                                        conf.string,
+                                        conf.notString,
+                                        conf.regexp,
+                                        conf.code,
+                                        kb.nullConnection,
+                                    )
+                                ):
                                     if (
                                         all((falseCode, trueCode))
                                         and falseCode != trueCode
@@ -1936,14 +1946,16 @@ def checkWaf():
     Reference: http://seclists.org/nmap-dev/2011/q2/att-1005/http-waf-detect.nse
     """
 
-    if any((
-        conf.string,
-        conf.notString,
-        conf.regexp,
-        conf.dummy,
-        conf.offline,
-        conf.skipWaf,
-    )):
+    if any(
+        (
+            conf.string,
+            conf.notString,
+            conf.regexp,
+            conf.dummy,
+            conf.offline,
+            conf.skipWaf,
+        )
+    ):
         return None
 
     if kb.originalCode == _http_client.NOT_FOUND:

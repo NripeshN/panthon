@@ -446,10 +446,12 @@ class Filesystem(GenericFilesystem):
 
         encodedFileContent = encodeBase64(localFileContent, binary=False)
 
-        splittedEncodedFileContent = "\n".join([
-            encodedFileContent[i : i + chunkMaxSize]
-            for i in xrange(0, len(encodedFileContent), chunkMaxSize)
-        ])
+        splittedEncodedFileContent = "\n".join(
+            [
+                encodedFileContent[i : i + chunkMaxSize]
+                for i in xrange(0, len(encodedFileContent), chunkMaxSize)
+            ]
+        )
 
         logger.debug(
             "uploading the file base64-encoded content to %s, please wait.."

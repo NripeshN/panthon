@@ -1857,16 +1857,18 @@ class BaseResponse(object):
     # (rfc2616 section 10.2.3 and 10.3.5)
     bad_headers = {
         204: frozenset(("Content-Type", "Content-Length")),
-        304: frozenset((
-            "Allow",
-            "Content-Encoding",
-            "Content-Language",
-            "Content-Length",
-            "Content-Range",
-            "Content-Type",
-            "Content-Md5",
-            "Last-Modified",
-        )),
+        304: frozenset(
+            (
+                "Allow",
+                "Content-Encoding",
+                "Content-Language",
+                "Content-Length",
+                "Content-Range",
+                "Content-Type",
+                "Content-Md5",
+                "Last-Modified",
+            )
+        ),
     }
 
     def __init__(self, body="", status=None, headers=None, **more_headers):
@@ -4421,18 +4423,20 @@ class SimpleTemplate(BaseTemplate):
     def execute(self, _stdout, kwargs):
         env = self.defaults.copy()
         env.update(kwargs)
-        env.update({
-            "_stdout": _stdout,
-            "_printlist": _stdout.extend,
-            "include": functools.partial(self._include, env),
-            "rebase": functools.partial(self._rebase, env),
-            "_rebase": None,
-            "_str": self._str,
-            "_escape": self._escape,
-            "get": env.get,
-            "setdefault": env.setdefault,
-            "defined": env.__contains__,
-        })
+        env.update(
+            {
+                "_stdout": _stdout,
+                "_printlist": _stdout.extend,
+                "include": functools.partial(self._include, env),
+                "rebase": functools.partial(self._rebase, env),
+                "_rebase": None,
+                "_str": self._str,
+                "_escape": self._escape,
+                "get": env.get,
+                "setdefault": env.setdefault,
+                "defined": env.__contains__,
+            }
+        )
         exec(self.co, env)
         if env.get("_rebase"):
             subtpl, rargs = env.pop("_rebase")

@@ -658,11 +658,13 @@ def scan_status(taskid):
         )
 
     logger.debug("(%s) Retrieved scan status" % taskid)
-    return jsonize({
-        "success": True,
-        "status": status,
-        "returncode": DataStore.tasks[taskid].engine_get_returncode(),
-    })
+    return jsonize(
+        {
+            "success": True,
+            "status": status,
+            "returncode": DataStore.tasks[taskid].engine_get_returncode(),
+        }
+    )
 
 
 @get("/scan/<taskid>/data")
