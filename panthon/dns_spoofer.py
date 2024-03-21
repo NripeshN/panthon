@@ -1,5 +1,5 @@
 import netifaces
-from scapy.all import sniff, IP, DNS, DNSRR, send
+from scapy.all import sniff, IP, DNS, DNSRR, send, UDP
 
 
 class DNSSpoofer:

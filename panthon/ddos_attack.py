@@ -37,7 +37,7 @@ class DDoSAttack:
     def saphyra_attack(self, target_url):
         command = [
             "python3",
-            os.path.join(os.path.dirname(__file__), "saphyra.py"),
+            os.path.join(os.path.dirname(__file__), "DDOS/saphyra.py"),
             target_url,
         ]
         try:
@@ -48,9 +48,9 @@ class DDoSAttack:
 
     def detect_platform(self):
         if sys.platform == "darwin" and platform.machine() == "arm64":
-            return os.path.join(os.path.dirname(__file__), "aSYNcrone/aSYNcronemacARM")
+            return os.path.join(os.path.dirname(__file__), "DDOS/aSYNcrone/aSYNcronemacARM")
         elif sys.platform == "darwin":
-            return os.path.join(os.path.dirname(__file__), "aSYNcrone/aSYNcronemac")
+            return os.path.join(os.path.dirname(__file__), "DDOS/aSYNcrone/aSYNcronemac")
         elif sys.platform == "linux":
             return os.path.join(os.path.dirname(__file__), "aSYNcrone/aSYNcrone")
         else:

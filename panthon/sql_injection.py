@@ -1,7 +1,7 @@
 import logging
 import subprocess
 import os
-from .dsss import dsss
+from .SQL.dsss import dsss
 
 
 class SQLInjectionAttack:
@@ -18,7 +18,7 @@ class SQLInjectionAttack:
         TBL=None,
     ):
         logging.info("Attacking %s with SQLMap...", target_url)
-        path_to_executable = os.path.join(os.path.dirname(__file__), "sqlmap/sqlmap.py")
+        path_to_executable = os.path.join(os.path.dirname(__file__), "SQL/sqlmap/sqlmap.py")
         command = [
             "python3",
             path_to_executable,

