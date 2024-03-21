@@ -48,9 +48,13 @@ class DDoSAttack:
 
     def detect_platform(self):
         if sys.platform == "darwin" and platform.machine() == "arm64":
-            return os.path.join(os.path.dirname(__file__), "DDOS/aSYNcrone/aSYNcronemacARM")
+            return os.path.join(
+                os.path.dirname(__file__), "DDOS/aSYNcrone/aSYNcronemacARM"
+            )
         elif sys.platform == "darwin":
-            return os.path.join(os.path.dirname(__file__), "DDOS/aSYNcrone/aSYNcronemac")
+            return os.path.join(
+                os.path.dirname(__file__), "DDOS/aSYNcrone/aSYNcronemac"
+            )
         elif sys.platform == "linux":
             return os.path.join(os.path.dirname(__file__), "aSYNcrone/aSYNcrone")
         else:
