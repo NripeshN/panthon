@@ -35,6 +35,7 @@ class core:
 
     @classmethod
     def post_method(self):
+        Log.info("post method")
         bsObj = BeautifulSoup(self.body, "html.parser")
         forms = bsObj.find_all("form", method=True)
 
@@ -94,6 +95,7 @@ class core:
 
     @classmethod
     def get_method_form(self):
+        Log.info("get method form")
         bsObj = BeautifulSoup(self.body, "html.parser")
         forms = bsObj.find_all("form", method=True)
 
@@ -164,6 +166,7 @@ class core:
 
     @classmethod
     def get_method(self):
+        Log.info("get method")
         bsObj = BeautifulSoup(self.body, "html.parser")
         links = bsObj.find_all("a", href=True)
         for a in links:
@@ -173,6 +176,7 @@ class core:
                 or url.startswith("https://") is False
                 or url.startswith("mailto:") is False
             ):
+                Log.warning("Found link: " + C + urljoin(self.url, a["href"]))
                 base = urljoin(self.url, a["href"])
                 query = urlparse(base).query
                 if query != "":
@@ -233,6 +237,7 @@ class core:
             self.post_method()
             self.get_method()
             self.get_method_form()
+            Log.info("XSSCon method 2")
 
         elif method == 1:
             self.post_method()

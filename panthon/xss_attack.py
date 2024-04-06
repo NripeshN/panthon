@@ -2,17 +2,21 @@ import requests
 import logging
 import os
 import subprocess
-from .XSS.XSSCon.lib import core
-from .XSS.XSSCon.lib.crawler.crawler import *
+from panthon.XSS.XSSCon.lib import core
+from panthon.XSS.XSSCon.lib.crawler.crawler import *
 from random import randint
-from .XSS.XSSCon.lib.helper.Log import *
+from panthon.XSS.XSSCon.lib.helper.Log import *
 
 logging.basicConfig(level=logging.INFO)
 
 
 class XSSAttack:
-    def xanxxs_attack(self, url, time=25, file="XanXSS/xss-payload-list.txt", amount=1):
-        path_to_executable = os.path.join(os.path.dirname(__file__), "XanXSS/xanxss.py")
+    def xanxxs_attack(self, url, time=25, file="panthon/XSS/XanXSS/xss-payload-list.txt", amount=1):
+        # path_to_executable = os.path.join(os.path.dirname(__file__), "panthon/XSS/XanXSS/xanxss.py")
+        path_to_executable = "/Users/arunimakumar/Projects/panthon/panthon/XSS/XanXSS/xanxss.py"
+        # base_dir = os.path.dirname(os.path.realpath(__file__))
+        # file_path = os.path.join(base_dir, "XSS", "XanXSS", "xss-payload-list.txt")
+        # path_to_executable = os.path.join(base_dir, "XSS", "XanXSS", "xanxss.py")
         with open(file, "r") as f:
             payloads = [line.strip() for line in f]
 
@@ -20,12 +24,12 @@ class XSSAttack:
         command.extend(payloads)
         command.extend(["--time", str(time)])
         command.extend(["-a", str(amount)])
-
+        print("xanxss")
         subprocess.run(command)
 
-    def xsstrike_attack(self, url, threads=1000, file="XSStrike/xsstrike.py"):
+    def xsstrike_attack(self, url, threads=1000, file="panthon/XSS/XSStrike/xsstrike.py"):
         path_to_executable = os.path.join(
-            os.path.dirname(__file__), "XSStrike/xsstrike.py"
+            os.path.dirname(__file__), "panthon/XSS/XSStrike/xsstrike.py"
         )
 
         command = [
@@ -59,8 +63,10 @@ class XSSAttack:
                 payload = core.generate(randint(1, 6))
             else:
                 payload = core.generate(payload)
+            print(payload)
             return payload if payload is None else payload
 
+        print("xsscon")
         headers = {"User-Agent": userAgent}
         calculated_payload = check(payloadLevel, payload)
 
@@ -71,3 +77,4 @@ class XSSAttack:
             )
         elif single:
             core.main(single, proxy, headers, calculated_payload, cookie, method)
+

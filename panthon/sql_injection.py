@@ -8,10 +8,10 @@ class SQLInjectionAttack:
     def sqlmap_attack(
         self,
         target_url,
-        level=1,
-        risk=1,
+        level=3,
+        risk=3,
         password=False,
-        dbs=False,
+        dbs=True,
         tables=False,
         database=None,
         dump=False,
@@ -39,7 +39,9 @@ class SQLInjectionAttack:
             "--dump" if dump else "",
             "-T" if TBL else "",
             TBL if TBL else "",
+            "--crawl=2"
         ]
+        print("sqlmap")
         subprocess.run(command)
 
     def sqli_scanner(
@@ -70,5 +72,5 @@ class SQLInjectionAttack:
             "\nscan results: %s vulnerabilities found"
             % ("possible" if result else "no")
         )
-
+        print("sqli")
         return result

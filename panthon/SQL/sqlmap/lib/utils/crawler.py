@@ -195,7 +195,7 @@ def crawl(target, post=None, cookie=None):
         if kb.checkSitemap is None:
             message = "do you want to check for the existence of "
             message += "site's sitemap(.xml) [y/N] "
-            kb.checkSitemap = readInput(message, default="N", boolean=True)
+            kb.checkSitemap = readInput(message, default="y", boolean=True)
 
         if kb.checkSitemap:
             found = True
