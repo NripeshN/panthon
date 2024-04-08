@@ -25,6 +25,7 @@ RUN apt-get update  \
         telnetd \
         python3.8-distutils \
      && rm -rf /var/lib/apt/lists/*
+     
 ADD ./ /app/panthon
 
 WORKDIR /app/panthon

@@ -27,8 +27,8 @@ PAYLOADS = [
 
 def load_tampers():
     """Load the tamper scripts into memory."""
-    # script_path = "{}/XanXSS/tamper".format(os.getcwd())
-    script_path="/Users/arunimakumar/Projects/panthon/panthon/XSS/XanXSS/tamper"
+    script_path = "{}/panthon/XSS/XanXSS/tamper".format(os.getcwd())
+    # script_path="/Users/arunimakumar/Projects/panthon/panthon/XSS/XanXSS/tamper"
     importter = "tamper.{}"
     skip_schema = ("__init__.py", ".pyc", "__")
     tmp = []

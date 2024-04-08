@@ -13,7 +13,10 @@ logging.basicConfig(level=logging.INFO)
 class XSSAttack:
     def xanxxs_attack(self, url, time=25, file="panthon/XSS/XanXSS/xss-payload-list.txt", amount=1):
         # path_to_executable = os.path.join(os.path.dirname(__file__), "panthon/XSS/XanXSS/xanxss.py")
-        path_to_executable = "/Users/arunimakumar/Projects/panthon/panthon/XSS/XanXSS/xanxss.py"
+        current_path = os.getcwd()
+        print(current_path)
+        
+        path_to_executable = f"{current_path}/panthon/XSS/XanXSS/xanxss.py"
         # base_dir = os.path.dirname(os.path.realpath(__file__))
         # file_path = os.path.join(base_dir, "XSS", "XanXSS", "xss-payload-list.txt")
         # path_to_executable = os.path.join(base_dir, "XSS", "XanXSS", "xanxss.py")

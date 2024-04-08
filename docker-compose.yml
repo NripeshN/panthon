@@ -19,8 +19,7 @@ services:
                       ip route del default  &&
                       ip route add default via 10.8.0.1 &&
                       iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE &&
-                      tail -f /dev/null
-                 "
+                      tail -f /dev/null"
 
     local-server:
         build: ./image_local_dns_server
@@ -35,8 +34,7 @@ services:
         command: bash -c "
                       ip route del default  &&
                       ip route add default via 10.9.0.11 &&
-                      service named start && tail -f /dev/null
-                "
+                      service named start && tail -f /dev/null"
                   
     user:
         build: ./image_user
@@ -51,8 +49,8 @@ services:
         command: bash -c "
                       ip route del default  &&
                       ip route add default via 10.9.0.11 &&
-                      /start.sh
-                 "
+                      /start.sh"
+                 
 
     attacker:
         build: .
