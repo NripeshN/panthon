@@ -5,7 +5,7 @@ import logging
 import subprocess
 from urllib.parse import urlparse
 import os
-import torch
+
 
 
 logging.basicConfig(
