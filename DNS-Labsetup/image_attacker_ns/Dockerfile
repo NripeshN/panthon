@@ -26,6 +26,8 @@ RUN apt-get update  \
         python3.8-dev \
         python3.8-distutils \
         git \ 
+        bind9  \
+        bind9utils \
      && rm -rf /var/lib/apt/lists/*
 
 # Clone the panthon repository from GitHub
