@@ -11,10 +11,8 @@ RUN apt-get update  \
         nano   \
         net-tools \
         unzip \
-        # 
         arping \
         conntrack \
-        curl   \
         dnsutils  \
         iptables \
         mtr-tiny  \
@@ -24,21 +22,24 @@ RUN apt-get update  \
         tcpdump   \
         telnet \
         telnetd \
+        libexpat1-dev \
+        python3.8-dev \
         python3.8-distutils \
+        git \ 
      && rm -rf /var/lib/apt/lists/*
 
-RUN git clone --progress --recurse-submodules https://github.com/NripeshN/panthon --depth 1
-
-ADD ./ /app/panthon
+# Clone the panthon repository from GitHub
+RUN git clone --progress --recurse-submodules https://github.com/NripeshN/panthon --depth 1 /app/panthon
 
 WORKDIR /app/panthon
 
-COPY get-pip3.py /tmp
-
-RUN  python3 /tmp/get-pip3.py \
-     && pip3 install scapy \
-     && pip install -e . \
-     && rm /tmp/get-pip3.py
+# Install pip and set up a virtual environment
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
+     && python3.8 get-pip.py \
+     && python3.8 -m pip install virtualenv \
+     && python3.8 -m virtualenv venv \
+     && . venv/bin/activate \
+     && pip install -e .
 
 # Create the "seed" user account
 # Change seed's and root's passwords to "dees"

@@ -73,6 +73,7 @@ services:
         tty: true
         cap_add:
                 - ALL
+        privileged: true
         networks:
             net-10.9.0.0:
                 ipv4_address: 10.9.0.153
