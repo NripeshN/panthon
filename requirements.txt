@@ -1,4 +1,3 @@
-torch
 scapy
 netifaces
 bs4
