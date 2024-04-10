@@ -190,6 +190,9 @@ def checkSqlInjection(place, parameter, value):
                         "Do you want to skip test payloads specific for other DBMSes?"
                         " [Y/n]"
                     )
+
+                    conf.answers = "Do you want to skip test payloads specific for other DBMSes? [Y/n] = N"
+
                     kb.reduceTests = (
                         (Backend.getErrorParsedDBMSes() or [kb.heuristicDbms])
                         if readInput(msg, default="Y", boolean=True)
