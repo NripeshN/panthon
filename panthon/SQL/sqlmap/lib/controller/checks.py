@@ -101,6 +101,7 @@ from lib.techniques.union.test import unionTest
 from lib.techniques.union.use import configUnion
 from thirdparty import six
 from thirdparty.six.moves import http_client as _http_client
+import os 
 
 
 def checkSqlInjection(place, parameter, value):
@@ -190,6 +191,9 @@ def checkSqlInjection(place, parameter, value):
                         "Do you want to skip test payloads specific for other DBMSes?"
                         " [Y/n]"
                     )
+
+                    conf.answers = "Do you want to skip test payloads specific for other DBMSes? [Y/n] = N"
+
                     kb.reduceTests = (
                         (Backend.getErrorParsedDBMSes() or [kb.heuristicDbms])
                         if readInput(msg, default="Y", boolean=True)
@@ -219,11 +223,16 @@ def checkSqlInjection(place, parameter, value):
                 msg += "level (%d)" % conf.level if conf.level < 5 else ""
                 msg += " and " if conf.level < 5 and conf.risk < 3 else ""
                 msg += "risk (%d)" % conf.risk if conf.risk < 3 else ""
-                msg += (
-                    " values? [Y/n]"
-                    if conf.level < 5 and conf.risk < 3
-                    else " value? [Y/n]"
-                )
+
+                    
+                if conf.level < 5 and conf.risk < 3:
+                    msg+=" values? [Y/n]"
+                    conf.answers =") values? [Y/n]=Y"
+                
+                else:
+                    msg+= " value? [Y/n]"
+                    conf.answers = f") value? [Y/n]=Y"
+
                 kb.extendTests = (
                     (Backend.getErrorParsedDBMSes() or [kb.heuristicDbms])
                     if readInput(msg, default="Y", boolean=True)
@@ -446,6 +455,9 @@ def checkSqlInjection(place, parameter, value):
                             msg += "at least one other (potential) "
                             msg += "technique found. Do you want to reduce "
                             msg += "the number of requests? [Y/n] "
+
+                            conf.answers = "technique found. Do you want to reduce the number of requests? [Y/n] =n"
+
                             kb.futileUnion = readInput(msg, default="Y", boolean=True)
 
                         if kb.futileUnion and int(_) > 10:

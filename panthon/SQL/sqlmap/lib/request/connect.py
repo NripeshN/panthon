@@ -1515,15 +1515,19 @@ class Connect(object):
                         and value.split(",")[0].upper() == HTTP_HEADER.COOKIE.upper()
                     ):
                         if kb.choices.cookieEncode is None:
-                            msg = (
-                                "do you want to URL encode cookie values"
-                                " (implementation specific)? %s"
-                                % (
-                                    "[Y/n]"
-                                    if not conf.url.endswith(".aspx")
-                                    else "[y/N]"
-                                )
-                            )
+                            msg = "do you want to URL encode cookie values (implementation specific)? %s"
+
+                            if not conf.url.endswith(".aspx"):
+                                # Set the message for the condition where URL does not end with ".aspx"
+                                msg = msg % "[Y/n]"
+                                # Set conf.answers for this specific case
+                                conf.answers = "(implementation specific)? [Y/n]=Y"
+                            else:
+                                # Set the message for the condition where URL ends with ".aspx"
+                                msg = msg % "[y/N]"
+                                # Set conf.answers for this specific case
+                                conf.answers = "(implementation specific)? [y/N]=N"
+
                             kb.choices.cookieEncode = readInput(
                                 msg,
                                 default="Y" if not conf.url.endswith(".aspx") else "N",

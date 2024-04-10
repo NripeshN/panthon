@@ -32,7 +32,7 @@ class XSSAttack:
 
     def xsstrike_attack(self, url, threads=1000, file="panthon/XSS/XSStrike/xsstrike.py"):
         path_to_executable = os.path.join(
-            os.path.dirname(__file__), "panthon/XSS/XSStrike/xsstrike.py"
+            os.path.dirname(__file__), "XSS/XSStrike/xsstrike.py"
         )
 
         command = [
@@ -42,8 +42,8 @@ class XSSAttack:
             url,
             "-t",
             str(threads),
-            "--file",
-            file,
+            # "--file",
+            # file,
         ]
 
         subprocess.run(command)

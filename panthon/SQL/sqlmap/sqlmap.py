@@ -145,7 +145,7 @@ def checkEnvironment():
         errMsg += "newer versions of sqlmap with runtime scripts for older "
         errMsg += "versions"
         logger.critical(errMsg)
-        raise SystemExit
+        raise SystemExitfv
 
     # Patch for pip (import) environment
     if "sqlmap.sqlmap" in sys.modules:

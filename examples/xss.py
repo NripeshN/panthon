@@ -2,7 +2,7 @@ from panthon import XSSAttack
 
 url = "http://localhost:3000/#/complain"
 
-xss_attack = XSSAttack.xanxxs_attack(self=XSSAttack,url=url)
+xss_attack = XSSAttack.xsscon_attack(self=XSSAttack,url=url)
 
 # forms = xss_attack.get_all_forms()
 # for form in forms:

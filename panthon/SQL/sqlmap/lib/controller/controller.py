@@ -931,6 +931,8 @@ def start():
                                             "is vulnerable. Do you want to keep testing"
                                             " the others (if any)? [y/N] "
                                         )
+                                        
+                                        conf.answers = "is vulnerable. Do you want to keep testing the others (if any)? [y/N] = y"
 
                                         if not readInput(
                                             msg, default="N", boolean=True
