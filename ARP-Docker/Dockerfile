@@ -1,4 +1,5 @@
-FROM ubuntu:20.04
+ARG base=amd64/ubuntu:20.04
+FROM ${base}
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update  \
@@ -24,13 +25,12 @@ RUN apt-get update  \
         telnet \
         telnetd \
         python3.8-distutils \
+        git \
      && rm -rf /var/lib/apt/lists/*
 
 COPY get-pip3.py /tmp
 
-# Copy the Python package into the Docker build context
-ADD ./ /app/panthon
-
+RUN git clone --progress --recurse-submodules https://github.com/NripeshN/panthon --depth 1 /app/panthon
 
 WORKDIR /app/panthon
 

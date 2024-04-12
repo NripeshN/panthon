@@ -5,5 +5,5 @@ spoofing_rules = {
     "example.com.": "10.9.0.153" 
 }
 
-spoofer = DNSSpoofer('br-6e22e6f96755', spoofing_rules)  # Adjust interface as needed
+spoofer = DNSSpoofer('eth0', spoofing_rules)  # Adjust interface as needed
 spoofer.start()
