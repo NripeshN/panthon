@@ -134,7 +134,7 @@ class DoSAttack:
     def goldeneye_attack(
         self,
         url,
-        user_agents=os.path.join(os.path.dirname(__file__), "data/user_agents.txt"),
+        user_agents=os.path.join(os.path.dirname(__file__), "data/useragents.txt"),
         workers=10,
         sockets=500,
         method="get",
@@ -157,6 +157,7 @@ class DoSAttack:
             "-n",
             str(nosslcheck),
         ]
+        print(" ".join(command))
         subprocess.run(command)
 
 

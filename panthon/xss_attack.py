@@ -57,7 +57,7 @@ class XSSAttack:
         userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36",
         single=False,
         proxy=None,
-        cookie="""{"ID":"1094200543"}""",
+        cookie=None,
         method=2,
     ):
         def check(payloadLevel, payload):
@@ -81,3 +81,30 @@ class XSSAttack:
         elif single:
             core.main(single, proxy, headers, calculated_payload, cookie, method)
 
+        print("xsscon")
+        path_to_executable = os.path.join(
+            os.path.dirname(__file__), "XSS/XSSCon/xsscon.py"
+        )
+
+        # command = [ "python3",
+        #              path_to_executable,
+        #            "-u",
+        #            str(url),
+        #            "--depth",
+        #            str(depth),
+        #            "--payload-level",
+        #            str(payloadLevel),
+        #            "--payload" if payload else "",
+        #            str(payload) if payload else "",
+        #            "--user-agent",
+        #            str(userAgent),
+        #            "--single" if single else "",
+        #            "--proxy" if proxy else "",
+        #            str(proxy) if proxy else "",
+        #            "--cookie" if cookie else "",
+        #            str(cookie) if cookie else "",
+        #            "--method",
+        #            str(method)
+        #            ]
+            
+        # subprocess.run(command)

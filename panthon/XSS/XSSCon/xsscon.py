@@ -5,11 +5,11 @@ Copyright under the MIT license
 """
 
 import argparse
-from XSSCon.lib.helper.helper import *
-from XSSCon.lib.helper.Log import *
-from XSSCon.lib.core import *
+from lib.helper.helper import *
+from lib.helper.Log import *
+from lib.core import *
 from random import randint
-from XSSCon.lib.crawler.crawler import *
+from lib.crawler.crawler import *
 
 epilog = """
 Github: https://www.github.com/menkrep1337/XSSCon
