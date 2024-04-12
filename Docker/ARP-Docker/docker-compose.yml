@@ -13,7 +13,7 @@ services:
             net-10.9.0.0:
                 ipv4_address: 10.9.0.5
         command: bash -c "
-            /etc/init.d/openbsd-inetd start &&
+            /etc/init.d/openbsd-inetd start && 
             tail -f /dev/null"
         
                   

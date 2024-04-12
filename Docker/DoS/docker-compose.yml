@@ -1,0 +1,50 @@
+version: '2.3'
+
+services:
+  server:
+    build: 
+      context: .
+    image: bkimminich/juice-shop  # OWASP Juice Shop Docker image
+    container_name: dos_server
+    networks:
+      dos_network:
+        ipv4_address: 10.5.0.5
+    ports:
+      - "3000:3000"  # Juice Shop default port
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'  # Limit to half a CPU
+          memory: 256M  # Limit to 256 MB of RAM
+    restart: on-failure
+
+  client:
+    build: 
+      context: .
+    image: large
+    container_name: normal_client
+    command: sh -c "while sleep 1; do wget -q -O- http://10.5.0.5:3000; done"
+    depends_on:
+      - server
+    networks:
+      dos_network:
+        ipv4_address: 10.5.0.6
+
+  attacker:
+    build: 
+      context: .
+    image: large
+    container_name: dos_attacker
+    command: sh -c "while true; do wget -q -O- http://10.5.0.5:3000; done"
+    depends_on:
+      - server
+    networks:
+      dos_network:
+        ipv4_address: 10.5.0.7
+
+networks:
+  dos_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/24
