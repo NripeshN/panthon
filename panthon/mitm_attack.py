@@ -65,7 +65,7 @@ class MITMAttack:
         logging.info(
             "Attacking {} with packets from {}...".format(interface, ipv4 or ipv6)
         )
-        path_to_executable = os.path.join(os.path.dirname(__file__), "mitm6.py")
+        path_to_executable = os.path.join(os.path.dirname(__file__), "mitm/mitm6.py")
         command = [
             "python3",
             path_to_executable,

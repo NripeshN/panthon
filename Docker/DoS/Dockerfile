@@ -1,4 +1,5 @@
-FROM ubuntu:20.04
+ARG base=amd64/ubuntu:20.04
+FROM ${base}
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update  \
@@ -24,21 +25,20 @@ RUN apt-get update  \
         telnet \
         telnetd \
         python3.8-distutils \
+        git \
      && rm -rf /var/lib/apt/lists/*
-     
-ADD ./ /app/panthon
-
-WORKDIR /app/panthon
 
 COPY get-pip3.py /tmp
+
+RUN git clone --progress --recurse-submodules https://github.com/NripeshN/panthon --depth 1 /app/panthon
+
+WORKDIR /app/panthon
 
 RUN  python3 /tmp/get-pip3.py \
      && pip3 install scapy \
      && pip install -e . \
-     && rm /tmp/get-pip3.py
+     && rm /tmp/get-pip3.py 
 
-# Create the "seed" user account
-# Change seed's and root's passwords to "dees"
 RUN  useradd -m -s /bin/bash seed \
      && echo "root:dees" | chpasswd \
      && echo "seed:dees" | chpasswd
@@ -47,4 +47,3 @@ COPY bashrc /home/seed/.bashrc
 COPY bashrc /root/.bashrc
 
 CMD /bin/bash
-

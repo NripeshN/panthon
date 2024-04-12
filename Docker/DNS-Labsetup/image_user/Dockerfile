@@ -1,4 +1,4 @@
-FROM large
+FROM handsonsecurity/seed-ubuntu:large
 
 # We cannot directly set /etc/resolve.conf, because the file 
 # will be overwritten when the container starts.
