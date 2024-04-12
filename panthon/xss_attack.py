@@ -6,6 +6,7 @@ from panthon.XSS.XSSCon.lib import core
 from panthon.XSS.XSSCon.lib.crawler.crawler import *
 from random import randint
 from panthon.XSS.XSSCon.lib.helper.Log import *
+import json
 
 logging.basicConfig(level=logging.INFO)
 
@@ -30,23 +31,6 @@ class XSSAttack:
         print("xanxss")
         subprocess.run(command)
 
-    def xsstrike_attack(self, url, threads=1000, file="panthon/XSS/XSStrike/xsstrike.py"):
-        path_to_executable = os.path.join(
-            os.path.dirname(__file__), "XSS/XSStrike/xsstrike.py"
-        )
-
-        command = [
-            "python3",
-            path_to_executable,
-            "-u",
-            url,
-            "-t",
-            str(threads),
-            # "--file",
-            # file,
-        ]
-
-        subprocess.run(command)
 
     def xsscon_attack(
         self,
@@ -54,57 +38,47 @@ class XSSAttack:
         depth=2,
         payloadLevel=6,
         payload=None,
-        userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36",
+        userAgent="'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'",
         single=False,
         proxy=None,
         cookie=None,
         method=2,
     ):
-        def check(payloadLevel, payload):
-            payload = int(payloadLevel)
-            if payload > 6 and payload is None:
-                payload = core.generate(randint(1, 6))
-            else:
-                payload = core.generate(payload)
-            print(payload)
-            return payload if payload is None else payload
-
-        print("xsscon")
-        headers = {"User-Agent": userAgent}
-        calculated_payload = check(payloadLevel, payload)
-
-        if url:
-            core.main(url, proxy, headers, calculated_payload, cookie, method)
-            crawler.crawl(
-                url, depth, proxy, userAgent, calculated_payload, method, cookie
-            )
-        elif single:
-            core.main(single, proxy, headers, calculated_payload, cookie, method)
 
         print("xsscon")
         path_to_executable = os.path.join(
             os.path.dirname(__file__), "XSS/XSSCon/xsscon.py"
         )
 
-        # command = [ "python3",
-        #              path_to_executable,
-        #            "-u",
-        #            str(url),
-        #            "--depth",
-        #            str(depth),
-        #            "--payload-level",
-        #            str(payloadLevel),
-        #            "--payload" if payload else "",
-        #            str(payload) if payload else "",
-        #            "--user-agent",
-        #            str(userAgent),
-        #            "--single" if single else "",
-        #            "--proxy" if proxy else "",
-        #            str(proxy) if proxy else "",
-        #            "--cookie" if cookie else "",
-        #            str(cookie) if cookie else "",
-        #            "--method",
-        #            str(method)
-        #            ]
-            
-        # subprocess.run(command)
+        cookies = cookie.split(";")
+        cookie_dict = {}
+        for c in cookies:
+            key, value = c.split("=")
+            cookie_dict[key.strip()] = value.strip()
+
+        cookie_json = json.dumps(cookie_dict)
+        print(cookie_json)
+
+        command = [ "python3",
+                     path_to_executable,
+                   "-u",
+                   str(url),
+                   "--depth",
+                   str(depth),
+                   "--payload-level",
+                   str(payloadLevel),
+                   "--payload" if payload else "",
+                   str(payload) if payload else "",
+                   "--user-agent",
+                   str(userAgent),
+                   "--single" if single else "",
+                   "--proxy" if proxy else "",
+                   str(proxy) if proxy else "",
+                   "--cookie" if cookie else "",
+                   str("'"+cookie_json+"'") if cookie else "",
+                   "--method",
+                   str(method)
+                   ]
+        
+        command_str = (" ".join(command))
+        subprocess.run(command_str, shell=True)

@@ -81,7 +81,7 @@ def start():
         default=agent,
     )
     pos_opt.add_argument(
-        "--single", metavar="", help="Single scan. No crawling just one address"
+        "--single", action="store_true", help="Single scan. No crawling just one address"
     )
     pos_opt.add_argument(
         "--proxy",
@@ -102,35 +102,35 @@ def start():
     getopt = parse.parse_args()
     print(logo)
     Log.info("Starting XSSCon...")
+
     if getopt.u:
-        core.main(
-            getopt.u,
-            getopt.proxy,
-            getopt.user_agent,
-            check(getopt),
-            getopt.cookie,
-            getopt.method,
-        )
-
-        crawler.crawl(
-            getopt.u,
-            int(getopt.depth),
-            getopt.proxy,
-            getopt.user_agent,
-            check(getopt),
-            getopt.method,
-            getopt.cookie,
-        )
-
-    elif getopt.single:
-        core.main(
-            getopt.single,
-            getopt.proxy,
-            getopt.user_agent,
-            check(getopt),
-            getopt.cookie,
-            getopt.method,
-        )
+        if getopt.single:
+            core.main(
+                getopt.u,
+                getopt.proxy,
+                getopt.user_agent,
+                check(getopt),
+                getopt.cookie,
+                getopt.method,
+            )
+        else:
+            core.main(
+                getopt.u,
+                getopt.proxy,
+                getopt.user_agent,
+                check(getopt),
+                getopt.cookie,
+                getopt.method,
+            )
+            crawler.crawl(
+                getopt.u,
+                int(getopt.depth),
+                getopt.proxy,
+                getopt.user_agent,
+                check(getopt),
+                getopt.method,
+                getopt.cookie,
+            )
 
     elif getopt.about:
         print(
