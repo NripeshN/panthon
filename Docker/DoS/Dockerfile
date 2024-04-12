@@ -26,6 +26,9 @@ RUN apt-get update  \
         telnetd \
         python3.8-distutils \
         git \
+        curl \
+        bash \
+        wget \
      && rm -rf /var/lib/apt/lists/*
 
 COPY get-pip3.py /tmp
