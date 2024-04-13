@@ -55,7 +55,7 @@ class DDoSAttack:
                 os.path.dirname(__file__), "DDOS/aSYNcrone/aSYNcronemac"
             )
         elif sys.platform == "linux":
-            return os.path.join(os.path.dirname(__file__), "aSYNcrone/aSYNcrone")
+            return os.path.join(os.path.dirname(__file__), "DDOS/aSYNcrone/aSYNcrone")
         else:
             logging.error(f"Unknown platform: {sys.platform}")
             return None
