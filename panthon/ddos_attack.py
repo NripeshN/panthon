@@ -21,7 +21,6 @@ class DDoSAttack:
             hostname = parsed_url.netloc
             ip = socket.gethostbyname(hostname)
             command = [
-                "sudo",
                 platform_type,
                 "80",
                 ip,
