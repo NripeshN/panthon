@@ -11,7 +11,7 @@ RUN apt-get update  \
         nano   \
         net-tools \
         unzip \
-        # 
+        sudo \
         arping \
         conntrack \
         curl   \

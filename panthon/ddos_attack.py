@@ -13,7 +13,7 @@ logging.basicConfig(
 
 
 class DDoSAttack:
-    def aSYNcrone_attack(self, target_url, target_port, num_connections):
+    def aSYNcrone_attack(self, target_url, target_port, num_connections=10000):
         platform_type = self.detect_platform()
 
         if platform_type:
