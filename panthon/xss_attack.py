@@ -50,14 +50,15 @@ class XSSAttack:
             os.path.dirname(__file__), "XSS/XSSCon/xsscon.py"
         )
 
-        cookies = cookie.split(";")
-        cookie_dict = {}
-        for c in cookies:
-            key, value = c.split("=")
-            cookie_dict[key.strip()] = value.strip()
+        if cookie:
+            cookies = cookie.split(";")
+            cookie_dict = {}
+            for c in cookies:
+                key, value = c.split("=")
+                cookie_dict[key.strip()] = value.strip()
 
-        cookie_json = json.dumps(cookie_dict)
-        print(cookie_json)
+            cookie_json = json.dumps(cookie_dict)
+            print(cookie_json)
 
         command = [
             "python3",
