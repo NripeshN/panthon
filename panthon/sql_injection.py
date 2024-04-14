@@ -1,7 +1,6 @@
 import logging
 import subprocess
 import os
-from .SQL.dsss import dsss
 
 
 class SQLInjectionAttack:
@@ -51,7 +50,7 @@ class SQLInjectionAttack:
         print("sqlmap")
         subprocess.run(command)
 
-    def sqli_scanner(
+    def dsss_attack(
         self, target_url, data=None, cookie=None, ua=None, referer=None, proxy=None
     ):
         """Scans the target_url for potential SQL injection vulnerabilities.
@@ -69,15 +68,31 @@ class SQLInjectionAttack:
         """
 
         # Initialize options for the scanner
-        attack = dsss(proxy=proxy, cookie=cookie, ua=ua, referer=referer)
+     #   attack = dsss(proxy=proxy, cookie=cookie, ua=ua, referer=referer)
 
         # Scan the target URL
-        result = attack.scan_page(target_url, data)
+        #result = attack.scan_page(target_url, data)
+
+        command = [
+            "python3",
+            os.path.join(os.path.dirname(__file__), "SQL/dsss.py"),
+            "-u",
+            target_url,
+            "--cookie" if cookie else "",
+            cookie if cookie else "",
+            "--user-agent" if ua else "",
+            ua if ua else "",
+            "--referer" if referer else "",
+            referer if referer else "",
+            "--proxy" if proxy else "",
+            proxy if proxy else ""
+        ]
+        subprocess.run(command)
 
         # Print the result
-        logging.info(
-            "\nscan results: %s vulnerabilities found"
-            % ("possible" if result else "no")
-        )
-        print("sqli")
-        return result
+#        logging.info(
+ #           "\nscan results: %s vulnerabilities found"
+  #          % ("possible" if result else "no")
+    #    )
+   #     print("sqli")
+     #   return result
