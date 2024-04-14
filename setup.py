@@ -10,7 +10,7 @@ def _strip(line):
 
 setup(
     name="panthon",
-    version="0.2.1",
+    version="0.2.4",
     author="Nripesh",
     author_email="Nripesh14@gmail.com",
     description=(
@@ -24,6 +24,7 @@ setup(
     long_description_content_type="text/markdown",
     include_package_data=True,
     packages=setuptools.find_packages(),
+    package_data={'panthon': ['*']},
     install_requires=[
         _strip(line) for line in open("requirements.txt", "r", encoding="utf-8").readlines()
     ],
