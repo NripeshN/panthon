@@ -81,7 +81,9 @@ def start():
         default=agent,
     )
     pos_opt.add_argument(
-        "--single", action="store_true", help="Single scan. No crawling just one address"
+        "--single",
+        action="store_true",
+        help="Single scan. No crawling just one address",
     )
     pos_opt.add_argument(
         "--proxy",
