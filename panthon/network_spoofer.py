@@ -8,6 +8,7 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+
 class NetworkMonitor:
     def __init__(self, interface="eth0", timeout=60):
         self.interface = interface
@@ -25,7 +26,12 @@ class NetworkMonitor:
         return sniff_thread
 
     def sniff_packets(self):
-        scapy.sniff(iface=self.interface, prn=self.packet_handler, store=False, timeout=self.timeout)
+        scapy.sniff(
+            iface=self.interface,
+            prn=self.packet_handler,
+            store=False,
+            timeout=self.timeout,
+        )
 
     def stop_sniffing(self):
         self.stop_sniff = True
