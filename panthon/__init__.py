@@ -6,3 +6,4 @@ from .mitm_attack import MITMAttack
 from .sql_injection import SQLInjectionAttack
 from .xss_attack import XSSAttack
 from .network_spoofer import NetworkSpoofer
+from .website_extractor import WebsiteExtractor
