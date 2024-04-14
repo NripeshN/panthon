@@ -10,7 +10,7 @@ def _strip(line):
 
 setup(
     name="panthon",
-    version="0.1.20",
+    version="0.2.0",
     author="Nripesh",
     author_email="Nripesh14@gmail.com",
     description=(
