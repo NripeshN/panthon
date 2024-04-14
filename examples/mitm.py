@@ -8,7 +8,9 @@ interface = "eth0"  # Network interface used for the attack
 attack = MITMAttack()
 
 # Set the necessary attributes
-attack.set_attributes(target_ip, gateway_ip, interface)
+# attack.set_attributes(target_ip, gateway_ip, interface)
 
-# Run the MITM attack
-attack.run_attack()
+# # Run the MITM attack
+# attack.run_attack()
+
+attack.mitm6(interface=interface, ipv4=target_ip, relay_target=gateway_ip)

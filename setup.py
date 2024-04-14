@@ -5,14 +5,12 @@ from pathlib import Path
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text(encoding="utf-8")
 
-
 def _strip(line):
     return line.split(" ")[0].split("#")[0].split(",")[0]
 
-
 setup(
     name="panthon",
-    version="0.1.20",
+    version="0.2.0",
     author="Nripesh",
     author_email="Nripesh14@gmail.com",
     description=(
@@ -27,10 +25,10 @@ setup(
     include_package_data=True,
     packages=setuptools.find_packages(),
     install_requires=[
-        _strip(line) for line in open("requirements.txt", "r", encoding="utf-8")
+        _strip(line) for line in open("requirements.txt", "r", encoding="utf-8").readlines()
     ],
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
     ],
-    license="MIT License",
+    license="Apache Software License",
 )

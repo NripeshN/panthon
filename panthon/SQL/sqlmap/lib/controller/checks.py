@@ -101,7 +101,6 @@ from lib.techniques.union.test import unionTest
 from lib.techniques.union.use import configUnion
 from thirdparty import six
 from thirdparty.six.moves import http_client as _http_client
-import os 
 
 
 def checkSqlInjection(place, parameter, value):
@@ -224,13 +223,12 @@ def checkSqlInjection(place, parameter, value):
                 msg += " and " if conf.level < 5 and conf.risk < 3 else ""
                 msg += "risk (%d)" % conf.risk if conf.risk < 3 else ""
 
-                    
                 if conf.level < 5 and conf.risk < 3:
-                    msg+=" values? [Y/n]"
-                    conf.answers =") values? [Y/n]=Y"
-                
+                    msg += " values? [Y/n]"
+                    conf.answers = ") values? [Y/n]=Y"
+
                 else:
-                    msg+= " value? [Y/n]"
+                    msg += " value? [Y/n]"
                     conf.answers = f") value? [Y/n]=Y"
 
                 kb.extendTests = (

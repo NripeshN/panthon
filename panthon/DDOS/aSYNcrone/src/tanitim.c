@@ -1,6 +1,4 @@
-#include <unistd.h>
 #include <stdio.h>
+#include <unistd.h>
 
-void tanitim(){
-    
-}
+void tanitim() {}

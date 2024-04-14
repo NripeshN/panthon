@@ -1,5 +1,5 @@
 import time
-from scapy.all import ARP, Ether, srp, send 
+from scapy.all import ARP, Ether, srp, send
 
 
 class ARPSpoof:
@@ -12,7 +12,7 @@ class ARPSpoof:
             Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst=ip), timeout=2, retry=10
         )
         for s, r in responses:
-            print (r[Ether].src)
+            print(r[Ether].src)
             return r[Ether].src
         return None
 

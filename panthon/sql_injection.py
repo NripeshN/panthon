@@ -16,8 +16,8 @@ class SQLInjectionAttack:
         dump=False,
         TBL=None,
         cookies=None,
-        crawl =False,
-        batch = False
+        crawl=False,
+        batch=False,
     ):
         logging.info("Attacking %s with SQLMap...", target_url)
         path_to_executable = os.path.join(
@@ -25,7 +25,6 @@ class SQLInjectionAttack:
         )
         command = [
             "python3",
-            
             path_to_executable,
             # "--flush-session",
             "-u",
@@ -45,7 +44,7 @@ class SQLInjectionAttack:
             TBL if TBL else "",
             "--cookie" if cookies else "",
             str(cookies) if cookies else "",
-            "--crawl=2" if crawl else ""
+            "--crawl=2" if crawl else "",
         ]
         print("sqlmap")
         subprocess.run(command)

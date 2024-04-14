@@ -1,6 +1,7 @@
 from panthon import SQLInjectionAttack
 
 sql_injection_attack = SQLInjectionAttack()
+<<<<<<< HEAD
 #target_url = "http://testphp.vulnweb.com/artists.php?artist=1"
 # cookies="2f5db4132205f9974c03e2834841cb17, low"
 target_url ="http://localhost:4280/vulnerabilities/sqli/?id=1&Submit=Submit#"
@@ -8,3 +9,13 @@ target_url ="http://localhost:4280/vulnerabilities/sqli/?id=1&Submit=Submit#"
 #target_url="http://localhost:3000/#/search?q=1"
 sql_injection_attack.sqlmap_attack(target_url, cookies="PHPSESSID=1eccdf95db5e6f0fc8eb7282ced24055;security=low")
 #sql_injection_attack.sqlmap_attack(target_url=target_url, crawl =True,level=5, risk=3, batch=True)
+=======
+target_url = "http://localhost:3000/#/search?q=1"
+cookies = "token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MjIsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJoZWxsb0BnbWFpbC5jb20iLCJwYXNzd29yZCI6ImYzMGFhN2E2NjJjNzI4Yjc0MDdjNTRhZTZiZmQyN2QxIiwicm9sZSI6ImN1c3RvbWVyIiwiZGVsdXhlVG9rZW4iOiIiLCJsYXN0TG9naW5JcCI6IjAuMC4wLjAiLCJwcm9maWxlSW1hZ2UiOiIvYXNzZXRzL3B1YmxpYy9pbWFnZXMvdXBsb2Fkcy9kZWZhdWx0LnN2ZyIsInRvdHBTZWNyZXQiOiIiLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNC0wNC0wOSAwOToyNDoxNy45ODcgKzAwOjAwIiwidXBkYXRlZEF0IjoiMjAyNC0wNC0wOSAwOToyNDoxNy45ODcgKzAwOjAwIiwiZGVsZXRlZEF0IjpudWxsfSwiaWF0IjoxNzEyNjU0NjgyfQ.o_LFxlv-bGVLXaHlqpUdNcl2RvtFlEx8FzobRGx7UJliq40Jv9cJT7p6Qrq3tESrA7XF5we1TVJfgFL33wYQ_gcvTzcMa_2RzfP14jCuKyEtwyouy9Bb4nmeJsO7zKshvJdTUvdb6uJOSUc8jmS35W_psam3VLY0btsNPUyL11k"
+# target_url ="http://localhost:4280/vulnerabilities/sqli/?id=1&Submit=Submit#"
+# cookies = "PHPSESSID=47ea56e7013b793318e3dcd9a20c5c5d;security=low"
+# sql_injection_attack.sqli_scanner(target_url, cookie=cookies)
+sql_injection_attack.sqlmap_attack(
+    target_url=target_url, crawl=True, level=5, risk=3, batch=True
+)
+>>>>>>> 8e68bd6a52bbe0150b5b5c143a2c684a10dd32bf
