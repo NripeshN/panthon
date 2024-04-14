@@ -1,9 +1,10 @@
-ARG base=amd64/ubuntu:20.04
+ARG base=amd64/ubuntu:22.04
 FROM ${base}
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update  \
     && apt-get -y install  \
+        build-essential \
         binutils \
         curl   \
         iproute2  \
@@ -24,11 +25,12 @@ RUN apt-get update  \
         tcpdump   \
         telnet \
         telnetd \
-        python3.8-distutils \
         git \
         curl \
         bash \
         wget \
+        python3 \
+        python3-pip \
      && rm -rf /var/lib/apt/lists/*
 
 COPY get-pip3.py /tmp

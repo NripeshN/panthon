@@ -69,11 +69,11 @@ class MITMAttack:
         command = [
             "python3",
             path_to_executable,
-            " --interface " if interface else "",
-            " --localdomain " if localdomain else "",
-            " --ipv4 " if ipv4 else "",
-            " --ipv6 " if ipv6 else "",
-            " --mac " if mac else "",
-            " --relay " if relay_target else "",
+            " -i " if interface else "",
+            " - " if localdomain else "",
+            " -4 " if ipv4 else "",
+            " -6 " if ipv6 else "",
+            " -c " if mac else "",
+            " -r " if relay_target else "",
         ]
         subprocess.run(command)
