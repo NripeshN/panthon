@@ -3,15 +3,11 @@ from bs4 import BeautifulSoup, Tag
 from urllib.parse import urljoin
 from lxml import html, etree
 
+
 class WebsiteExtractor:
     def __init__(self, url):
         self.base_url = url
-        self.assets = {
-            'scripts': [],
-            'stylesheets': [],
-            'images': [],
-            'others': []
-        }
+        self.assets = {"scripts": [], "stylesheets": [], "images": [], "others": []}
 
     def get_html(self):
         try:
@@ -23,21 +19,21 @@ class WebsiteExtractor:
             return None
 
     def extract_assets(self, html):
-        soup = BeautifulSoup(html, 'html.parser')
+        soup = BeautifulSoup(html, "html.parser")
         for script in soup.find_all("script"):
-            src = script.get('src')
+            src = script.get("src")
             if src:
-                self.assets['scripts'].append(urljoin(self.base_url, src))
-        
+                self.assets["scripts"].append(urljoin(self.base_url, src))
+
         for link in soup.find_all("link", rel="stylesheet"):
-            href = link.get('href')
+            href = link.get("href")
             if href:
-                self.assets['stylesheets'].append(urljoin(self.base_url, href))
-        
+                self.assets["stylesheets"].append(urljoin(self.base_url, href))
+
         for img in soup.find_all("img"):
-            src = img.get('src')
+            src = img.get("src")
             if src:
-                self.assets['images'].append(urljoin(self.base_url, src))
+                self.assets["images"].append(urljoin(self.base_url, src))
 
         return self.assets
 
@@ -69,11 +65,12 @@ class WebsiteExtractor:
             tree = html.fromstring(html_content)
             # Convert the HtmlElement to an ElementTree object
             etree_obj = etree.ElementTree(tree)
-            input_elements = tree.xpath('//input | //textarea | //select')
+            input_elements = tree.xpath("//input | //textarea | //select")
             xpaths = [etree_obj.getpath(element) for element in input_elements]
             return xpaths
         else:
             return []
+
 
 # Example usage:
 if __name__ == "__main__":

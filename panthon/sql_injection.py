@@ -67,10 +67,10 @@ class SQLInjectionAttack:
         """
 
         # Initialize options for the scanner
-     #   attack = dsss(proxy=proxy, cookie=cookie, ua=ua, referer=referer)
+        #   attack = dsss(proxy=proxy, cookie=cookie, ua=ua, referer=referer)
 
         # Scan the target URL
-        #result = attack.scan_page(target_url, data)
+        # result = attack.scan_page(target_url, data)
 
         command = [
             "python3",
@@ -84,14 +84,16 @@ class SQLInjectionAttack:
             "--referer" if referer else "",
             referer if referer else "",
             "--proxy" if proxy else "",
-            proxy if proxy else ""
+            proxy if proxy else "",
         ]
         subprocess.run(command)
 
         # Print the result
+
+
 #        logging.info(
- #           "\nscan results: %s vulnerabilities found"
-  #          % ("possible" if result else "no")
-    #    )
-   #     print("sqli")
-     #   return result
+#           "\nscan results: %s vulnerabilities found"
+#          % ("possible" if result else "no")
+#    )
+#     print("sqli")
+#   return result
