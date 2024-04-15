@@ -5,8 +5,10 @@ from pathlib import Path
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text(encoding="utf-8")
 
+
 def _strip(line):
     return line.split(" ")[0].split("#")[0].split(",")[0]
+
 
 setup(
     name="panthon",
@@ -24,9 +26,10 @@ setup(
     long_description_content_type="text/markdown",
     include_package_data=True,
     packages=setuptools.find_packages(),
-    package_data={'panthon': ['*']},
+    package_data={"panthon": ["*"]},
     install_requires=[
-        _strip(line) for line in open("requirements.txt", "r", encoding="utf-8").readlines()
+        _strip(line)
+        for line in open("requirements.txt", "r", encoding="utf-8").readlines()
     ],
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
