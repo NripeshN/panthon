@@ -81,3 +81,4 @@ if __name__ == "__main__":
     extractor = WebsiteExtractor(url)
     input_xpaths = extractor.get_input_xpaths()
     print("XPaths of input elements:", input_xpaths)
+
