@@ -1,6 +1,7 @@
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from urllib.parse import urljoin
+from lxml import html, etree
 
 class WebsiteExtractor:
     def __init__(self, url):
@@ -15,7 +16,7 @@ class WebsiteExtractor:
     def get_html(self):
         try:
             response = requests.get(self.base_url)
-            response.raise_for_status()  # Raises an HTTPError for bad responses
+            response.raise_for_status()
             return response.text
         except requests.RequestException as e:
             print(f"Error fetching {self.base_url}: {e}")
@@ -26,20 +27,17 @@ class WebsiteExtractor:
         for script in soup.find_all("script"):
             src = script.get('src')
             if src:
-                full_url = urljoin(self.base_url, src)
-                self.assets['scripts'].append(full_url)
+                self.assets['scripts'].append(urljoin(self.base_url, src))
         
         for link in soup.find_all("link", rel="stylesheet"):
             href = link.get('href')
             if href:
-                full_url = urljoin(self.base_url, href)
-                self.assets['stylesheets'].append(full_url)
+                self.assets['stylesheets'].append(urljoin(self.base_url, href))
         
         for img in soup.find_all("img"):
             src = img.get('src')
             if src:
-                full_url = urljoin(self.base_url, src)
-                self.assets['images'].append(full_url)
+                self.assets['images'].append(urljoin(self.base_url, src))
 
         return self.assets
 
@@ -47,14 +45,14 @@ class WebsiteExtractor:
         try:
             response = requests.get(url)
             response.raise_for_status()
-            return response.content  # returns bytes
+            return response.content
         except requests.RequestException as e:
             print(f"Error downloading {url}: {e}")
             return None
 
     def fetch_website_assets(self):
         html = self.get_html()
-        if html is not None:
+        if html:
             assets = self.extract_assets(html)
             asset_contents = {}
             for category in assets:
@@ -65,10 +63,21 @@ class WebsiteExtractor:
         else:
             return {}
 
+    def get_input_xpaths(self):
+        html_content = self.get_html()
+        if html_content:
+            tree = html.fromstring(html_content)
+            # Convert the HtmlElement to an ElementTree object
+            etree_obj = etree.ElementTree(tree)
+            input_elements = tree.xpath('//input | //textarea | //select')
+            xpaths = [etree_obj.getpath(element) for element in input_elements]
+            return xpaths
+        else:
+            return []
+
 # Example usage:
 if __name__ == "__main__":
-    url = "https://www.wolframalpha.com"  # Change this URL to the website you want to extract
+    url = "https://abibinator.blogspot.com"
     extractor = WebsiteExtractor(url)
-    assets_content = extractor.fetch_website_assets()
-    for asset_url, content in assets_content.items():
-        print(f"Content of {asset_url}: {content[:100]}..." if content else f"Failed to download {asset_url}")
+    input_xpaths = extractor.get_input_xpaths()
+    print("XPaths of input elements:", input_xpaths)

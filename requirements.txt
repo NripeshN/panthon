@@ -5,3 +5,4 @@ tld
 fuzzywuzzy
 requests
 twisted
+lxml
