@@ -12,4 +12,3 @@ attack.set_attributes(target_ip, gateway_ip, interface)
 
 # # Run the MITM attack
 attack.run_attack()
-
