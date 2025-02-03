@@ -53,28 +53,30 @@ USER_AGENT_PARTS = {
                 for i in range(1, 30)
             ],
             "details": ["KHTML, like Gecko"],
-            "extensions": [
-                "Chrome/%d.0.%d.%d Safari/%d.%d"
-                % (
-                    random.randint(6, 32),
-                    random.randint(100, 2000),
-                    random.randint(0, 100),
-                    random.randint(535, 537),
-                    random.randint(1, 36),
-                )
-                for i in range(1, 30)
-            ]
-            + [
-                "Version/%d.%d.%d Safari/%d.%d"
-                % (
-                    random.randint(4, 6),
-                    random.randint(0, 1),
-                    random.randint(0, 9),
-                    random.randint(535, 537),
-                    random.randint(1, 36),
-                )
-                for i in range(1, 10)
-            ],
+            "extensions": (
+                [
+                    "Chrome/%d.0.%d.%d Safari/%d.%d"
+                    % (
+                        random.randint(6, 32),
+                        random.randint(100, 2000),
+                        random.randint(0, 100),
+                        random.randint(535, 537),
+                        random.randint(1, 36),
+                    )
+                    for i in range(1, 30)
+                ]
+                + [
+                    "Version/%d.%d.%d Safari/%d.%d"
+                    % (
+                        random.randint(4, 6),
+                        random.randint(0, 1),
+                        random.randint(0, 9),
+                        random.randint(535, 537),
+                        random.randint(1, 36),
+                    )
+                    for i in range(1, 10)
+                ]
+            ),
         },
         "iexplorer": {
             "browser_info": {
@@ -88,16 +90,18 @@ USER_AGENT_PARTS = {
                     "MSIE 10.0",
                 ],
                 "ext_pre": ["compatible", "Windows; U"],
-                "ext_post": ["Trident/%d.0" % i for i in range(4, 6)]
-                + [
-                    ".NET CLR %d.%d.%d"
-                    % (
-                        random.randint(1, 3),
-                        random.randint(0, 5),
-                        random.randint(1000, 30000),
-                    )
-                    for i in range(1, 10)
-                ],
+                "ext_post": (
+                    ["Trident/%d.0" % i for i in range(4, 6)]
+                    + [
+                        ".NET CLR %d.%d.%d"
+                        % (
+                            random.randint(1, 3),
+                            random.randint(0, 5),
+                            random.randint(1000, 30000),
+                        )
+                        for i in range(1, 10)
+                    ]
+                ),
             }
         },
         "gecko": {
