@@ -4,7 +4,6 @@ import sys
 import platform
 import importlib
 
-
 VERSION = "0.4"
 HEADERS = {
     "Connection": "close",

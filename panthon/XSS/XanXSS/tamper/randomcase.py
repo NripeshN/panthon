@@ -1,6 +1,5 @@
 import random
 
-
 __PRIORITY__ = 9
 
 
