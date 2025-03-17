@@ -1,7 +1,6 @@
 import re
 import random
 
-
 __PRIORITY__ = 2
 
 

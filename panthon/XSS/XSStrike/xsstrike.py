@@ -4,7 +4,6 @@ from __future__ import print_function
 
 from core.colors import end, red, white, bad, info
 
-
 try:
     import concurrent.futures
     from urllib.parse import urlparse
