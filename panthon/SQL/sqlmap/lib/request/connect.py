@@ -505,10 +505,10 @@ class Connect(object):
                     HTTP_HEADER.COOKIE: cookie,
                     HTTP_HEADER.USER_AGENT: ua,
                     HTTP_HEADER.REFERER: referer,
-                    HTTP_HEADER.HOST: getHeader(
-                        dict(conf.httpHeaders), HTTP_HEADER.HOST
-                    )
-                    or getHostHeader(url),
+                    HTTP_HEADER.HOST: (
+                        getHeader(dict(conf.httpHeaders), HTTP_HEADER.HOST)
+                        or getHostHeader(url)
+                    ),
                 },
                 base=None if target else {},
             )

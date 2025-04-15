@@ -4661,8 +4661,9 @@ def createGithubIssue(errMsg, excMsg):
             url="https://api.github.com/repos/sqlmapproject/sqlmap/issues",
             data=getBytes(json.dumps(data)),
             headers={
-                HTTP_HEADER.AUTHORIZATION: "token %s"
-                % decodeBase64(GITHUB_REPORT_OAUTH_TOKEN, binary=False),
+                HTTP_HEADER.AUTHORIZATION: (
+                    "token %s" % decodeBase64(GITHUB_REPORT_OAUTH_TOKEN, binary=False)
+                ),
                 HTTP_HEADER.USER_AGENT: fetchRandomAgent(),
             },
         )

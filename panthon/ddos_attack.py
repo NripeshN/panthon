@@ -6,7 +6,6 @@ import platform
 from urllib.parse import urlparse
 import socket
 
-
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
