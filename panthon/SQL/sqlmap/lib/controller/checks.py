@@ -922,7 +922,7 @@ def checkSqlInjection(place, parameter, value):
                                                 and _.strip() not in falseRawResponse
                                                 else None
                                             )
-                                            for _ in (trueSet - falseSet - errorSet)
+                                            for _ in trueSet - falseSet - errorSet
                                         )
 
                                         if candidates:
@@ -961,7 +961,7 @@ def checkSqlInjection(place, parameter, value):
                                                     and _.strip() not in trueRawResponse
                                                     else None
                                                 )
-                                                for _ in (falseSet - trueSet)
+                                                for _ in falseSet - trueSet
                                             )
 
                                             if candidates:

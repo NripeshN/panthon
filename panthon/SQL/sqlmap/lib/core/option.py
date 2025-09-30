@@ -828,7 +828,7 @@ def _setDBMS():
         errMsg = "you provided an unsupported back-end database management "
         errMsg += "system. Supported DBMSes are as follows: %s. " % ", ".join(
             sorted(
-                (_ for _ in (list(DBMS_DICT) + getPublicTypeMembers(FORK, True))),
+                (_ for _ in list(DBMS_DICT) + getPublicTypeMembers(FORK, True)),
                 key=str.lower,
             )
         )
