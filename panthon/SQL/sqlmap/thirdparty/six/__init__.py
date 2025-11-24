@@ -779,25 +779,21 @@ else:
             _locs_ = _globs_
         exec("""exec _code_ in _globs_, _locs_""")
 
-    exec_(
-        """def reraise(tp, value, tb=None):
+    exec_("""def reraise(tp, value, tb=None):
     try:
         raise tp, value, tb
     finally:
         tb = None
-"""
-    )
+""")
 
 
 if sys.version_info[:2] > (3,):
-    exec_(
-        """def raise_from(value, from_value):
+    exec_("""def raise_from(value, from_value):
     try:
         raise value from from_value
     finally:
         value = None
-"""
-    )
+""")
 else:
 
     def raise_from(value, from_value):
