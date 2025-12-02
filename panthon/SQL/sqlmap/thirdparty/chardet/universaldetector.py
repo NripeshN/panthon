@@ -33,7 +33,6 @@ class a user of ``chardet`` should use.
 :author: Ian Cordasco
 """
 
-
 import codecs
 import logging
 import re
