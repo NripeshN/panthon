@@ -66,7 +66,7 @@ def main():
         parser.add_option("-i", dest="inputFile", help="Input file")
         parser.add_option("-o", dest="outputFile", help="Output file")
 
-        (args, _) = parser.parse_args()
+        args, _ = parser.parse_args()
 
         if not args.inputFile:
             parser.error("Missing the input file, -h for help")

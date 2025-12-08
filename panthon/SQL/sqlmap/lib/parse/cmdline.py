@@ -1846,7 +1846,7 @@ def cmdLineParser(argv=None):
                 pass
 
         try:
-            (args, _) = (
+            args, _ = (
                 parser.parse_known_args(argv)
                 if hasattr(parser, "parse_known_args")
                 else parser.parse_args(argv)

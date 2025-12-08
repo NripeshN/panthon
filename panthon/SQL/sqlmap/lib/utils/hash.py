@@ -1004,7 +1004,7 @@ def _bruteProcessVariantA(
 
                 if current in hashes:
                     for item in attack_info[:]:
-                        ((user, hash_), _) = item
+                        (user, hash_), _ = item
 
                         if hash_ == current:
                             retVal.put((user, hash_, word))
@@ -1424,7 +1424,7 @@ def dictionaryAttack(attack_dict):
         logger.info(infoMsg)
 
         for item in attack_info:
-            ((user, _), _) = item
+            (user, _), _ = item
             if user and not user.startswith(DUMMY_USER_PREFIX):
                 custom_wordlist.append(normalizeUnicode(user))
 

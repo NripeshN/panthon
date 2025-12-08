@@ -3729,7 +3729,7 @@ def findDynamicContent(firstPage, secondPage):
 
     # Removing too small matching blocks
     for block in blocks[:]:
-        (_, _, length) = block
+        _, _, length = block
 
         if length <= 2 * DYNAMICITY_BOUNDARY_LENGTH:
             blocks.remove(block)

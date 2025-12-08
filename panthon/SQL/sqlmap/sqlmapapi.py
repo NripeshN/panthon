@@ -87,7 +87,7 @@ def main():
     apiparser.add_option(
         "--password", help="Basic authentication password (optional)", action="store"
     )
-    (args, _) = apiparser.parse_args()
+    args, _ = apiparser.parse_args()
 
     # Start the client or the server
     if args.server:
