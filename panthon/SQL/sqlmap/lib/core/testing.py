@@ -616,7 +616,7 @@ def smokeTest():
                     logger.setLevel(logging.CRITICAL)
                     kb.smokeMode = True
 
-                    (failure_count, _) = doctest.testmod(module)
+                    failure_count, _ = doctest.testmod(module)
 
                     kb.smokeMode = False
                     logger.setLevel(logging.INFO)

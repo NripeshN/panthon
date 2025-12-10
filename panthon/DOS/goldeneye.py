@@ -339,7 +339,7 @@ class Striker(Process):
                     self.socks.append(c)
 
                 for conn_req in self.socks:
-                    (url, headers) = self.createPayload()
+                    url, headers = self.createPayload()
 
                     method = (
                         random.choice([METHOD_GET, METHOD_POST])

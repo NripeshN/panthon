@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
         parser.add_option("-o", dest="outputFile", help="Output debug.exe text file")
 
-        (args, _) = parser.parse_args()
+        args, _ = parser.parse_args()
 
         if not args.inputFile:
             parser.error("Missing the input file, -h for help")
