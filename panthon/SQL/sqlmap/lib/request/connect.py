@@ -238,8 +238,9 @@ class Connect(object):
                 and (
                     headers.getheader(HTTP_HEADER.CONTENT_ENCODING, "").lower()
                     in ("gzip", "deflate")
-                    or "text"
-                    not in headers.getheader(HTTP_HEADER.CONTENT_TYPE, "").lower()
+                    or "text" not in headers.getheader(
+                        HTTP_HEADER.CONTENT_TYPE, ""
+                    ).lower()
                 )
             ):
                 retVal = conn.read(MAX_CONNECTION_TOTAL_SIZE)
