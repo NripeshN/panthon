@@ -2083,8 +2083,7 @@ class UnicodeDammit:
             if isHTML:
                 self.declaredHTMLEncoding = xml_encoding
             if sniffed_xml_encoding and (
-                xml_encoding
-                in (
+                xml_encoding in (
                     "iso-10646-ucs-2",
                     "ucs-2",
                     "csunicode",

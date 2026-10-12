@@ -626,8 +626,7 @@ def checkSqlInjection(place, parameter, value):
                             check,
                             origValue=(
                                 value
-                                if place
-                                not in (
+                                if place not in (
                                     PLACE.URI,
                                     PLACE.CUSTOM_POST,
                                     PLACE.CUSTOM_HEADER,
@@ -645,14 +644,14 @@ def checkSqlInjection(place, parameter, value):
                                     test.response.comparison,
                                     origValue=(
                                         value
-                                        if place
-                                        not in (
+                                        if place not in (
                                             PLACE.URI,
                                             PLACE.CUSTOM_POST,
                                             PLACE.CUSTOM_HEADER,
                                         )
-                                        and BOUNDED_INJECTION_MARKER
-                                        not in (value or "")
+                                        and BOUNDED_INJECTION_MARKER not in (
+                                            value or ""
+                                        )
                                         else None
                                     ),
                                 )
@@ -1424,8 +1423,7 @@ def checkFalsePositives(injection):
     retVal = True
 
     if all(
-        _
-        in (
+        _ in (
             PAYLOAD.TECHNIQUE.BOOLEAN,
             PAYLOAD.TECHNIQUE.TIME,
             PAYLOAD.TECHNIQUE.STACKED,
