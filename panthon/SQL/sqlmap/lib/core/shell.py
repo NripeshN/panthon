@@ -190,7 +190,7 @@ def autoCompletion(completion=None, os=None, commands=None):
         readline.parse_and_bind("tab: complete")
 
     elif commands:
-        completer = CompleterNG(dict(((_, None) for _ in commands)))
+        completer = CompleterNG(dict((_, None) for _ in commands))
         readline.set_completer_delims(" ")
         readline.set_completer(completer.complete)
         readline.parse_and_bind("tab: complete")

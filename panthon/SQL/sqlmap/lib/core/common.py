@@ -3284,7 +3284,7 @@ def adjustTimeDelay(lastQueryDuration, lowerStdLimit):
 
     kb.delayCandidates = [candidate] + kb.delayCandidates[:-1]
 
-    if all((_ == candidate for _ in kb.delayCandidates)) and candidate < conf.timeSec:
+    if all(_ == candidate for _ in kb.delayCandidates) and candidate < conf.timeSec:
         if (
             lastQueryDuration / (1.0 * conf.timeSec / candidate)
             > MIN_VALID_DELAYED_RESPONSE
